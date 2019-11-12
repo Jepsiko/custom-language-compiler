@@ -24,6 +24,7 @@
 
 %{//adding Java code (methods, inner classes, ...)
     java.util.List<Symbol> identifiers = new java.util.ArrayList<Symbol>();
+    java.util.List<Symbol> symbols = new java.util.ArrayList<Symbol>();
 
     void sortIdentifiers() { // Bubble sort algorithm
         boolean sorted = false;
@@ -54,21 +55,25 @@
 
     void analyze(LexicalUnit type, String token) {
         Symbol symbol = new Symbol(type, yyline, yycolumn, token);
-        System.out.println(symbol);
+        //System.out.println(symbol);
+        symbols.add(symbol);
 
-        if (symbol.getType() == LexicalUnit.VARNAME && !alreadyInIdentifiers(token)) {
+        /*if (symbol.getType() == LexicalUnit.VARNAME && !alreadyInIdentifiers(token)) {
              identifiers.add(symbol);
-        }
+        }*/
     }
 %}
 
 %eof{//code to execute after scanning
-    System.out.println("\nIdentifiers");
+    /*System.out.println("\nIdentifiers");
 
     sortIdentifiers();
     for (Symbol symbol : identifiers) {
         System.out.println((String)symbol.getValue() + "\t" + symbol.getLine());
-    }
+    }*/
+
+    Parser parser = new Parser(symbols);
+    parser.parse();
 %eof}
 
 ////////////////////////////////

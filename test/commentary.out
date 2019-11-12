@@ -1,0 +1,28 @@
+token: This	lexical unit: VARNAME
+token: is	lexical unit: VARNAME
+token: a	lexical unit: VARNAME
+token: not	lexical unit: NOT
+token: nested	lexical unit: VARNAME
+token: long	lexical unit: VARNAME
+token: comment	lexical unit: VARNAME
+token: begin	lexical unit: BEG
+token: read	lexical unit: READ
+token: (	lexical unit: LEFT_PARENTHESIS
+token: c	lexical unit: VARNAME
+token: )	lexical unit: RIGHT_PARENTHESIS
+token: ;	lexical unit: SEMICOLON
+token: read	lexical unit: READ
+token: (	lexical unit: LEFT_PARENTHESIS
+token: d	lexical unit: VARNAME
+token: )	lexical unit: RIGHT_PARENTHESIS
+token: end	lexical unit: END
+
+Identifiers
+This	14
+a	14
+c	28
+comment 14
+d   29
+is  14
+long    14
+nested  14
