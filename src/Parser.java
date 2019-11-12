@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Parser {
     private final java.util.List<Symbol> symbols;
     private final boolean v;
@@ -10,28 +13,38 @@ public class Parser {
         this.l = 0;
     }
 
-    public Parser(java.util.List<Symbol> symbols) { this(symbols, true); }
+    public Parser(java.util.List<Symbol> symbols) { this(symbols, false); }
 
     public void parse() {
-        Program();
-        System.out.println();
+        ParseTree parseTree = Program();
 
-        if (l == symbols.size()) {
-            System.out.println("Parsing Successful");
+        if (l == symbols.size() && parseTree != null) {
+            System.out.println();
+            System.out.println(parseTree.toLaTeX());
         }
     }
 
-    private void Program() {
+    private ParseTree Program() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [1] <Program> -> begin <Code> end
         if (lookahead() == LexicalUnit.BEG) {
             print(1, "<Program> -> begin <Code> end");
-            match(LexicalUnit.BEG);
-            Code();
-            match(LexicalUnit.END);
+
+            children.add(match(LexicalUnit.BEG));
+            children.add(Code());
+            children.add(match(LexicalUnit.END));
+            return new ParseTree("Program", children);
+        }
+        else {
+            System.out.println("Error Program");
+            return null;
         }
     }
 
-    private void Code() {
+    private ParseTree Code() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [2] <Code> -> ε
         if (
                 lookahead() == LexicalUnit.END ||
@@ -40,6 +53,7 @@ public class Parser {
                 lookahead() == LexicalUnit.ENDWHILE)
         {
             print(2, "<Code> -> ε");
+            return null;
         }
         // [3] <Code> -> <InstList>
         else if (
@@ -52,14 +66,18 @@ public class Parser {
         {
             print(3, "<Code> -> <InstList>");
 
-            InstList();
+            children.add(InstList());
+            return new ParseTree("Code", children);
         }
         else {
             System.out.println("Error Code");
+            return null;
         }
     }
 
-    private void InstList() {
+    private ParseTree InstList() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [4] <InstList> -> <Instruction> <NextInst>
         if (
                 lookahead() == LexicalUnit.VARNAME ||
@@ -71,15 +89,19 @@ public class Parser {
         {
             print(4, "<InstList> -> <Instruction> <NextInst>");
 
-            Instruction();
-            NextInst();
+            children.add(Instruction());
+            children.add(NextInst());
+            return new ParseTree("InstList", children);
         }
         else {
             System.out.println("Error InstList");
+            return null;
         }
     }
 
-    private void NextInst() {
+    private ParseTree NextInst() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [5] <NextInst> -> ε
         if (
                 lookahead() == LexicalUnit.END ||
@@ -88,76 +110,94 @@ public class Parser {
                 lookahead() == LexicalUnit.ENDWHILE)
         {
             print(5, "<NextInst> -> ε");
+            return null;
         }
         // [6] <NextInst> -> ; <InstList>
         else if (lookahead() == LexicalUnit.SEMICOLON) {
             print(6, "<NextInst> -> ; <InstList>");
 
-            match(LexicalUnit.SEMICOLON);
-            InstList();
+            children.add(match(LexicalUnit.SEMICOLON));
+            children.add(InstList());
+            return new ParseTree("NextInst", children);
         }
         else {
             System.out.println("Error NextInst");
+            return null;
         }
     }
 
-    private void Instruction() {
+    private ParseTree Instruction() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [7] <Instruction> -> <Assign>
         if (lookahead() == LexicalUnit.VARNAME) {
             print(7, "<Instruction> -> <Assign>");
 
-            Assign();
+            children.add(Assign());
+            return new ParseTree("Instruction", children);
         }
         // [8] <Instruction> -> <If>
         else if (lookahead() == LexicalUnit.IF) {
             print(8, "<Instruction> -> <If>");
 
-            If();
+            children.add(If());
+            return new ParseTree("Instruction", children);
         }
         // [9] <Instruction> -> <While>
         else if (lookahead() == LexicalUnit.WHILE) {
             print(9, "<Instruction> -> <While>");
 
-            While();
+            children.add(While());
+            return new ParseTree("Instruction", children);
         }
         // [10] <Instruction> -> <For>
         else if (lookahead() == LexicalUnit.FOR) {
             print(10, "<Instruction> -> <For>");
 
-            For();
+            children.add(For());
+            return new ParseTree("Instruction", children);
         }
         // [11] <Instruction> -> <Print>
         else if (lookahead() == LexicalUnit.PRINT) {
             print(11, "<Instruction> -> <Print>");
 
-            Print();
+            children.add(Print());
+            return new ParseTree("Instruction", children);
         }
         // [12] <Instruction> -> <Read>
         else if (lookahead() == LexicalUnit.READ) {
             print(12, "<Instruction> -> <Read>");
 
-            Read();
+            children.add(Read());
+            return new ParseTree("Instruction", children);
         }
         else {
             System.out.println("Error Instruction");
+            return null;
         }
     }
 
-    private void Assign() {
+    private ParseTree Assign() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [13] <Assign> -> [VarName] := <ExprArith>
         if (lookahead() == LexicalUnit.VARNAME) {
             print(13, "<Assign> -> [VarName] := <ExprArith>");
 
-            match(LexicalUnit.VARNAME);
-            match(LexicalUnit.ASSIGN);
-            ExprArith();
+            children.add(match(LexicalUnit.VARNAME));
+            children.add(match(LexicalUnit.ASSIGN));
+            children.add(ExprArith());
+            return new ParseTree("Assign", children);
         }
         else {
             System.out.println("Error Assign");
+            return null;
         }
     }
 
-    private void ExprArith() {
+    private ParseTree ExprArith() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [14] <ExprArith> -> <Prod> <ExprArith'>
         if (
                 lookahead() == LexicalUnit.VARNAME ||
@@ -167,30 +207,36 @@ public class Parser {
         {
             print(14, "<ExprArith> -> <Prod> <ExprArith'>");
 
-            Prod();
-            ExprArith_prime();
+            children.add(Prod());
+            children.add(ExprArith_prime());
+            return new ParseTree("ExprArith", children);
         }
         else {
             System.out.println("Error ExprArith");
+            return null;
         }
     }
 
-    private void ExprArith_prime() {
+    private ParseTree ExprArith_prime() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [15] <ExprArith'> -> + <Prod> <ExprArith'>
         if (lookahead() == LexicalUnit.PLUS) {
             print(15, "<ExprArith'> -> + <Prod> <ExprArith'>");
 
-            match(LexicalUnit.PLUS);
-            Prod();
-            ExprArith_prime();
+            children.add(match(LexicalUnit.PLUS));
+            children.add(Prod());
+            children.add(ExprArith_prime());
+            return new ParseTree("ExprArith'", children);
         }
         // [16] <ExprArith'> -> - <Prod> <ExprArith'>
         else if (lookahead() == LexicalUnit.MINUS) {
             print(16, "<ExprArith'> -> - <Prod> <ExprArith'>");
 
-            match(LexicalUnit.MINUS);
-            Prod();
-            ExprArith_prime();
+            children.add(match(LexicalUnit.MINUS));
+            children.add(Prod());
+            children.add(ExprArith_prime());
+            return new ParseTree("ExprArith'", children);
         }
         // [17] <ExprArith'> -> ε
         else if (
@@ -213,13 +259,17 @@ public class Parser {
                 lookahead() == LexicalUnit.TO)
         {
             print(17, "<ExprArith'> -> ε");
+            return null;
         }
         else {
             System.out.println("Error ExprArith'");
+            return null;
         }
     }
 
-    private void Prod() {
+    private ParseTree Prod() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [18] <Prod> -> <Atom> <Prod'>
         if (
                 lookahead() == LexicalUnit.VARNAME ||
@@ -229,30 +279,36 @@ public class Parser {
         {
             print(18, "<Prod> -> <Atom> <Prod'>");
 
-            Atom();
-            Prod_prime();
+            children.add(Atom());
+            children.add(Prod_prime());
+            return new ParseTree("Prod", children);
         }
         else {
             System.out.println("Error ExprArith");
+            return null;
         }
     }
 
-    private void Prod_prime() {
+    private ParseTree Prod_prime() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [19] <Prod'> -> * <Atom> <Prod'>
         if (lookahead() == LexicalUnit.TIMES) {
             print(19, "<Prod'> -> * <Atom> <Prod'>");
 
-            match(LexicalUnit.TIMES);
-            Atom();
-            Prod_prime();
+            children.add(match(LexicalUnit.TIMES));
+            children.add(Atom());
+            children.add(Prod_prime());
+            return new ParseTree("Prod'", children);
         }
         // [20] <Prod'> -> / <Atom> <Prod'>
         else if (lookahead() == LexicalUnit.DIVIDE) {
             print(20, "<Prod'> -> / <Atom> <Prod'>");
 
-            match(LexicalUnit.TIMES);
-            Atom();
-            Prod_prime();
+            children.add(match(LexicalUnit.DIVIDE));
+            children.add(Atom());
+            children.add(Prod_prime());
+            return new ParseTree("Prod'", children);
         }
         // [21] <Prod'> -> ε
         else if (
@@ -277,82 +333,102 @@ public class Parser {
                 lookahead() == LexicalUnit.TO)
         {
             print(21, "<Prod'> -> ε");
+            return null;
         }
         else {
             System.out.println("Error Prod'");
+            return null;
         }
     }
 
-    private void Atom() {
+    private ParseTree Atom() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [22] <Atom> -> - <Atom>
         if (lookahead() == LexicalUnit.MINUS) {
             print(22, "<Atom> -> - <Atom>");
 
-            match(LexicalUnit.MINUS);
-            Atom();
+            children.add(match(LexicalUnit.MINUS));
+            children.add(Atom());
+            return new ParseTree("Atom", children);
         }
         // [23] <Atom> -> [Number]
         else if (lookahead() == LexicalUnit.NUMBER) {
             print(23, "<Atom> -> [Number]");
 
-            match(LexicalUnit.NUMBER);
+            children.add(match(LexicalUnit.NUMBER));
+            return new ParseTree("Atom", children);
         }
         // [24] <Atom> -> [VarName]
         else if (lookahead() == LexicalUnit.VARNAME) {
             print(24, "<Atom> -> [VarName]");
 
-            match(LexicalUnit.VARNAME);
+            children.add(match(LexicalUnit.VARNAME));
+            return new ParseTree("Atom", children);
         }
         // [25] <Atom> -> ( <ExprArith> )
         else if (lookahead() == LexicalUnit.LEFT_PARENTHESIS) {
             print(25, "<Atom> -> ( <ExprArith> )");
 
-            match(LexicalUnit.LEFT_PARENTHESIS);
-            ExprArith();
-            match(LexicalUnit.RIGHT_PARENTHESIS);
+            children.add(match(LexicalUnit.LEFT_PARENTHESIS));
+            children.add(ExprArith());
+            children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
+            return new ParseTree("Atom", children);
         }
         else {
             System.out.println("Error Atom");
+            return null;
         }
     }
 
-    private void If() {
+    private ParseTree If() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [26] <If> -> if <Cond> then <Code> <IfSeq>
         if (lookahead() == LexicalUnit.IF) {
             print(26, "<If> -> if <Cond> then <Code> <IfSeq>");
 
-            match(LexicalUnit.IF);
-            Cond();
-            match(LexicalUnit.THEN);
-            Code();
-            IfSeq();
+            children.add(match(LexicalUnit.IF));
+            children.add(Cond());
+            children.add(match(LexicalUnit.THEN));
+            children.add(Code());
+            children.add(IfSeq());
+            return new ParseTree("If", children);
         }
         else {
             System.out.println("Error If");
+            return null;
         }
     }
 
-    private void IfSeq() {
+    private ParseTree IfSeq() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [27] <IfSeq> -> endif
         if (lookahead() == LexicalUnit.ENDIF) {
             print(27, "<IfSeq> -> endif");
 
-            match(LexicalUnit.ENDIF);
+            children.add(match(LexicalUnit.ENDIF));
+            return new ParseTree("IfSeq", children);
         }
         // [28] <IfSeq> -> else <Code> endif
         else if (lookahead() == LexicalUnit.ELSE) {
             print(28, "<IfSeq> -> else <Code> endif");
 
-            match(LexicalUnit.ELSE);
-            Code();
-            match(LexicalUnit.ENDIF);
+            children.add(match(LexicalUnit.ELSE));
+            children.add(Code());
+            children.add(match(LexicalUnit.ENDIF));
+            return new ParseTree("IfSeq", children);
         }
         else {
             System.out.println("Error IfSeq");
+            return null;
         }
     }
 
-    private void Cond() {
+    private ParseTree Cond() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [29] <Cond> -> <CondAnd> <Cond'>
         if (
                 lookahead() == LexicalUnit.VARNAME ||
@@ -363,22 +439,27 @@ public class Parser {
         {
             print(29, "<Cond> -> <CondAnd> <Cond'>");
 
-            CondAnd();
-            Cond_prime();
+            children.add(CondAnd());
+            children.add(Cond_prime());
+            return new ParseTree("Cond", children);
         }
         else {
             System.out.println("Error Cond");
+            return null;
         }
     }
 
-    private void Cond_prime() {
+    private ParseTree Cond_prime() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [30] <Cond'> -> or <CondAnd> <Cond'>
         if (lookahead() == LexicalUnit.OR) {
             print(30, "<Cond'> -> or <CondAnd> <Cond'>");
 
-            match(LexicalUnit.OR);
-            CondAnd();
-            Cond_prime();
+            children.add(match(LexicalUnit.OR));
+            children.add(CondAnd());
+            children.add(Cond_prime());
+            return new ParseTree("Cond'", children);
         }
         // [31] <Cond'> -> ε
         else if (
@@ -386,13 +467,17 @@ public class Parser {
                 lookahead() == LexicalUnit.DO)
         {
             print(31, "<Cond'> -> ε");
+            return null;
         }
         else {
             System.out.println("Error Cond'");
+            return null;
         }
     }
 
-    private void CondAnd() {
+    private ParseTree CondAnd() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [32] <CondAnd> -> <SimpleCond> <CondAnd'>
         if (
                 lookahead() == LexicalUnit.VARNAME ||
@@ -403,22 +488,27 @@ public class Parser {
         {
             print(32, "<CondAnd> -> <SimpleCond> <CondAnd'>");
 
-            SimpleCond();
-            CondAnd_prime();
+            children.add(SimpleCond());
+            children.add(CondAnd_prime());
+            return new ParseTree("CondAnd", children);
         }
         else {
             System.out.println("Error CondAnd");
+            return null;
         }
     }
 
-    private void CondAnd_prime() {
+    private ParseTree CondAnd_prime() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [33] <CondAnd'> -> and <SimpleCond> <CondAnd'>
         if (lookahead() == LexicalUnit.AND) {
             print(33, "<CondAnd'> -> and <SimpleCond> <CondAnd'>");
 
-            match(LexicalUnit.AND);
-            SimpleCond();
-            CondAnd_prime();
+            children.add(match(LexicalUnit.AND));
+            children.add(SimpleCond());
+            children.add(CondAnd_prime());
+            return new ParseTree("CondAnd'", children);
         }
         // [34] <CondAnd'> -> ε
         else if (
@@ -427,13 +517,17 @@ public class Parser {
                 lookahead() == LexicalUnit.OR)
         {
             print(34, "<CondAnd'> -> ε");
+            return null;
         }
         else {
             System.out.println("Error CondAnd'");
+            return null;
         }
     }
 
-    private void SimpleCond() {
+    private ParseTree SimpleCond() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [35] <SimpleCond> -> <ExprArith> <Comp> <ExprArith>
         if (
                 lookahead() == LexicalUnit.VARNAME ||
@@ -443,141 +537,176 @@ public class Parser {
         {
             print(35, "<SimpleCond> -> <ExprArith> <Comp> <ExprArith>");
 
-            ExprArith();
-            Comp();
-            ExprArith();
+            children.add(ExprArith());
+            children.add(Comp());
+            children.add(ExprArith());
+            return new ParseTree("SimpleCond", children);
         }
         // [36] <SimpleCond> -> not <SimpleCond>
         else if (lookahead() == LexicalUnit.NOT) {
             print(36, "<SimpleCond> -> not <SimpleCond>");
+
+            children.add(match(LexicalUnit.NOT));
+            children.add(SimpleCond());
+            return new ParseTree("SimpleCond", children);
         }
         else {
             System.out.println("Error SimpleCond");
+            return null;
         }
     }
 
-    private void Comp() {
+    private ParseTree Comp() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [37] <Comp> -> =
         if (lookahead() == LexicalUnit.EQUAL) {
             print(37, "<Comp> -> =");
 
-            match(LexicalUnit.EQUAL);
+            children.add(match(LexicalUnit.EQUAL));
+            return new ParseTree("Comp", children);
         }
         // [38] <Comp> -> >=
         else if (lookahead() == LexicalUnit.GREATER_EQUAL) {
             print(38, "<Comp> -> >=");
 
-            match(LexicalUnit.GREATER_EQUAL);
+            children.add(match(LexicalUnit.GREATER_EQUAL));
+            return new ParseTree("Comp", children);
         }
         // [39] <Comp> -> >
         else if (lookahead() == LexicalUnit.GREATER) {
             print(39, "<Comp> -> >");
 
-            match(LexicalUnit.GREATER);
+            children.add(match(LexicalUnit.GREATER));
+            return new ParseTree("Comp", children);
         }
         // [40] <Comp> -> <=
         else if (lookahead() == LexicalUnit.SMALLER_EQUAL) {
             print(40, "<Comp> -> <=");
 
-            match(LexicalUnit.SMALLER_EQUAL);
+            children.add(match(LexicalUnit.SMALLER_EQUAL));
+            return new ParseTree("Comp", children);
         }
         // [41] <Comp> -> <
         else if (lookahead() == LexicalUnit.SMALLER) {
             print(41, "<Comp> -> <");
 
-            match(LexicalUnit.SMALLER);
+            children.add(match(LexicalUnit.SMALLER));
+            return new ParseTree("Comp", children);
         }
         // [42] <Comp> -> /=
         else if (lookahead() == LexicalUnit.DIFFERENT) {
             print(42, "<Comp> -> /=");
 
-            match(LexicalUnit.DIFFERENT);
+            children.add(match(LexicalUnit.DIFFERENT));
+            return new ParseTree("Comp", children);
         }
         else {
             System.out.println("Error Comp");
+            return null;
         }
     }
 
-    private void While() {
+    private ParseTree While() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [43] <While> -> while <Cond> do <Code> endwhile
         if (lookahead() == LexicalUnit.WHILE) {
             print(43, "<While> -> while <Cond> do <Code> endwhile");
 
-            match(LexicalUnit.WHILE);
-            Cond();
-            match(LexicalUnit.DO);
-            Code();
-            match(LexicalUnit.ENDWHILE);
+            children.add(match(LexicalUnit.WHILE));
+            children.add(Cond());
+            children.add(match(LexicalUnit.DO));
+            children.add(Code());
+            children.add(match(LexicalUnit.ENDWHILE));
+            return new ParseTree("While", children);
         }
         else {
             System.out.println("Error While");
+            return null;
         }
     }
 
-    private void For() {
+    private ParseTree For() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [44] <For> -> for [VarName] from <ExprArith> by <ExprArith> to <ExprArith> do <Code> endwhile
         if (lookahead() == LexicalUnit.FOR) {
             print(44, "<For> -> for [VarName] from <ExprArith> by <ExprArith> to " +
                     "<ExprArith> do <Code> endwhile");
 
-            match(LexicalUnit.FOR);
-            match(LexicalUnit.VARNAME);
-            match(LexicalUnit.FROM);
-            ExprArith();
-            match(LexicalUnit.BY);
-            ExprArith();
-            match(LexicalUnit.TO);
-            ExprArith();
-            match(LexicalUnit.DO);
-            Code();
-            match(LexicalUnit.ENDWHILE);
+            children.add(match(LexicalUnit.FOR));
+            children.add(match(LexicalUnit.VARNAME));
+            children.add(match(LexicalUnit.FROM));
+            children.add(ExprArith());
+            children.add(match(LexicalUnit.BY));
+            children.add(ExprArith());
+            children.add(match(LexicalUnit.TO));
+            children.add(ExprArith());
+            children.add(match(LexicalUnit.DO));
+            children.add(Code());
+            children.add(match(LexicalUnit.ENDWHILE));
+            return new ParseTree("For", children);
         }
         else {
-            System.out.println("Error While");
+            System.out.println("Error For");
+            return null;
         }
     }
 
-    private void Print() {
+    private ParseTree Print() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [45] <Print> -> print([VarName])
         if (lookahead() == LexicalUnit.PRINT) {
             print(45, "<Print> -> print([VarName])");
 
-            match(LexicalUnit.PRINT);
-            match(LexicalUnit.LEFT_PARENTHESIS);
-            match(LexicalUnit.VARNAME);
-            match(LexicalUnit.RIGHT_PARENTHESIS);
+            children.add(match(LexicalUnit.PRINT));
+            children.add(match(LexicalUnit.LEFT_PARENTHESIS));
+            children.add(match(LexicalUnit.VARNAME));
+            children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
+            return new ParseTree("Print", children);
         }
         else {
             System.out.println("Error Print");
+            return null;
         }
     }
 
-    private void Read() {
+    private ParseTree Read() {
+        List<ParseTree> children = new ArrayList<>();
+
         // [46] <Read> -> read([VarName])
         if (lookahead() == LexicalUnit.READ) {
             print(46, "<Read> -> read([VarName])");
 
-            match(LexicalUnit.READ);
-            match(LexicalUnit.LEFT_PARENTHESIS);
-            match(LexicalUnit.VARNAME);
-            match(LexicalUnit.RIGHT_PARENTHESIS);
+            children.add(match(LexicalUnit.READ));
+            children.add(match(LexicalUnit.LEFT_PARENTHESIS));
+            children.add(match(LexicalUnit.VARNAME));
+            children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
+            return new ParseTree("Read", children);
         }
         else {
             System.out.println("Error Read");
+            return null;
         }
     }
 
-    private void match(LexicalUnit type)
+    private ParseTree match(LexicalUnit type)
     {
         if (lookahead() == type) {
             if (v) {
                 System.out.print("Match : ");
                 System.out.println(type);
             }
+            Symbol terminal = symbols.get(l);
             l++;
+
+            return new ParseTree(terminal.getValue().toString());
         }
         else
             System.out.println("Error");
+            return null;
     }
 
     private LexicalUnit lookahead() {

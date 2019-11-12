@@ -14,27 +14,36 @@ import java.util.ArrayList;
  */
 
 public class ParseTree {
-    private Symbol label; // The label of the root of the tree
+    private String label; // The label of the root of the tree
     private List<ParseTree> children; // Its children, which are trees themselves
 
     /**
      * Creates a singleton tree with only a root labeled by lbl.
      * 
-     * @param lbl The label of the root
+     * @param label The label of the root
      */
-    public ParseTree(Symbol lbl) {
-        this.label = lbl;
-        this.children = new ArrayList<ParseTree>(); // This tree has no children
+    public ParseTree(String label) {
+        this(label, new ArrayList<ParseTree>()); // This tree has no children
     }
 
     /**
      * Creates a tree with root labeled by lbl and children chdn.
      * 
-     * @param lbl  The label of the root
+     * @param label  The label of the root
      * @param chdn Its children
      */
-    public ParseTree(Symbol lbl, List<ParseTree> chdn) {
-        this.label = lbl;
+    public ParseTree(String label, List<ParseTree> chdn) {
+        StringBuilder labelForLatex = new StringBuilder();
+        for (int i = 0; i < label.length(); i++){
+            char c = label.charAt(i);
+
+            if (c == '_') {
+                labelForLatex.append('\\');
+            }
+            labelForLatex.append(c);
+        }
+
+        this.label = labelForLatex.toString();
         this.children = chdn;
     }
 
@@ -44,11 +53,12 @@ public class ParseTree {
     public String toLaTexTree() {
         StringBuilder treeTeX = new StringBuilder();
         treeTeX.append("[");
-        treeTeX.append("{" + label.toString() + "}");
+        treeTeX.append("{").append(label).append("}");
         treeTeX.append(" ");
 
         for (ParseTree child : children) {
-            treeTeX.append(child.toLaTexTree());
+            if (child != null)
+                treeTeX.append(child.toLaTexTree());
         }
         treeTeX.append("]");
         return treeTeX.toString();
@@ -61,12 +71,14 @@ public class ParseTree {
     public String toTikZ() {
         StringBuilder treeTikZ = new StringBuilder();
         treeTikZ.append("node {");
-        treeTikZ.append(label.toString());
+        treeTikZ.append(label);
         treeTikZ.append("}\n");
         for (ParseTree child : children) {
-            treeTikZ.append("child { ");
-            treeTikZ.append(child.toTikZ());
-            treeTikZ.append(" }\n");
+            if (child != null) {
+                treeTikZ.append("child { ");
+                treeTikZ.append(child.toTikZ());
+                treeTikZ.append(" }\n");
+            }
         }
         return treeTikZ.toString();
     }
