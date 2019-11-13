@@ -667,6 +667,9 @@ class Parser {
             return new ParseTree(terminal.getValue().toString());
         }
         else if (!syntaxError) {
+            if (!v) {
+                System.out.println();
+            }
             System.out.println("Syntax error at line " + terminal.getLine());
             syntaxError = true;
         }
