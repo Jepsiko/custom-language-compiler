@@ -1,80 +1,18 @@
-//import java_cup.runtime.*; uncomment if you use CUP
+import java.util.regex.PatternSyntaxException;
 
 %%// Options of the scanner
 
-%class Lexer	//Name
+%class LexicalAnalyzer	//Name
 %unicode			//Use unicode
 %line				//Use line counter (yyline variable)
 %column			//Use character counter by line (yycolumn variable)
+%function nextToken
+%type Symbol
+%yylexthrow PatternSyntaxException
 
-//you can use either %cup or %standalone
-//   %standalone is for a Scanner which works alone and scan a file
-//   %cup is to interact with a CUP parser. In this case, you have to return
-//        a Symbol object (defined in the CUP library) for each action.
-//        Two constructors:
-//                          1. Symbol(int id,int line, int column)
-//                          2. Symbol(int id,int line, int column,Object value)
-%standalone
-
-////////
-//CODE//
-////////
-%init{//code to execute before scanning
-%init}
-
-%{//adding Java code (methods, inner classes, ...)
-    java.util.List<Symbol> identifiers = new java.util.ArrayList<Symbol>();
-    java.util.List<Symbol> symbols = new java.util.ArrayList<Symbol>();
-
-    void sortIdentifiers() { // Bubble sort algorithm
-        boolean sorted = false;
-        Symbol temp;
-        while(!sorted) {
-            sorted = true;
-            for (int i = 0; i < identifiers.size()-1; i++) {
-                String varname1 = (String)identifiers.get(i).getValue();
-                String varname2 = (String)identifiers.get(i+1).getValue();
-                if (varname1.compareTo(varname2) > 0) {
-                    temp = identifiers.get(i);
-                    identifiers.set(i, identifiers.get(i+1));
-                    identifiers.set(i+1, temp);
-                    sorted = false;
-                }
-            }
-        }
-    }
-
-    boolean alreadyInIdentifiers(String varname) {
-        for (Symbol symbol : identifiers) {
-            if (((String)symbol.getValue()).compareTo(varname) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    void analyze(LexicalUnit type, String token) {
-        Symbol symbol = new Symbol(type, yyline, yycolumn, token);
-        //System.out.println(symbol);
-        symbols.add(symbol);
-
-        /*if (symbol.getType() == LexicalUnit.VARNAME && !alreadyInIdentifiers(token)) {
-             identifiers.add(symbol);
-        }*/
-    }
-%}
-
-%eof{//code to execute after scanning
-    /*System.out.println("\nIdentifiers");
-
-    sortIdentifiers();
-    for (Symbol symbol : identifiers) {
-        System.out.println((String)symbol.getValue() + "\t" + symbol.getLine());
-    }*/
-
-    Parser parser = new Parser(symbols);
-    parser.parse();
-%eof}
+%eofval{//code to execute after scanning
+    return new Symbol(LexicalUnit.END_OF_STREAM, yyline, yycolumn);
+%eofval}
 
 ////////////////////////////////
 //Extended Regular Expressions//
@@ -86,88 +24,71 @@ Num = [0-9]
 AlphaNum = {Alpha}|{Num}
 VarName = {Alpha} {AlphaNum}*
 Number = "-"?{Num}+
-Separation = (" "|{EndOfLine})
+Space		= (\t | \f | " ")
+Separator = ({Space}|{EndOfLine})
+Any = ([^"\n""\r"])*
+UpToEnd = ({Space}{Any}{EndOfLine}) | ({EndOfLine})
 
 //////////
 //States//
 //////////
 
-%xstate YYINITIAL, SHORT_COMMENT, LONG_COMMENT, LONG_COMMENT_EMPTY
+%xstate YYINITIAL, LONG_COMMENT
 
 %%//Identification of tokens and actions
 
 <YYINITIAL>{
-   "co "               {yybegin(SHORT_COMMENT);}
-   "CO"{Separation}    {yybegin(LONG_COMMENT_EMPTY);}
+   "co"{UpToEnd}      {}
+   "CO"{Separator}    {yybegin(LONG_COMMENT);}
 
-   "/="          {analyze(LexicalUnit.DIFFERENT, yytext());}
-   "="           {analyze(LexicalUnit.EQUAL, yytext());}
-   ">="          {analyze(LexicalUnit.GREATER_EQUAL, yytext());}
-   "<="          {analyze(LexicalUnit.SMALLER_EQUAL, yytext());}
-   ">"           {analyze(LexicalUnit.GREATER, yytext());}
-   "<"           {analyze(LexicalUnit.SMALLER, yytext());}
+   "/="          {return new Symbol(LexicalUnit.DIFFERENT, yyline, yycolumn, yytext());}
+   "="           {return new Symbol(LexicalUnit.EQUAL, yyline, yycolumn, yytext());}
+   ">="          {return new Symbol(LexicalUnit.GREATER_EQUAL, yyline, yycolumn, yytext());}
+   "<="          {return new Symbol(LexicalUnit.SMALLER_EQUAL, yyline, yycolumn, yytext());}
+   ">"           {return new Symbol(LexicalUnit.GREATER, yyline, yycolumn, yytext());}
+   "<"           {return new Symbol(LexicalUnit.SMALLER, yyline, yycolumn, yytext());}
 
-   ";"           {analyze(LexicalUnit.SEMICOLON, yytext());}
-   ":="          {analyze(LexicalUnit.ASSIGN, yytext());}
-   "("           {analyze(LexicalUnit.LEFT_PARENTHESIS, yytext());}
-   ")"           {analyze(LexicalUnit.RIGHT_PARENTHESIS, yytext());}
+   ";"           {return new Symbol(LexicalUnit.SEMICOLON, yyline, yycolumn, yytext());}
+   ":="          {return new Symbol(LexicalUnit.ASSIGN, yyline, yycolumn, yytext());}
+   "("           {return new Symbol(LexicalUnit.LEFT_PARENTHESIS, yyline, yycolumn, yytext());}
+   ")"           {return new Symbol(LexicalUnit.RIGHT_PARENTHESIS, yyline, yycolumn, yytext());}
 
-   {Number}      {analyze(LexicalUnit.NUMBER, yytext());}
+   {Number}      {return new Symbol(LexicalUnit.NUMBER, yyline, yycolumn, new Integer(yytext()));}
 
    // Minus after Number because the minus alone is included in Number.
    // "-" is interpreted as a minus only if it is not directly followed by digits.
-   "-"           {analyze(LexicalUnit.MINUS, yytext());}
-   "+"           {analyze(LexicalUnit.PLUS, yytext());}
-   "*"           {analyze(LexicalUnit.TIMES, yytext());}
-   "/"           {analyze(LexicalUnit.DIVIDE, yytext());}
+   "-"           {return new Symbol(LexicalUnit.MINUS, yyline, yycolumn, yytext());}
+   "+"           {return new Symbol(LexicalUnit.PLUS, yyline, yycolumn, yytext());}
+   "*"           {return new Symbol(LexicalUnit.TIMES, yyline, yycolumn, yytext());}
+   "/"           {return new Symbol(LexicalUnit.DIVIDE, yyline, yycolumn, yytext());}
 
-   "begin"       {analyze(LexicalUnit.BEG, yytext());}
-   "end"         {analyze(LexicalUnit.END, yytext());}
-   "if"          {analyze(LexicalUnit.IF, yytext());}
-   "then"        {analyze(LexicalUnit.THEN, yytext());}
-   "endif"       {analyze(LexicalUnit.ENDIF, yytext());}
-   "else"        {analyze(LexicalUnit.ELSE, yytext());}
-   "not"         {analyze(LexicalUnit.NOT, yytext());}
-   "and"         {analyze(LexicalUnit.AND, yytext());}
-   "or"          {analyze(LexicalUnit.OR, yytext());}
-   "while"       {analyze(LexicalUnit.WHILE, yytext());}
-   "do"          {analyze(LexicalUnit.DO, yytext());}
-   "endwhile"    {analyze(LexicalUnit.ENDWHILE, yytext());}
-   "for"         {analyze(LexicalUnit.FOR, yytext());}
-   "from"        {analyze(LexicalUnit.FROM, yytext());}
-   "by"          {analyze(LexicalUnit.BY, yytext());}
-   "to"          {analyze(LexicalUnit.TO, yytext());}
-   "print"       {analyze(LexicalUnit.PRINT, yytext());}
-   "read"        {analyze(LexicalUnit.READ, yytext());}
+   "begin"       {return new Symbol(LexicalUnit.BEG, yyline, yycolumn, yytext());}
+   "end"         {return new Symbol(LexicalUnit.END, yyline, yycolumn, yytext());}
+   "if"          {return new Symbol(LexicalUnit.IF, yyline, yycolumn, yytext());}
+   "then"        {return new Symbol(LexicalUnit.THEN, yyline, yycolumn, yytext());}
+   "endif"       {return new Symbol(LexicalUnit.ENDIF, yyline, yycolumn, yytext());}
+   "else"        {return new Symbol(LexicalUnit.ELSE, yyline, yycolumn, yytext());}
+   "not"         {return new Symbol(LexicalUnit.NOT, yyline, yycolumn, yytext());}
+   "and"         {return new Symbol(LexicalUnit.AND, yyline, yycolumn, yytext());}
+   "or"          {return new Symbol(LexicalUnit.OR, yyline, yycolumn, yytext());}
+   "while"       {return new Symbol(LexicalUnit.WHILE, yyline, yycolumn, yytext());}
+   "do"          {return new Symbol(LexicalUnit.DO, yyline, yycolumn, yytext());}
+   "endwhile"    {return new Symbol(LexicalUnit.ENDWHILE, yyline, yycolumn, yytext());}
+   "for"         {return new Symbol(LexicalUnit.FOR, yyline, yycolumn, yytext());}
+   "from"        {return new Symbol(LexicalUnit.FROM, yyline, yycolumn, yytext());}
+   "by"          {return new Symbol(LexicalUnit.BY, yyline, yycolumn, yytext());}
+   "to"          {return new Symbol(LexicalUnit.TO, yyline, yycolumn, yytext());}
+   "print"       {return new Symbol(LexicalUnit.PRINT, yyline, yycolumn, yytext());}
+   "read"        {return new Symbol(LexicalUnit.READ, yyline, yycolumn, yytext());}
 
-   {VarName}     {analyze(LexicalUnit.VARNAME, yytext());}
+   {VarName}     {return new Symbol(LexicalUnit.VARNAME, yyline, yycolumn, yytext());}
 
-   {EndOfLine}   {}
-   .             {}
-}
-
-<SHORT_COMMENT>{
-   {EndOfLine}   {yybegin(YYINITIAL);}
-   .             {}
+   {Separator}  {}
+   [^]			 {throw new PatternSyntaxException("Unmatched token, out of symbols", yytext(), yyline);}	//unmatched token gives an error
 }
 
 <LONG_COMMENT>{
-   {Separation}"CO"{Separation} {yybegin(YYINITIAL);}
-   {EndOfLine}                  {}
-   .                            {}
-}
-
-// If we have those empty comments :
-// CO CO
-//
-// CO
-// CO
-//
-// The separators " " or "\n" are read in the YYINITIAL state.
-// So it is unnecessary to have a separation before CO in this state
-// because we only need one separator between two "CO" in an empty comment.
-<LONG_COMMENT_EMPTY>{
-   "CO"{Separation}             {yybegin(YYINITIAL);}
-   {EndOfLine}                  {}
-   .                            {yybegin(LONG_COMMENT);}
+   [^]			        {}
+   "CO"{Separator}     {yybegin(YYINITIAL);}
+   <<EOF>>              {throw new PatternSyntaxException("A comment is never closed.",yytext(),yyline);}
 }

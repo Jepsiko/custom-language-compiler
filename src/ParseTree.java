@@ -33,17 +33,7 @@ public class ParseTree {
      * @param chdn Its children
      */
     public ParseTree(String label, List<ParseTree> chdn) {
-        StringBuilder labelForLatex = new StringBuilder();
-        for (int i = 0; i < label.length(); i++){
-            char c = label.charAt(i);
-
-            if (c == '_') {
-                labelForLatex.append('\\');
-            }
-            labelForLatex.append(c);
-        }
-
-        this.label = labelForLatex.toString();
+        this.label = label;
         this.children = chdn;
     }
 
@@ -105,7 +95,7 @@ public class ParseTree {
      * </pre>
      */
     public String toLaTeXLua() {
-        return "\\RequirePackage{luatex85}\n\\documentclass{standalone}\n\n\\usepackage{tikz}\n\n\\usetikzlibrary{graphdrawing, graphdrawing.trees}\n\n\\begin{document}\n\n"
+        return "\\RequirePackage{luatex85}\n\\documentclass{standalone}\n\n\\usepackage[T1]{fontenc}\n\\usepackage{tikz}\n\n\\usetikzlibrary{graphdrawing, graphdrawing.trees}\n\n\\begin{document}\n\n"
                 + toTikZPicture() + "\n\n\\end{document}\n%% Local Variables:\n%% TeX-engine: luatex\n%% End:";
     }
 
@@ -128,7 +118,7 @@ public class ParseTree {
      * </pre>
      */
     public String toLaTeX() {
-        return "\\documentclass[border=5pt]{standalone}\n\n\\usepackage{tikz}\n\\usepackage{forest}\n\n\\begin{document}\n\n"
+        return "\\documentclass[border=5pt]{standalone}\n\n\\usepackage[T1]{fontenc}\n\\usepackage{tikz}\n\\usepackage{forest}\n\n\\begin{document}\n\n"
                 + toForestPicture() + "\n\n\\end{document}\n%% Local Variables:\n%% TeX-engine: pdflatex\n%% End:";
     }
 }

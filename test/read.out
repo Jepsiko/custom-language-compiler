@@ -1,7 +1,0 @@
-token: read	lexical unit: READ
-token: (	lexical unit: LEFT_PARENTHESIS
-token: a	lexical unit: VARNAME
-token: )	lexical unit: RIGHT_PARENTHESIS
-
-Identifiers
-a	1

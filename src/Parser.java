@@ -1,27 +1,36 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parser {
+/**
+ *
+ */
+class Parser {
     private final java.util.List<Symbol> symbols;
     private final boolean v;
 
     private int l;
+    private boolean syntaxError;
 
-    public Parser(java.util.List<Symbol> symbols, boolean verbose) {
+    Parser(java.util.List<Symbol> symbols) {
+        this(symbols, false);
+    }
+
+    Parser(java.util.List<Symbol> symbols, boolean verbose) {
         this.symbols = symbols;
         this.v = verbose;
         this.l = 0;
+        this.syntaxError = false;
     }
 
-    public Parser(java.util.List<Symbol> symbols) { this(symbols, false); }
-
-    public void parse() {
+    ParseTree parse() {
         ParseTree parseTree = Program();
-
-        if (l == symbols.size() && parseTree != null) {
+        if (!v)
             System.out.println();
-            System.out.println(parseTree.toLaTeX());
-        }
+
+        if (syntaxError)
+            return null;
+        else
+            return parseTree;
     }
 
     private ParseTree Program() {
@@ -34,12 +43,10 @@ public class Parser {
             children.add(match(LexicalUnit.BEG));
             children.add(Code());
             children.add(match(LexicalUnit.END));
-            return new ParseTree("Program", children);
+            return new ParseTree("<Program>", children);
         }
-        else {
-            System.out.println("Error Program");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Code() {
@@ -67,12 +74,10 @@ public class Parser {
             print(3, "<Code> -> <InstList>");
 
             children.add(InstList());
-            return new ParseTree("Code", children);
+            return new ParseTree("<Code>", children);
         }
-        else {
-            System.out.println("Error Code");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree InstList() {
@@ -91,12 +96,10 @@ public class Parser {
 
             children.add(Instruction());
             children.add(NextInst());
-            return new ParseTree("InstList", children);
+            return new ParseTree("<InstList>", children);
         }
-        else {
-            System.out.println("Error InstList");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree NextInst() {
@@ -118,12 +121,10 @@ public class Parser {
 
             children.add(match(LexicalUnit.SEMICOLON));
             children.add(InstList());
-            return new ParseTree("NextInst", children);
+            return new ParseTree("<NextInst>", children);
         }
-        else {
-            System.out.println("Error NextInst");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Instruction() {
@@ -134,47 +135,45 @@ public class Parser {
             print(7, "<Instruction> -> <Assign>");
 
             children.add(Assign());
-            return new ParseTree("Instruction", children);
+            return new ParseTree("<Instruction>", children);
         }
         // [8] <Instruction> -> <If>
         else if (lookahead() == LexicalUnit.IF) {
             print(8, "<Instruction> -> <If>");
 
             children.add(If());
-            return new ParseTree("Instruction", children);
+            return new ParseTree("<Instruction>", children);
         }
         // [9] <Instruction> -> <While>
         else if (lookahead() == LexicalUnit.WHILE) {
             print(9, "<Instruction> -> <While>");
 
             children.add(While());
-            return new ParseTree("Instruction", children);
+            return new ParseTree("<Instruction>", children);
         }
         // [10] <Instruction> -> <For>
         else if (lookahead() == LexicalUnit.FOR) {
             print(10, "<Instruction> -> <For>");
 
             children.add(For());
-            return new ParseTree("Instruction", children);
+            return new ParseTree("<Instruction>", children);
         }
         // [11] <Instruction> -> <Print>
         else if (lookahead() == LexicalUnit.PRINT) {
             print(11, "<Instruction> -> <Print>");
 
             children.add(Print());
-            return new ParseTree("Instruction", children);
+            return new ParseTree("<Instruction>", children);
         }
         // [12] <Instruction> -> <Read>
         else if (lookahead() == LexicalUnit.READ) {
             print(12, "<Instruction> -> <Read>");
 
             children.add(Read());
-            return new ParseTree("Instruction", children);
+            return new ParseTree("<Instruction>", children);
         }
-        else {
-            System.out.println("Error Instruction");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Assign() {
@@ -187,12 +186,10 @@ public class Parser {
             children.add(match(LexicalUnit.VARNAME));
             children.add(match(LexicalUnit.ASSIGN));
             children.add(ExprArith());
-            return new ParseTree("Assign", children);
+            return new ParseTree("<Assign>", children);
         }
-        else {
-            System.out.println("Error Assign");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree ExprArith() {
@@ -209,12 +206,10 @@ public class Parser {
 
             children.add(Prod());
             children.add(ExprArith_prime());
-            return new ParseTree("ExprArith", children);
+            return new ParseTree("<ExprArith>", children);
         }
-        else {
-            System.out.println("Error ExprArith");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree ExprArith_prime() {
@@ -227,7 +222,7 @@ public class Parser {
             children.add(match(LexicalUnit.PLUS));
             children.add(Prod());
             children.add(ExprArith_prime());
-            return new ParseTree("ExprArith'", children);
+            return new ParseTree("<ExprArith'>", children);
         }
         // [16] <ExprArith'> -> - <Prod> <ExprArith'>
         else if (lookahead() == LexicalUnit.MINUS) {
@@ -236,7 +231,7 @@ public class Parser {
             children.add(match(LexicalUnit.MINUS));
             children.add(Prod());
             children.add(ExprArith_prime());
-            return new ParseTree("ExprArith'", children);
+            return new ParseTree("<ExprArith'>", children);
         }
         // [17] <ExprArith'> -> ε
         else if (
@@ -261,10 +256,8 @@ public class Parser {
             print(17, "<ExprArith'> -> ε");
             return null;
         }
-        else {
-            System.out.println("Error ExprArith'");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Prod() {
@@ -281,12 +274,10 @@ public class Parser {
 
             children.add(Atom());
             children.add(Prod_prime());
-            return new ParseTree("Prod", children);
+            return new ParseTree("<Prod>", children);
         }
-        else {
-            System.out.println("Error ExprArith");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Prod_prime() {
@@ -299,7 +290,7 @@ public class Parser {
             children.add(match(LexicalUnit.TIMES));
             children.add(Atom());
             children.add(Prod_prime());
-            return new ParseTree("Prod'", children);
+            return new ParseTree("<Prod'>", children);
         }
         // [20] <Prod'> -> / <Atom> <Prod'>
         else if (lookahead() == LexicalUnit.DIVIDE) {
@@ -308,7 +299,7 @@ public class Parser {
             children.add(match(LexicalUnit.DIVIDE));
             children.add(Atom());
             children.add(Prod_prime());
-            return new ParseTree("Prod'", children);
+            return new ParseTree("<Prod'>", children);
         }
         // [21] <Prod'> -> ε
         else if (
@@ -335,10 +326,8 @@ public class Parser {
             print(21, "<Prod'> -> ε");
             return null;
         }
-        else {
-            System.out.println("Error Prod'");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Atom() {
@@ -350,21 +339,21 @@ public class Parser {
 
             children.add(match(LexicalUnit.MINUS));
             children.add(Atom());
-            return new ParseTree("Atom", children);
+            return new ParseTree("<Atom>", children);
         }
         // [23] <Atom> -> [Number]
         else if (lookahead() == LexicalUnit.NUMBER) {
             print(23, "<Atom> -> [Number]");
 
             children.add(match(LexicalUnit.NUMBER));
-            return new ParseTree("Atom", children);
+            return new ParseTree("<Atom>", children);
         }
         // [24] <Atom> -> [VarName]
         else if (lookahead() == LexicalUnit.VARNAME) {
             print(24, "<Atom> -> [VarName]");
 
             children.add(match(LexicalUnit.VARNAME));
-            return new ParseTree("Atom", children);
+            return new ParseTree("<Atom>", children);
         }
         // [25] <Atom> -> ( <ExprArith> )
         else if (lookahead() == LexicalUnit.LEFT_PARENTHESIS) {
@@ -373,12 +362,10 @@ public class Parser {
             children.add(match(LexicalUnit.LEFT_PARENTHESIS));
             children.add(ExprArith());
             children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
-            return new ParseTree("Atom", children);
+            return new ParseTree("<Atom>", children);
         }
-        else {
-            System.out.println("Error Atom");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree If() {
@@ -393,12 +380,10 @@ public class Parser {
             children.add(match(LexicalUnit.THEN));
             children.add(Code());
             children.add(IfSeq());
-            return new ParseTree("If", children);
+            return new ParseTree("<If>", children);
         }
-        else {
-            System.out.println("Error If");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree IfSeq() {
@@ -409,7 +394,7 @@ public class Parser {
             print(27, "<IfSeq> -> endif");
 
             children.add(match(LexicalUnit.ENDIF));
-            return new ParseTree("IfSeq", children);
+            return new ParseTree("<IfSeq>", children);
         }
         // [28] <IfSeq> -> else <Code> endif
         else if (lookahead() == LexicalUnit.ELSE) {
@@ -418,12 +403,10 @@ public class Parser {
             children.add(match(LexicalUnit.ELSE));
             children.add(Code());
             children.add(match(LexicalUnit.ENDIF));
-            return new ParseTree("IfSeq", children);
+            return new ParseTree("<IfSeq>", children);
         }
-        else {
-            System.out.println("Error IfSeq");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Cond() {
@@ -441,12 +424,10 @@ public class Parser {
 
             children.add(CondAnd());
             children.add(Cond_prime());
-            return new ParseTree("Cond", children);
+            return new ParseTree("<Cond>", children);
         }
-        else {
-            System.out.println("Error Cond");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Cond_prime() {
@@ -459,7 +440,7 @@ public class Parser {
             children.add(match(LexicalUnit.OR));
             children.add(CondAnd());
             children.add(Cond_prime());
-            return new ParseTree("Cond'", children);
+            return new ParseTree("<Cond'>", children);
         }
         // [31] <Cond'> -> ε
         else if (
@@ -469,10 +450,8 @@ public class Parser {
             print(31, "<Cond'> -> ε");
             return null;
         }
-        else {
-            System.out.println("Error Cond'");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree CondAnd() {
@@ -490,12 +469,10 @@ public class Parser {
 
             children.add(SimpleCond());
             children.add(CondAnd_prime());
-            return new ParseTree("CondAnd", children);
+            return new ParseTree("<CondAnd>", children);
         }
-        else {
-            System.out.println("Error CondAnd");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree CondAnd_prime() {
@@ -508,7 +485,7 @@ public class Parser {
             children.add(match(LexicalUnit.AND));
             children.add(SimpleCond());
             children.add(CondAnd_prime());
-            return new ParseTree("CondAnd'", children);
+            return new ParseTree("<CondAnd'>", children);
         }
         // [34] <CondAnd'> -> ε
         else if (
@@ -519,10 +496,8 @@ public class Parser {
             print(34, "<CondAnd'> -> ε");
             return null;
         }
-        else {
-            System.out.println("Error CondAnd'");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree SimpleCond() {
@@ -540,7 +515,7 @@ public class Parser {
             children.add(ExprArith());
             children.add(Comp());
             children.add(ExprArith());
-            return new ParseTree("SimpleCond", children);
+            return new ParseTree("<SimpleCond>", children);
         }
         // [36] <SimpleCond> -> not <SimpleCond>
         else if (lookahead() == LexicalUnit.NOT) {
@@ -548,12 +523,10 @@ public class Parser {
 
             children.add(match(LexicalUnit.NOT));
             children.add(SimpleCond());
-            return new ParseTree("SimpleCond", children);
+            return new ParseTree("<SimpleCond>", children);
         }
-        else {
-            System.out.println("Error SimpleCond");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Comp() {
@@ -564,47 +537,45 @@ public class Parser {
             print(37, "<Comp> -> =");
 
             children.add(match(LexicalUnit.EQUAL));
-            return new ParseTree("Comp", children);
+            return new ParseTree("<Comp>", children);
         }
         // [38] <Comp> -> >=
         else if (lookahead() == LexicalUnit.GREATER_EQUAL) {
             print(38, "<Comp> -> >=");
 
             children.add(match(LexicalUnit.GREATER_EQUAL));
-            return new ParseTree("Comp", children);
+            return new ParseTree("<Comp>", children);
         }
         // [39] <Comp> -> >
         else if (lookahead() == LexicalUnit.GREATER) {
             print(39, "<Comp> -> >");
 
             children.add(match(LexicalUnit.GREATER));
-            return new ParseTree("Comp", children);
+            return new ParseTree("<Comp>", children);
         }
         // [40] <Comp> -> <=
         else if (lookahead() == LexicalUnit.SMALLER_EQUAL) {
             print(40, "<Comp> -> <=");
 
             children.add(match(LexicalUnit.SMALLER_EQUAL));
-            return new ParseTree("Comp", children);
+            return new ParseTree("<Comp>", children);
         }
         // [41] <Comp> -> <
         else if (lookahead() == LexicalUnit.SMALLER) {
             print(41, "<Comp> -> <");
 
             children.add(match(LexicalUnit.SMALLER));
-            return new ParseTree("Comp", children);
+            return new ParseTree("<Comp>", children);
         }
         // [42] <Comp> -> /=
         else if (lookahead() == LexicalUnit.DIFFERENT) {
             print(42, "<Comp> -> /=");
 
             children.add(match(LexicalUnit.DIFFERENT));
-            return new ParseTree("Comp", children);
+            return new ParseTree("<Comp>", children);
         }
-        else {
-            System.out.println("Error Comp");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree While() {
@@ -619,12 +590,10 @@ public class Parser {
             children.add(match(LexicalUnit.DO));
             children.add(Code());
             children.add(match(LexicalUnit.ENDWHILE));
-            return new ParseTree("While", children);
+            return new ParseTree("<While>", children);
         }
-        else {
-            System.out.println("Error While");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree For() {
@@ -646,12 +615,10 @@ public class Parser {
             children.add(match(LexicalUnit.DO));
             children.add(Code());
             children.add(match(LexicalUnit.ENDWHILE));
-            return new ParseTree("For", children);
+            return new ParseTree("<For>", children);
         }
-        else {
-            System.out.println("Error For");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Print() {
@@ -665,12 +632,10 @@ public class Parser {
             children.add(match(LexicalUnit.LEFT_PARENTHESIS));
             children.add(match(LexicalUnit.VARNAME));
             children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
-            return new ParseTree("Print", children);
+            return new ParseTree("<Print>", children);
         }
-        else {
-            System.out.println("Error Print");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree Read() {
@@ -684,29 +649,29 @@ public class Parser {
             children.add(match(LexicalUnit.LEFT_PARENTHESIS));
             children.add(match(LexicalUnit.VARNAME));
             children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
-            return new ParseTree("Read", children);
+            return new ParseTree("<Read>", children);
         }
-        else {
-            System.out.println("Error Read");
-            return null;
-        }
+
+        return null;
     }
 
     private ParseTree match(LexicalUnit type)
     {
-        if (lookahead() == type) {
+        Symbol terminal = symbols.get(l);
+        if (terminal.getType() == type) {
             if (v) {
-                System.out.print("Match : ");
-                System.out.println(type);
+                System.out.println("Match : " + terminal);
             }
-            Symbol terminal = symbols.get(l);
             l++;
 
             return new ParseTree(terminal.getValue().toString());
         }
-        else
-            System.out.println("Error");
-            return null;
+        else if (!syntaxError) {
+            System.out.println("Syntax error at line " + terminal.getLine());
+            syntaxError = true;
+        }
+
+        return null;
     }
 
     private LexicalUnit lookahead() {
