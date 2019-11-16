@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Main of the Code, read the code and call the parser
+ */
 public class Main{
     public static void main(String[] args) throws FileNotFoundException, IOException, SecurityException{
 

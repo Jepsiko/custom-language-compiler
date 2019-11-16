@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class Parser representing the parser of our compiler
  *
  */
 class Parser {
@@ -22,6 +23,7 @@ class Parser {
         this.syntaxError = false;
     }
 
+
     ParseTree parse() {
         ParseTree parseTree = Program();
         if (!v)
@@ -33,6 +35,10 @@ class Parser {
             return parseTree;
     }
 
+    /**
+     * Creates the Tree for BEGIN  <CODE> END
+     *
+     */
     private ParseTree Program() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -49,6 +55,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for BEGIN  <CODE> END
+     *
+     */
     private ParseTree Code() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -80,6 +90,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for <InstList>
+     *
+     */
     private ParseTree InstList() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -102,6 +116,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for the <NextInst>
+     *
+     */
     private ParseTree NextInst() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -127,6 +145,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for several instructions (For, While etc) <Instruction>
+     *
+     */
     private ParseTree Instruction() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -176,6 +198,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for <Assign>
+     *
+     */
     private ParseTree Assign() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -192,6 +218,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for The Arithmetic Expressions <ExprArith>
+     *
+     */
     private ParseTree ExprArith() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -212,6 +242,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for The Primal Arithmetic Expressions <ExprArith'>
+     *
+     */
     private ParseTree ExprArith_prime() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -368,6 +402,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for the If... Statement
+     *
+     */
     private ParseTree If() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -578,6 +616,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for While... Do... Loop
+     *
+     */
     private ParseTree While() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -596,6 +638,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for the For... Loop
+     *
+     */
     private ParseTree For() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -621,6 +667,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for the Print Instruction
+     *
+     */
     private ParseTree Print() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -638,6 +688,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * Creates the Tree for the Read Instruction
+     *
+     */
     private ParseTree Read() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -677,6 +731,7 @@ class Parser {
         return null;
     }
 
+    
     private LexicalUnit lookahead() {
         return symbols.get(l).getType();
     }
