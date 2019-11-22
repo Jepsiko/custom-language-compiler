@@ -53,6 +53,23 @@ class Parser {
             return parseTree;
     }
 
+    /**
+     * Function representing the variable Program.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Program() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -69,6 +86,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Code.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Code() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -100,6 +134,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable InstList.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree InstList() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -122,6 +173,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable NextInst.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree NextInst() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -147,6 +215,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Instruction.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Instruction() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -196,6 +281,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Assign.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Assign() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -212,6 +314,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable ExprArith.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree ExprArith() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -232,6 +351,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable ExprArith'.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree ExprArith_prime() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -280,6 +416,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Prod.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Prod() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -300,6 +453,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Prod'.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Prod_prime() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -350,6 +520,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Atom.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Atom() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -388,6 +575,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable If.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree If() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -406,6 +610,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable IfSeq.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree IfSeq() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -429,6 +650,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Cond.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Cond() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -450,6 +688,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Cond'.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Cond_prime() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -474,6 +729,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable CondAnd.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree CondAnd() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -495,6 +767,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable CondAnd'.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree CondAnd_prime() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -520,6 +809,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable SimpleCond.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree SimpleCond() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -549,6 +855,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Comp.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Comp() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -598,6 +921,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable While.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree While() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -616,6 +956,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable For.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree For() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -641,6 +998,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Print.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Print() {
         List<ParseTree> children = new ArrayList<>();
 
@@ -658,6 +1032,23 @@ class Parser {
         return null;
     }
 
+    /**
+     * Function representing the variable Read.
+     *
+     * According to the action table, the function will execute a
+     * certain rule if the lookahead is corresponding.
+     *
+     * If the rule contains terminals, there will be a match and
+     * the lookahead will be incremented.
+     *
+     * Otherwise, the function corresponding to the variable is called.
+     *
+     * Each match return a leaf of the tree. Each function return
+     * a recursive tree. Those are stored as children of the tree returned
+     * in this function.
+     *
+     * @return a recursive ParseTree
+     */
     private ParseTree Read() {
         List<ParseTree> children = new ArrayList<>();
 
