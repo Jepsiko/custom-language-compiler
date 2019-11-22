@@ -7,10 +7,22 @@ import java.util.List;
  * If the rule contains terminals, each one of them will me matched.
  */
 class Parser {
+    /**
+     * List of symbols for the input
+     */
     private final java.util.List<Symbol> symbols;
+    /**
+     * Verbose boolean
+     */
     private final boolean v;
 
+    /**
+     * Lookahead pointer
+     */
     private int l;
+    /**
+     * Syntax Error boolean
+     */
     private boolean syntaxError;
 
     Parser(java.util.List<Symbol> symbols) {
