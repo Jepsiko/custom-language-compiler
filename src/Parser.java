@@ -1072,7 +1072,7 @@ class Parser {
      * the lookahead is incremented and becomes the next terminal of the input
      *
      * @param type lexical unit to be matched
-     * @return return a leaf of a ParseTree with the matched terminal
+     * @return a leaf of a ParseTree with the matched terminal
      */
     private ParseTree match(LexicalUnit type)
     {
