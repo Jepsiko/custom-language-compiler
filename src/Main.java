@@ -50,14 +50,15 @@ public class Main{
         if (parseTree == null)
             return;
 
-//        if (!texFile.equals("")) {
-//            Path file = Paths.get(texFile);
-//            Files.write(file, Collections.singleton(parseTree.toLaTeX()), StandardCharsets.UTF_8);
-//        }
+        if (!texFile.equals("")) {
+            Path file = Paths.get(texFile);
+            Files.write(file, Collections.singleton(parseTree.toLaTeX()), StandardCharsets.UTF_8);
+        }
 
         AbstractSyntaxTree AST = ParseTree.toAST(parseTree);
 
         if (!texFile.equals("")) {
+            texFile = texFile.replace(".", "_AST.");
             Path file = Paths.get(texFile);
             Files.write(file, Collections.singleton(AST.toLaTeX()), StandardCharsets.UTF_8);
         }

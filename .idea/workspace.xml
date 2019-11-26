@@ -7,15 +7,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dist/tree.tex_AST" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree_AST.aux" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree_AST.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree_AST.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/ast.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ast.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/ast.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ast.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/ast.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/ast.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ast.aux" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ast.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ast.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/ast.tex" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParseTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/complex.alg" beforeDir="false" afterPath="$PROJECT_DIR$/test/complex.alg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -106,7 +111,7 @@
       <workItem from="1574675589979" duration="1579000" />
       <workItem from="1574689455148" duration="52000" />
       <workItem from="1574689524825" duration="4085000" />
-      <workItem from="1574756947117" duration="8895000" />
+      <workItem from="1574756947117" duration="9581000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -178,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574761163118</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="The creation of the AST can be done but is not perfect">
+      <created>1574766021730</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1574766021730</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,6 +221,7 @@
     <MESSAGE value="Terminals have to be kept to be in the AST" />
     <MESSAGE value="ParseTree inherit from AbstractSyntaxTree" />
     <MESSAGE value="No inheritance for now" />
-    <option name="LAST_COMMIT_MESSAGE" value="No inheritance for now" />
+    <MESSAGE value="The creation of the AST can be done but is not perfect" />
+    <option name="LAST_COMMIT_MESSAGE" value="The creation of the AST can be done but is not perfect" />
   </component>
 </project>
