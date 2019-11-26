@@ -7,6 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ParseTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -98,7 +100,7 @@
       <workItem from="1574675589979" duration="1579000" />
       <workItem from="1574689455148" duration="52000" />
       <workItem from="1574689524825" duration="4085000" />
-      <workItem from="1574756947117" duration="1977000" />
+      <workItem from="1574756947117" duration="2600000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -149,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574758658539</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Terminals have to be kept to be in the AST">
+      <created>1574758943165</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1574758943165</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +186,7 @@
     <MESSAGE value="Function toAST added but not finished" />
     <MESSAGE value="TODO added" />
     <MESSAGE value="Refactor, now the trees are constructed with symbols instead of string" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor, now the trees are constructed with symbols instead of string" />
+    <MESSAGE value="Terminals have to be kept to be in the AST" />
+    <option name="LAST_COMMIT_MESSAGE" value="Terminals have to be kept to be in the AST" />
   </component>
 </project>
