@@ -106,4 +106,34 @@ public class AbstractSyntaxTree {
         return "\\documentclass[border=5pt]{standalone}\n\n\\usepackage[T1]{fontenc}\n\\usepackage{tikz}\n\\usepackage{forest}\n\n\\begin{document}\n\n"
                 + toForestPicture() + "\n\n\\end{document}\n%% Local Variables:\n%% TeX-engine: pdflatex\n%% End:";
     }
+
+    public void simplify() {
+        if (label.getValue() == "<Cond>"  && children.size() == 1) {
+            AbstractSyntaxTree child = children.get(0);
+            children = child.children;
+        }
+        else if ((label.getValue() == "<ExprArith>" || label.getValue() == "<SimpleCond>") && children.size() == 3) {
+            AbstractSyntaxTree leftTerm = children.get(0);
+            AbstractSyntaxTree operator = children.get(1);
+            AbstractSyntaxTree rightTerm = children.get(2);
+
+            operator.children.add(leftTerm);
+            operator.children.add(rightTerm);
+
+            children.remove(2);
+            children.remove(0);
+        }
+        else if (label.getValue() == "<ExprArith>" && children.size() == 1) {
+            AbstractSyntaxTree child = children.get(0);
+
+            if (child.label.getValue() == "<ExprArith>") {
+                children = child.children;
+            }
+        }
+
+        for (AbstractSyntaxTree child : children) {
+            System.out.println(label.getValue() + " " + child.label.getValue());
+            child.simplify();
+        }
+    }
 }

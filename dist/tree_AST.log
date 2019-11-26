@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  26 NOV 2019 12:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  26 NOV 2019 18:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -712,7 +712,7 @@ Package: inlinedef 2008/07/10 v1.0 Inlined expansions within definitions
 \forest@externalize@max@outer@n=\count291
 \forest@externalize@inner@n=\count292
 )
-No file tree_AST.aux.
+(./tree_AST.aux)
 \openout1 = `tree_AST.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
@@ -727,7 +727,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
-ABD: EveryShipout initializing macros
+ ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count293
@@ -794,16 +794,16 @@ Missing character: There is no ; in font nullfont!
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree_AST.aux) ) 
 Here is how much of TeX's memory you used:
- 37166 strings out of 494894
- 822560 string characters out of 6179472
- 820734 words of memory out of 5000000
- 40184 multiletter control sequences out of 15000+600000
+ 37206 strings out of 494894
+ 822891 string characters out of 6179472
+ 823420 words of memory out of 5000000
+ 40222 multiletter control sequences out of 15000+600000
  531035 words of font info for 23 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 203i,9n,209p,10360b,6088s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 223i,9n,223p,10360b,5976s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/
 jepsiko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk>
-Output written on tree_AST.pdf (1 page, 13389 bytes).
+Output written on tree_AST.pdf (1 page, 13399 bytes).
 PDF statistics:
  48 PDF objects out of 1000 (max. 8388607)
  11 compressed objects within 1 object stream

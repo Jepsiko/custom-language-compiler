@@ -121,11 +121,16 @@ public class ParseTree {
     }
 
     static public AbstractSyntaxTree toAST(ParseTree parseTree) {
-        List<AbstractSyntaxTree> childrenAST = new ArrayList<>();
+        AbstractSyntaxTree AST = createTree(parseTree);
 
-        if (parseTree == null) {
-            return null;
-        }
+        AST.simplify();
+
+        return AST;
+    }
+
+    static private AbstractSyntaxTree createTree(ParseTree parseTree) {
+
+        List<AbstractSyntaxTree> childrenAST = new ArrayList<>();
 
         for (ParseTree child : parseTree.children) {
             if (child.label.isTerminal()) {
@@ -134,7 +139,7 @@ public class ParseTree {
                 }
             } else if (child.label.isNonTerminal()) {
                 if (isToBeKept(child)) {
-                    childrenAST.add(toAST(child));
+                    childrenAST.add(createTree(child));
                 } else {
                     Stack<ParseTree> stack = new Stack<>();
                     for (int i = child.children.size()-1; i >= 0; i--) { // Initialization of the stack
@@ -144,7 +149,7 @@ public class ParseTree {
                                 childrenAST.add(new AbstractSyntaxTree(greatChild.label));
                             }
                             else {
-                                childrenAST.add(toAST(greatChild));
+                                childrenAST.add(createTree(greatChild));
                             }
                         }
                         else {
@@ -154,7 +159,6 @@ public class ParseTree {
 
                     ParseTree current;
                     while (!stack.isEmpty()) {
-                        System.out.println(stack.size());
 
                         current = stack.pop();
                         for (int i = current.children.size()-1; i >= 0; i--) {
@@ -164,7 +168,7 @@ public class ParseTree {
                                     childrenAST.add(new AbstractSyntaxTree(greatChild.label));
                                 }
                                 else {
-                                    childrenAST.add(toAST(greatChild));
+                                    childrenAST.add(createTree(greatChild));
                                 }
                             }
                             else {
