@@ -127,7 +127,9 @@ public class ParseTree {
 
         for (ParseTree child : parseTree.children) {
             if (child.label.isTerminal()) {
-                childrenAST.add(new AbstractSyntaxTree(child.label));
+                if (isToBeKept(child)) {
+                    childrenAST.add(new AbstractSyntaxTree(child.label));
+                }
             }
             else if (child.label.isNonTerminal()) {
 

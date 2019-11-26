@@ -7,9 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ParseTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +98,7 @@
       <workItem from="1574675589979" duration="1579000" />
       <workItem from="1574689455148" duration="52000" />
       <workItem from="1574689524825" duration="4085000" />
-      <workItem from="1574756947117" duration="1686000" />
+      <workItem from="1574756947117" duration="1977000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -144,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574757913145</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Refactor, now the trees are constructed with symbols instead of string">
+      <created>1574758658539</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1574758658539</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,6 +176,7 @@
     <MESSAGE value="doc modified" />
     <MESSAGE value="Function toAST added but not finished" />
     <MESSAGE value="TODO added" />
-    <option name="LAST_COMMIT_MESSAGE" value="TODO added" />
+    <MESSAGE value="Refactor, now the trees are constructed with symbols instead of string" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor, now the trees are constructed with symbols instead of string" />
   </component>
 </project>
