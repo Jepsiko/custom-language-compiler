@@ -20,6 +20,7 @@ public class Main{
 
         boolean verbose = false;
         String texFile = "";
+        String outputFile = "";
         int i = 0;
         while (i < args.length-1) {
             String arg = args[i];
@@ -29,6 +30,9 @@ public class Main{
             }
             else if (arg.equals("-wt")) {
                 texFile = args[++i];
+            }
+            else if (arg.equals("-o")) {
+                outputFile = args[++i];
             }
             i++;
         }
@@ -62,5 +66,8 @@ public class Main{
             Path file = Paths.get(texFile);
             Files.write(file, Collections.singleton(AST.toLaTeX()), StandardCharsets.UTF_8);
         }
+
+        Compiler compiler = new Compiler(outputFile);
+        compiler.compile(AST);
     }
 }

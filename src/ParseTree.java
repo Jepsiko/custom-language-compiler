@@ -197,6 +197,7 @@ public class ParseTree {
                 case "<CondAnd'>":
                 case "<ExprArith'>":
                 case "<Comp>":
+                case "<Prod'>":
                     return false;
             }
         } else {

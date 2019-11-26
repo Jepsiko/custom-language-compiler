@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AbstractSyntaxTree {
     private Symbol label;
     private List<AbstractSyntaxTree> children;
+    private Compiler compiler;
 
     /**
      * Creates a singleton tree with only a root labeled by lbl.
@@ -121,21 +123,112 @@ public class AbstractSyntaxTree {
             }
         }
 
-        if ((label.getValue() == "<ExprArith>" || label.getValue() == "<SimpleCond>") && children.size() == 3) {
-            AbstractSyntaxTree leftTerm = children.get(0);
-            AbstractSyntaxTree operator = children.get(1);
-            AbstractSyntaxTree rightTerm = children.get(2);
+        if (label.getValue() == "<SimpleCond>" && children.size() == 3) {
+            children = Collections.singletonList(rearrangeTree());
+        }
 
-            operator.children.add(leftTerm);
-            operator.children.add(rightTerm);
-
-            children.remove(2);
-            children.remove(0);
+        if (label.getValue() == "<ExprArith>" && children.size() >= 3) {
+            children = Collections.singletonList(rearrangeTree());
         }
 
         for (AbstractSyntaxTree child : children) {
-            System.out.println(label.getValue() + " " + child.label.getValue());
             child.simplify();
         }
+    }
+
+    private int getOperatorIndex() {
+        for (int i = children.size()-1; i >= 0; i--) {
+            AbstractSyntaxTree child = children.get(i);
+            if (child.label.getType() != null) {
+                switch (child.label.getType()) {
+                    case EQUAL:
+                    case DIFFERENT:
+                    case GREATER:
+                    case GREATER_EQUAL:
+                    case SMALLER:
+                    case SMALLER_EQUAL:
+                        return i;
+                }
+            }
+        }
+
+        for (int i = children.size()-1; i >= 0; i--) {
+            AbstractSyntaxTree child = children.get(i);
+            if (child.label.getType() != null) {
+                switch (child.label.getType()) {
+                    case PLUS:
+                    case MINUS:
+                        return i;
+                }
+            }
+        }
+
+        for (int i = children.size()-1; i >= 0; i--) {
+            AbstractSyntaxTree child = children.get(i);
+            if (child.label.getType() != null) {
+                switch (child.label.getType()) {
+                    case DIVIDE:
+                    case TIMES:
+                        return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private AbstractSyntaxTree rearrangeTree() {
+        int operatorIndex = getOperatorIndex();
+        System.out.println(operatorIndex);
+        System.out.println(children.size());
+        AbstractSyntaxTree operator = children.get(operatorIndex);
+        System.out.println(operator.label.getValue());
+        List<AbstractSyntaxTree> operatorChildren = new ArrayList<>();
+
+        if (operatorIndex > 1) {
+            AbstractSyntaxTree temp = new AbstractSyntaxTree(new Symbol(null, "temp"));
+            int startPos = 0;
+            for (int i = startPos; i < operatorIndex; i++) {
+                temp.children.add(children.get(startPos));
+                System.out.println("Left : " + children.get(startPos).label.getValue());
+                children.remove(startPos);
+            }
+            operatorChildren.add(temp.rearrangeTree());
+        }
+        else {
+            operatorChildren.add(children.get(0));
+        }
+
+        if (operatorIndex < children.size()-2) {
+
+            AbstractSyntaxTree temp = new AbstractSyntaxTree(new Symbol(null, "temp"));
+            int startPos = 2;
+            int childrenSize = children.size();
+            for (int i = startPos; i < childrenSize; i++) {
+                temp.children.add(children.get(startPos));
+                System.out.println("Right : " + children.get(startPos).label.getValue());
+                children.remove(startPos);
+            }
+            operatorChildren.add(temp.rearrangeTree());
+        }
+        else {
+            operatorChildren.add(children.get(children.size()-1));
+        }
+
+        operator.children = operatorChildren;
+
+        return operator;
+    }
+
+    public List<AbstractSyntaxTree> traversal() {
+        List<AbstractSyntaxTree> path = new ArrayList<>();
+        path.add(this);
+        for (AbstractSyntaxTree child : children) {
+            path.addAll(child.traversal());
+        }
+        return path;
+    }
+
+    public Symbol getLabel() {
+        return label;
     }
 }
