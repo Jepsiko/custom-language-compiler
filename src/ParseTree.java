@@ -126,16 +126,16 @@ public class ParseTree {
         List<AbstractSyntaxTree> childrenAST = new ArrayList<>();
 
         for (ParseTree child : parseTree.children) {
-            if (child.label.equals("begin")) {
+            if (child.label.equals("begin")) { // TODO: replace by if child is terminal -> new AbstractSyntaxTree(child.label)
                 childrenAST.add(new AbstractSyntaxTree("begin"));
             }
-            else if (child.label.equals("<Code>")) {
+            else if (child.label.equals("<Code>")) { // TODO: replace by if child is non-terminal to be kept -> toAST(child)
                 childrenAST.add(toAST(child));
             }
             else if (child.label.equals("end")) {
                 childrenAST.add(new AbstractSyntaxTree("end"));
             }
-            else if (child.label.equals("<InstList>")) {
+            else if (child.label.equals("<InstList>")) { // TODO: replace by if child is non-terminal to ignore -> for (greatChild) : toAST(greatChild)
                 for (ParseTree greatChild : child.children) {
                     childrenAST.add(toAST(greatChild));
                 }
