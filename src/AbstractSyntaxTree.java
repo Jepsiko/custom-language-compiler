@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractSyntaxTree {
-    Symbol label;
+    private Symbol label;
     private List<AbstractSyntaxTree> children;
 
     /**

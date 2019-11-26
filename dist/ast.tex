@@ -1,0 +1,15 @@
+\documentclass[border=5pt]{standalone}
+
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{forest}
+
+\begin{document}
+
+\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{begin} ][{<Code>} [{<InstList>} [{<Instruction>} [{<Read>} [{read} ][{(} ][{a} ][{)} ]]][{<NextInst>} [{;} ][{<InstList>} [{<Instruction>} [{<For>} [{for} ][{i} ][{from} ][{<ExprArith>} [{<Prod>} [{<Atom>} [{0} ]]]][{by} ][{<ExprArith>} [{<Prod>} [{<Atom>} [{1} ]]]][{to} ][{<ExprArith>} [{<Prod>} [{<Atom>} [{10} ]]]][{do} ][{<Code>} [{<InstList>} [{<Instruction>} [{<If>} [{if} ][{<Cond>} [{<CondAnd>} [{<SimpleCond>} [{not} ][{<SimpleCond>} [{<ExprArith>} [{<Prod>} [{<Atom>} [{a} ]]]][{<Comp>} [{/=} ]][{<ExprArith>} [{<Prod>} [{<Atom>} [{i} ]]]]]]]][{then} ][{<Code>} [{<InstList>} [{<Instruction>} [{<Print>} [{print} ][{(} ][{i} ][{)} ]]]]][{<IfSeq>} [{else} ][{<Code>} [{<InstList>} [{<Instruction>} [{<Print>} [{print} ][{(} ][{a} ][{)} ]]]]][{endif} ]]]]]][{endwhile} ]]]]]]][{end} ]];
+\end{forest}
+
+\end{document}
+%% Local Variables:
+%% TeX-engine: pdflatex
+%% End:
