@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractSyntaxTree {
-    private String label;
+    private Symbol label;
     private List<AbstractSyntaxTree> children;
 
     /**
@@ -10,7 +10,7 @@ public class AbstractSyntaxTree {
      *
      * @param label The label of the root
      */
-    public AbstractSyntaxTree(String label) {
+    public AbstractSyntaxTree(Symbol label) {
         this(label, new ArrayList<>());
     }
 
@@ -20,7 +20,7 @@ public class AbstractSyntaxTree {
      * @param label  The label of the root
      * @param children Its children
      */
-    public AbstractSyntaxTree(String label, List<AbstractSyntaxTree> children) {
+    public AbstractSyntaxTree(Symbol label, List<AbstractSyntaxTree> children) {
         this.label = label;
         this.children = children;
     }
@@ -31,7 +31,7 @@ public class AbstractSyntaxTree {
     public String toLaTexTree() {
         StringBuilder treeTeX = new StringBuilder();
         treeTeX.append("[");
-        treeTeX.append("{").append(label).append("}");
+        treeTeX.append("{").append(label.getValue()).append("}");
         treeTeX.append(" ");
 
     for (AbstractSyntaxTree child : children) {
@@ -49,7 +49,7 @@ public class AbstractSyntaxTree {
     public String toTikZ() {
         StringBuilder treeTikZ = new StringBuilder();
         treeTikZ.append("node {");
-        treeTikZ.append(label);
+        treeTikZ.append(label.getValue());
         treeTikZ.append("}\n");
         for (AbstractSyntaxTree child : children) {
             if (child != null) {

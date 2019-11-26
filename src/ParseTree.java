@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 public class ParseTree {
-    private String label; // The label of the root of the tree
+    private Symbol label; // The label of the root of the tree
     private List<ParseTree> children; // Its children, which are trees themselves
 
     /**
@@ -22,7 +22,7 @@ public class ParseTree {
      * 
      * @param label The label of the root
      */
-    public ParseTree(String label) {
+    public ParseTree(Symbol label) {
         this(label, new ArrayList<ParseTree>()); // This tree has no children
     }
 
@@ -32,7 +32,7 @@ public class ParseTree {
      * @param label  The label of the root
      * @param chdn Its children
      */
-    public ParseTree(String label, List<ParseTree> chdn) {
+    public ParseTree(Symbol label, List<ParseTree> chdn) {
         this.label = label;
         this.children = chdn;
     }
@@ -43,7 +43,7 @@ public class ParseTree {
     public String toLaTexTree() {
         StringBuilder treeTeX = new StringBuilder();
         treeTeX.append("[");
-        treeTeX.append("{").append(label).append("}");
+        treeTeX.append("{").append(label.getValue()).append("}");
         treeTeX.append(" ");
 
         for (ParseTree child : children) {
@@ -61,7 +61,7 @@ public class ParseTree {
     public String toTikZ() {
         StringBuilder treeTikZ = new StringBuilder();
         treeTikZ.append("node {");
-        treeTikZ.append(label);
+        treeTikZ.append(label.getValue());
         treeTikZ.append("}\n");
         for (ParseTree child : children) {
             if (child != null) {
@@ -126,22 +126,26 @@ public class ParseTree {
         List<AbstractSyntaxTree> childrenAST = new ArrayList<>();
 
         for (ParseTree child : parseTree.children) {
-            if (child.label.equals("begin")) { // TODO: replace by if child is terminal -> new AbstractSyntaxTree(child.label)
-                childrenAST.add(new AbstractSyntaxTree("begin"));
+            if (child.label.isTerminal()) {
+                childrenAST.add(new AbstractSyntaxTree(child.label));
             }
-            else if (child.label.equals("<Code>")) { // TODO: replace by if child is non-terminal to be kept -> toAST(child)
-                childrenAST.add(toAST(child));
-            }
-            else if (child.label.equals("end")) {
-                childrenAST.add(new AbstractSyntaxTree("end"));
-            }
-            else if (child.label.equals("<InstList>")) { // TODO: replace by if child is non-terminal to ignore -> for (greatChild) : toAST(greatChild)
-                for (ParseTree greatChild : child.children) {
-                    childrenAST.add(toAST(greatChild));
+            else if (child.label.isNonTerminal()) {
+
+                if (isToBeKept(child)) {
+                    childrenAST.add(toAST(child));
+                }
+                else {
+                    for (ParseTree greatChild : child.children) {
+                        childrenAST.add(toAST(greatChild));
+                    }
                 }
             }
         }
 
         return new AbstractSyntaxTree(parseTree.label, childrenAST);
+    }
+
+    static private boolean isToBeKept(ParseTree parseTree) {
+        return true;
     }
 }

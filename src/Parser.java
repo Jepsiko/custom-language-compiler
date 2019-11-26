@@ -80,7 +80,7 @@ class Parser {
             children.add(match(LexicalUnit.BEG));
             children.add(Code());
             children.add(match(LexicalUnit.END));
-            return new ParseTree("<Program>", children);
+            return new ParseTree(new Symbol(null, "<Program>"), children);
         }
 
         return null;
@@ -128,7 +128,7 @@ class Parser {
             print(3, "<Code> -> <InstList>");
 
             children.add(InstList());
-            return new ParseTree("<Code>", children);
+            return new ParseTree(new Symbol(null, "<Code>"), children);
         }
 
         return null;
@@ -167,7 +167,7 @@ class Parser {
 
             children.add(Instruction());
             children.add(NextInst());
-            return new ParseTree("<InstList>", children);
+            return new ParseTree(new Symbol(null, "<InstList>"), children);
         }
 
         return null;
@@ -209,7 +209,7 @@ class Parser {
 
             children.add(match(LexicalUnit.SEMICOLON));
             children.add(InstList());
-            return new ParseTree("<NextInst>", children);
+            return new ParseTree(new Symbol(null, "<NextInst>"), children);
         }
 
         return null;
@@ -240,42 +240,42 @@ class Parser {
             print(7, "<Instruction> -> <Assign>");
 
             children.add(Assign());
-            return new ParseTree("<Instruction>", children);
+            return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [8] <Instruction> -> <If>
         else if (lookahead() == LexicalUnit.IF) {
             print(8, "<Instruction> -> <If>");
 
             children.add(If());
-            return new ParseTree("<Instruction>", children);
+            return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [9] <Instruction> -> <While>
         else if (lookahead() == LexicalUnit.WHILE) {
             print(9, "<Instruction> -> <While>");
 
             children.add(While());
-            return new ParseTree("<Instruction>", children);
+            return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [10] <Instruction> -> <For>
         else if (lookahead() == LexicalUnit.FOR) {
             print(10, "<Instruction> -> <For>");
 
             children.add(For());
-            return new ParseTree("<Instruction>", children);
+            return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [11] <Instruction> -> <Print>
         else if (lookahead() == LexicalUnit.PRINT) {
             print(11, "<Instruction> -> <Print>");
 
             children.add(Print());
-            return new ParseTree("<Instruction>", children);
+            return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [12] <Instruction> -> <Read>
         else if (lookahead() == LexicalUnit.READ) {
             print(12, "<Instruction> -> <Read>");
 
             children.add(Read());
-            return new ParseTree("<Instruction>", children);
+            return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
 
         return null;
@@ -308,7 +308,7 @@ class Parser {
             children.add(match(LexicalUnit.VARNAME));
             children.add(match(LexicalUnit.ASSIGN));
             children.add(ExprArith());
-            return new ParseTree("<Assign>", children);
+            return new ParseTree(new Symbol(null, "<Assign>"), children);
         }
 
         return null;
@@ -345,7 +345,7 @@ class Parser {
 
             children.add(Prod());
             children.add(ExprArith_prime());
-            return new ParseTree("<ExprArith>", children);
+            return new ParseTree(new Symbol(null, "<ExprArith>"), children);
         }
 
         return null;
@@ -378,7 +378,7 @@ class Parser {
             children.add(match(LexicalUnit.PLUS));
             children.add(Prod());
             children.add(ExprArith_prime());
-            return new ParseTree("<ExprArith'>", children);
+            return new ParseTree(new Symbol(null, "<ExprArith'>"), children);
         }
         // [16] <ExprArith'> -> - <Prod> <ExprArith'>
         else if (lookahead() == LexicalUnit.MINUS) {
@@ -387,7 +387,7 @@ class Parser {
             children.add(match(LexicalUnit.MINUS));
             children.add(Prod());
             children.add(ExprArith_prime());
-            return new ParseTree("<ExprArith'>", children);
+            return new ParseTree(new Symbol(null, "<ExprArith'>"), children);
         }
         // [17] <ExprArith'> -> ε
         else if (
@@ -447,7 +447,7 @@ class Parser {
 
             children.add(Atom());
             children.add(Prod_prime());
-            return new ParseTree("<Prod>", children);
+            return new ParseTree(new Symbol(null, "<Prod>"), children);
         }
 
         return null;
@@ -480,7 +480,7 @@ class Parser {
             children.add(match(LexicalUnit.TIMES));
             children.add(Atom());
             children.add(Prod_prime());
-            return new ParseTree("<Prod'>", children);
+            return new ParseTree(new Symbol(null, "<Prod'>"), children);
         }
         // [20] <Prod'> -> / <Atom> <Prod'>
         else if (lookahead() == LexicalUnit.DIVIDE) {
@@ -489,7 +489,7 @@ class Parser {
             children.add(match(LexicalUnit.DIVIDE));
             children.add(Atom());
             children.add(Prod_prime());
-            return new ParseTree("<Prod'>", children);
+            return new ParseTree(new Symbol(null, "<Prod'>"), children);
         }
         // [21] <Prod'> -> ε
         else if (
@@ -546,21 +546,21 @@ class Parser {
 
             children.add(match(LexicalUnit.MINUS));
             children.add(Atom());
-            return new ParseTree("<Atom>", children);
+            return new ParseTree(new Symbol(null, "<Atom>"), children);
         }
         // [23] <Atom> -> [Number]
         else if (lookahead() == LexicalUnit.NUMBER) {
             print(23, "<Atom> -> [Number]");
 
             children.add(match(LexicalUnit.NUMBER));
-            return new ParseTree("<Atom>", children);
+            return new ParseTree(new Symbol(null, "<Atom>"), children);
         }
         // [24] <Atom> -> [VarName]
         else if (lookahead() == LexicalUnit.VARNAME) {
             print(24, "<Atom> -> [VarName]");
 
             children.add(match(LexicalUnit.VARNAME));
-            return new ParseTree("<Atom>", children);
+            return new ParseTree(new Symbol(null, "<Atom>"), children);
         }
         // [25] <Atom> -> ( <ExprArith> )
         else if (lookahead() == LexicalUnit.LEFT_PARENTHESIS) {
@@ -569,7 +569,7 @@ class Parser {
             children.add(match(LexicalUnit.LEFT_PARENTHESIS));
             children.add(ExprArith());
             children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
-            return new ParseTree("<Atom>", children);
+            return new ParseTree(new Symbol(null, "<Atom>"), children);
         }
 
         return null;
@@ -604,7 +604,7 @@ class Parser {
             children.add(match(LexicalUnit.THEN));
             children.add(Code());
             children.add(IfSeq());
-            return new ParseTree("<If>", children);
+            return new ParseTree(new Symbol(null, "<If>"), children);
         }
 
         return null;
@@ -635,7 +635,7 @@ class Parser {
             print(27, "<IfSeq> -> endif");
 
             children.add(match(LexicalUnit.ENDIF));
-            return new ParseTree("<IfSeq>", children);
+            return new ParseTree(new Symbol(null, "<IfSeq>"), children);
         }
         // [28] <IfSeq> -> else <Code> endif
         else if (lookahead() == LexicalUnit.ELSE) {
@@ -644,7 +644,7 @@ class Parser {
             children.add(match(LexicalUnit.ELSE));
             children.add(Code());
             children.add(match(LexicalUnit.ENDIF));
-            return new ParseTree("<IfSeq>", children);
+            return new ParseTree(new Symbol(null, "<IfSeq>"), children);
         }
 
         return null;
@@ -682,7 +682,7 @@ class Parser {
 
             children.add(CondAnd());
             children.add(Cond_prime());
-            return new ParseTree("<Cond>", children);
+            return new ParseTree(new Symbol(null, "<Cond>"), children);
         }
 
         return null;
@@ -715,7 +715,7 @@ class Parser {
             children.add(match(LexicalUnit.OR));
             children.add(CondAnd());
             children.add(Cond_prime());
-            return new ParseTree("<Cond'>", children);
+            return new ParseTree(new Symbol(null, "<Cond'>"), children);
         }
         // [31] <Cond'> -> ε
         else if (
@@ -761,7 +761,7 @@ class Parser {
 
             children.add(SimpleCond());
             children.add(CondAnd_prime());
-            return new ParseTree("<CondAnd>", children);
+            return new ParseTree(new Symbol(null, "<CondAnd>"), children);
         }
 
         return null;
@@ -794,7 +794,7 @@ class Parser {
             children.add(match(LexicalUnit.AND));
             children.add(SimpleCond());
             children.add(CondAnd_prime());
-            return new ParseTree("<CondAnd'>", children);
+            return new ParseTree(new Symbol(null, "<CondAnd'>"), children);
         }
         // [34] <CondAnd'> -> ε
         else if (
@@ -841,7 +841,7 @@ class Parser {
             children.add(ExprArith());
             children.add(Comp());
             children.add(ExprArith());
-            return new ParseTree("<SimpleCond>", children);
+            return new ParseTree(new Symbol(null, "<SimpleCond>"), children);
         }
         // [36] <SimpleCond> -> not <SimpleCond>
         else if (lookahead() == LexicalUnit.NOT) {
@@ -849,7 +849,7 @@ class Parser {
 
             children.add(match(LexicalUnit.NOT));
             children.add(SimpleCond());
-            return new ParseTree("<SimpleCond>", children);
+            return new ParseTree(new Symbol(null, "<SimpleCond>"), children);
         }
 
         return null;
@@ -880,42 +880,42 @@ class Parser {
             print(37, "<Comp> -> =");
 
             children.add(match(LexicalUnit.EQUAL));
-            return new ParseTree("<Comp>", children);
+            return new ParseTree(new Symbol(null, "<Comp>"), children);
         }
         // [38] <Comp> -> >=
         else if (lookahead() == LexicalUnit.GREATER_EQUAL) {
             print(38, "<Comp> -> >=");
 
             children.add(match(LexicalUnit.GREATER_EQUAL));
-            return new ParseTree("<Comp>", children);
+            return new ParseTree(new Symbol(null, "<Comp>"), children);
         }
         // [39] <Comp> -> >
         else if (lookahead() == LexicalUnit.GREATER) {
             print(39, "<Comp> -> >");
 
             children.add(match(LexicalUnit.GREATER));
-            return new ParseTree("<Comp>", children);
+            return new ParseTree(new Symbol(null, "<Comp>"), children);
         }
         // [40] <Comp> -> <=
         else if (lookahead() == LexicalUnit.SMALLER_EQUAL) {
             print(40, "<Comp> -> <=");
 
             children.add(match(LexicalUnit.SMALLER_EQUAL));
-            return new ParseTree("<Comp>", children);
+            return new ParseTree(new Symbol(null, "<Comp>"), children);
         }
         // [41] <Comp> -> <
         else if (lookahead() == LexicalUnit.SMALLER) {
             print(41, "<Comp> -> <");
 
             children.add(match(LexicalUnit.SMALLER));
-            return new ParseTree("<Comp>", children);
+            return new ParseTree(new Symbol(null, "<Comp>"), children);
         }
         // [42] <Comp> -> /=
         else if (lookahead() == LexicalUnit.DIFFERENT) {
             print(42, "<Comp> -> /=");
 
             children.add(match(LexicalUnit.DIFFERENT));
-            return new ParseTree("<Comp>", children);
+            return new ParseTree(new Symbol(null, "<Comp>"), children);
         }
 
         return null;
@@ -950,7 +950,7 @@ class Parser {
             children.add(match(LexicalUnit.DO));
             children.add(Code());
             children.add(match(LexicalUnit.ENDWHILE));
-            return new ParseTree("<While>", children);
+            return new ParseTree(new Symbol(null, "<While>"), children);
         }
 
         return null;
@@ -992,7 +992,7 @@ class Parser {
             children.add(match(LexicalUnit.DO));
             children.add(Code());
             children.add(match(LexicalUnit.ENDWHILE));
-            return new ParseTree("<For>", children);
+            return new ParseTree(new Symbol(null, "<For>"), children);
         }
 
         return null;
@@ -1026,7 +1026,7 @@ class Parser {
             children.add(match(LexicalUnit.LEFT_PARENTHESIS));
             children.add(match(LexicalUnit.VARNAME));
             children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
-            return new ParseTree("<Print>", children);
+            return new ParseTree(new Symbol(null, "<Print>"), children);
         }
 
         return null;
@@ -1060,7 +1060,7 @@ class Parser {
             children.add(match(LexicalUnit.LEFT_PARENTHESIS));
             children.add(match(LexicalUnit.VARNAME));
             children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
-            return new ParseTree("<Read>", children);
+            return new ParseTree(new Symbol(null, "<Read>"), children);
         }
 
         return null;
@@ -1083,7 +1083,7 @@ class Parser {
             }
             l++;
 
-            return new ParseTree(terminal.getValue().toString());
+            return new ParseTree(terminal);
         }
         else if (!syntaxError) {
             if (!v) {
