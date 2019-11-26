@@ -47,9 +47,19 @@ public class Main{
         Parser parser = new Parser(symbols, verbose);
         ParseTree parseTree = parser.parse();
 
-        if (!texFile.equals("") && parseTree != null) {
+        if (parseTree == null)
+            return;
+
+//        if (!texFile.equals("")) {
+//            Path file = Paths.get(texFile);
+//            Files.write(file, Collections.singleton(parseTree.toLaTeX()), StandardCharsets.UTF_8);
+//        }
+
+        AbstractSyntaxTree AST = ParseTree.toAST(parseTree);
+
+        if (!texFile.equals("")) {
             Path file = Paths.get(texFile);
-            Files.write(file, Collections.singleton(parseTree.toLaTeX()), StandardCharsets.UTF_8);
+            Files.write(file, Collections.singleton(AST.toLaTeX()), StandardCharsets.UTF_8);
         }
     }
 }
