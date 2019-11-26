@@ -112,7 +112,16 @@ public class AbstractSyntaxTree {
             AbstractSyntaxTree child = children.get(0);
             children = child.children;
         }
-        else if ((label.getValue() == "<ExprArith>" || label.getValue() == "<SimpleCond>") && children.size() == 3) {
+
+        if (label.getValue() == "<ExprArith>" && children.size() == 1) {
+            AbstractSyntaxTree child = children.get(0);
+
+            if (child.label.getValue() == "<ExprArith>") {
+                children = child.children;
+            }
+        }
+
+        if ((label.getValue() == "<ExprArith>" || label.getValue() == "<SimpleCond>") && children.size() == 3) {
             AbstractSyntaxTree leftTerm = children.get(0);
             AbstractSyntaxTree operator = children.get(1);
             AbstractSyntaxTree rightTerm = children.get(2);
@@ -122,13 +131,6 @@ public class AbstractSyntaxTree {
 
             children.remove(2);
             children.remove(0);
-        }
-        else if (label.getValue() == "<ExprArith>" && children.size() == 1) {
-            AbstractSyntaxTree child = children.get(0);
-
-            if (child.label.getValue() == "<ExprArith>") {
-                children = child.children;
-            }
         }
 
         for (AbstractSyntaxTree child : children) {
