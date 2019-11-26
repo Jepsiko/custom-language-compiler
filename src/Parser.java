@@ -80,6 +80,7 @@ class Parser {
             children.add(match(LexicalUnit.BEG));
             children.add(Code());
             children.add(match(LexicalUnit.END));
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Program>"), children);
         }
 
@@ -128,6 +129,7 @@ class Parser {
             print(3, "<Code> -> <InstList>");
 
             children.add(InstList());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Code>"), children);
         }
 
@@ -167,6 +169,7 @@ class Parser {
 
             children.add(Instruction());
             children.add(NextInst());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<InstList>"), children);
         }
 
@@ -209,6 +212,7 @@ class Parser {
 
             children.add(match(LexicalUnit.SEMICOLON));
             children.add(InstList());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<NextInst>"), children);
         }
 
@@ -240,6 +244,7 @@ class Parser {
             print(7, "<Instruction> -> <Assign>");
 
             children.add(Assign());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [8] <Instruction> -> <If>
@@ -247,6 +252,7 @@ class Parser {
             print(8, "<Instruction> -> <If>");
 
             children.add(If());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [9] <Instruction> -> <While>
@@ -254,6 +260,7 @@ class Parser {
             print(9, "<Instruction> -> <While>");
 
             children.add(While());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [10] <Instruction> -> <For>
@@ -261,6 +268,7 @@ class Parser {
             print(10, "<Instruction> -> <For>");
 
             children.add(For());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [11] <Instruction> -> <Print>
@@ -268,6 +276,7 @@ class Parser {
             print(11, "<Instruction> -> <Print>");
 
             children.add(Print());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
         // [12] <Instruction> -> <Read>
@@ -275,6 +284,7 @@ class Parser {
             print(12, "<Instruction> -> <Read>");
 
             children.add(Read());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Instruction>"), children);
         }
 
@@ -308,6 +318,7 @@ class Parser {
             children.add(match(LexicalUnit.VARNAME));
             children.add(match(LexicalUnit.ASSIGN));
             children.add(ExprArith());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Assign>"), children);
         }
 
@@ -345,6 +356,7 @@ class Parser {
 
             children.add(Prod());
             children.add(ExprArith_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<ExprArith>"), children);
         }
 
@@ -378,6 +390,7 @@ class Parser {
             children.add(match(LexicalUnit.PLUS));
             children.add(Prod());
             children.add(ExprArith_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<ExprArith'>"), children);
         }
         // [16] <ExprArith'> -> - <Prod> <ExprArith'>
@@ -387,6 +400,7 @@ class Parser {
             children.add(match(LexicalUnit.MINUS));
             children.add(Prod());
             children.add(ExprArith_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<ExprArith'>"), children);
         }
         // [17] <ExprArith'> -> ε
@@ -447,6 +461,7 @@ class Parser {
 
             children.add(Atom());
             children.add(Prod_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Prod>"), children);
         }
 
@@ -480,6 +495,7 @@ class Parser {
             children.add(match(LexicalUnit.TIMES));
             children.add(Atom());
             children.add(Prod_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Prod'>"), children);
         }
         // [20] <Prod'> -> / <Atom> <Prod'>
@@ -489,6 +505,7 @@ class Parser {
             children.add(match(LexicalUnit.DIVIDE));
             children.add(Atom());
             children.add(Prod_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Prod'>"), children);
         }
         // [21] <Prod'> -> ε
@@ -546,6 +563,7 @@ class Parser {
 
             children.add(match(LexicalUnit.MINUS));
             children.add(Atom());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Atom>"), children);
         }
         // [23] <Atom> -> [Number]
@@ -569,6 +587,7 @@ class Parser {
             children.add(match(LexicalUnit.LEFT_PARENTHESIS));
             children.add(ExprArith());
             children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Atom>"), children);
         }
 
@@ -604,6 +623,7 @@ class Parser {
             children.add(match(LexicalUnit.THEN));
             children.add(Code());
             children.add(IfSeq());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<If>"), children);
         }
 
@@ -644,6 +664,7 @@ class Parser {
             children.add(match(LexicalUnit.ELSE));
             children.add(Code());
             children.add(match(LexicalUnit.ENDIF));
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<IfSeq>"), children);
         }
 
@@ -682,6 +703,7 @@ class Parser {
 
             children.add(CondAnd());
             children.add(Cond_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Cond>"), children);
         }
 
@@ -715,6 +737,7 @@ class Parser {
             children.add(match(LexicalUnit.OR));
             children.add(CondAnd());
             children.add(Cond_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<Cond'>"), children);
         }
         // [31] <Cond'> -> ε
@@ -761,6 +784,7 @@ class Parser {
 
             children.add(SimpleCond());
             children.add(CondAnd_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<CondAnd>"), children);
         }
 
@@ -794,6 +818,7 @@ class Parser {
             children.add(match(LexicalUnit.AND));
             children.add(SimpleCond());
             children.add(CondAnd_prime());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<CondAnd'>"), children);
         }
         // [34] <CondAnd'> -> ε
@@ -841,6 +866,7 @@ class Parser {
             children.add(ExprArith());
             children.add(Comp());
             children.add(ExprArith());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<SimpleCond>"), children);
         }
         // [36] <SimpleCond> -> not <SimpleCond>
@@ -849,6 +875,7 @@ class Parser {
 
             children.add(match(LexicalUnit.NOT));
             children.add(SimpleCond());
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<SimpleCond>"), children);
         }
 
@@ -950,6 +977,7 @@ class Parser {
             children.add(match(LexicalUnit.DO));
             children.add(Code());
             children.add(match(LexicalUnit.ENDWHILE));
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<While>"), children);
         }
 
@@ -992,6 +1020,7 @@ class Parser {
             children.add(match(LexicalUnit.DO));
             children.add(Code());
             children.add(match(LexicalUnit.ENDWHILE));
+            while (children.remove(null));
             return new ParseTree(new Symbol(null, "<For>"), children);
         }
 

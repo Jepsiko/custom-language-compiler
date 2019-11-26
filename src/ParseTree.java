@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * A skeleton class to represent parse trees. The arity is not fixed: a node can
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  * leave is simply a tree with no children (its list of children is empty). This
  * class can also be seen as representing the Node of a tree, in which case a
  * tree is simply represented as its root.
- * 
+ *
  * @author Léo Exibard, Sarah Winter
  */
 
@@ -19,7 +20,7 @@ public class ParseTree {
 
     /**
      * Creates a singleton tree with only a root labeled by lbl.
-     * 
+     *
      * @param label The label of the root
      */
     public ParseTree(Symbol label) {
@@ -28,8 +29,8 @@ public class ParseTree {
 
     /**
      * Creates a tree with root labeled by lbl and children chdn.
-     * 
-     * @param label  The label of the root
+     *
+     * @param label    The label of the root
      * @param children Its children
      */
     public ParseTree(Symbol label, List<ParseTree> children) {
@@ -47,8 +48,7 @@ public class ParseTree {
         treeTeX.append(" ");
 
         for (ParseTree child : children) {
-            if (child != null)
-                treeTeX.append(child.toLaTexTree());
+            treeTeX.append(child.toLaTexTree());
         }
         treeTeX.append("]");
         return treeTeX.toString();
@@ -64,11 +64,9 @@ public class ParseTree {
         treeTikZ.append(label.getValue());
         treeTikZ.append("}\n");
         for (ParseTree child : children) {
-            if (child != null) {
-                treeTikZ.append("child { ");
-                treeTikZ.append(child.toTikZ());
-                treeTikZ.append(" }\n");
-            }
+            treeTikZ.append("child { ");
+            treeTikZ.append(child.toTikZ());
+            treeTikZ.append(" }\n");
         }
         return treeTikZ.toString();
     }
@@ -125,20 +123,54 @@ public class ParseTree {
     static public AbstractSyntaxTree toAST(ParseTree parseTree) {
         List<AbstractSyntaxTree> childrenAST = new ArrayList<>();
 
+        if (parseTree == null) {
+            return null;
+        }
+
         for (ParseTree child : parseTree.children) {
             if (child.label.isTerminal()) {
                 if (isToBeKept(child)) {
                     childrenAST.add(new AbstractSyntaxTree(child.label));
                 }
-            }
-            else if (child.label.isNonTerminal()) {
-
+            } else if (child.label.isNonTerminal()) {
                 if (isToBeKept(child)) {
                     childrenAST.add(toAST(child));
-                }
-                else {
-                    for (ParseTree greatChild : child.children) {
-                        childrenAST.add(toAST(greatChild));
+                } else {
+                    Stack<ParseTree> stack = new Stack<>();
+                    for (int i = child.children.size()-1; i >= 0; i--) { // Initialization of the stack
+                        ParseTree greatChild = child.children.get(i);
+                        if (isToBeKept(greatChild)) {
+                            if (greatChild.label.isTerminal()) {
+                                childrenAST.add(new AbstractSyntaxTree(greatChild.label));
+                            }
+                            else {
+                                childrenAST.add(toAST(greatChild));
+                            }
+                        }
+                        else {
+                            stack.push(greatChild);
+                        }
+                    }
+
+                    ParseTree current;
+                    while (!stack.isEmpty()) {
+                        System.out.println(stack.size());
+
+                        current = stack.pop();
+                        for (int i = current.children.size()-1; i >= 0; i--) {
+                            ParseTree greatChild = current.children.get(i);
+                            if (isToBeKept(greatChild)) {
+                                if (greatChild.label.isTerminal()) {
+                                    childrenAST.add(new AbstractSyntaxTree(greatChild.label));
+                                }
+                                else {
+                                    childrenAST.add(toAST(greatChild));
+                                }
+                            }
+                            else {
+                                stack.push(greatChild);
+                            }
+                        }
                     }
                 }
             }
@@ -148,6 +180,46 @@ public class ParseTree {
     }
 
     static private boolean isToBeKept(ParseTree parseTree) {
+        if (parseTree.label.isNonTerminal()) {
+            String nonTerminal = parseTree.label.getValue().toString();
+            switch (nonTerminal) {
+                case "<InstList>":
+                case "<Instruction>":
+                case "<NextInst>":
+                case "<Prod>":
+                case "<Atom>":
+                case "<IfSeq>":
+                case "<Cond'>":
+                case "<CondAnd'>":
+                case "<ExprArith'>":
+                case "<Comp>":
+                    return false;
+            }
+        } else {
+            LexicalUnit terminal = parseTree.label.getType();
+            switch (terminal) {
+                case LEFT_PARENTHESIS:
+                case RIGHT_PARENTHESIS:
+                case SEMICOLON:
+                case READ:
+                case DO:
+                case THEN:
+                case BY:
+                case TO:
+                case FROM:
+                case FOR:
+                case IF:
+                case PRINT:
+                case ENDIF:
+                case ELSE:
+                case ENDWHILE:
+                case ASSIGN:
+                case WHILE:
+                case AND:
+                case OR:
+                    return false;
+            }
+        }
         return true;
     }
 }

@@ -17,7 +17,7 @@ public class AbstractSyntaxTree {
     /**
      * Creates a tree with root labeled by lbl and children chdn.
      *
-     * @param label  The label of the root
+     * @param label    The label of the root
      * @param children Its children
      */
     public AbstractSyntaxTree(Symbol label, List<AbstractSyntaxTree> children) {
@@ -34,9 +34,8 @@ public class AbstractSyntaxTree {
         treeTeX.append("{").append(label.getValue()).append("}");
         treeTeX.append(" ");
 
-    for (AbstractSyntaxTree child : children) {
-            if (child != null)
-                treeTeX.append(child.toLaTexTree());
+        for (AbstractSyntaxTree child : children) {
+            treeTeX.append(child.toLaTexTree());
         }
         treeTeX.append("]");
         return treeTeX.toString();
@@ -52,11 +51,9 @@ public class AbstractSyntaxTree {
         treeTikZ.append(label.getValue());
         treeTikZ.append("}\n");
         for (AbstractSyntaxTree child : children) {
-            if (child != null) {
-                treeTikZ.append("child { ");
-                treeTikZ.append(child.toTikZ());
-                treeTikZ.append(" }\n");
-            }
+            treeTikZ.append("child { ");
+            treeTikZ.append(child.toTikZ());
+            treeTikZ.append(" }\n");
         }
         return treeTikZ.toString();
     }

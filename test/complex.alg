@@ -1,9 +1,9 @@
 
-CO Counter with if and else to test the parser CO
+CO Complex syntax CO
 begin
   read(a) ;
-  for i from 0 by 1 to 10 do
-    if not a /= i then
+  for i from 0 by 1 to (9+1) do
+    if not a /= i or a < i and not a+2 = i then
       print(i)
     else
       print(a)
