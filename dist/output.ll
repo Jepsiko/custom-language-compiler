@@ -59,6 +59,9 @@ store i32 -100, i32* %KO
 %0 = call i32 @readInt()
 store i32 %0, i32* %guess
 
+%win = alloca i32
+store i32 0, i32* %win
+
 %i = alloca i32
 store i32 0, i32* %i
 br label %forCond0
@@ -70,34 +73,44 @@ store i32 %3, i32* %i
 
 br i1 %2, label %forCode0, label %endfor0
 forCode0:
-%try = alloca i32
-%4 = call i32 @readInt()
-store i32 %4, i32* %try
+%4 = load i32, i32* %win
+%5 = icmp eq i32 %4, 0
 
-%5 = load i32, i32* %try
-%6 = load i32, i32* %guess
-%7 = icmp sgt i32 %5, %6
-
-br i1 %7, label %ifCode0, label %elseCode0
+br i1 %5, label %ifCode0, label %endif0
 ifCode0:
-%8 = load i32, i32* %less
-call void @println(i32 %8)
+%try = alloca i32
+%6 = call i32 @readInt()
+store i32 %6, i32* %try
 
-br label %endif0
-elseCode0:
-%9 = load i32, i32* %try
-%10 = load i32, i32* %guess
-%11 = icmp slt i32 %9, %10
+%7 = load i32, i32* %try
+%8 = load i32, i32* %guess
+%9 = icmp sgt i32 %7, %8
 
-br i1 %11, label %ifCode1, label %elseCode1
+br i1 %9, label %ifCode1, label %elseCode1
 ifCode1:
-%12 = load i32, i32* %more
-call void @println(i32 %12)
+%10 = load i32, i32* %less
+call void @println(i32 %10)
 
 br label %endif1
 elseCode1:
-%13 = load i32, i32* %OK
-call void @println(i32 %13)
+%11 = load i32, i32* %try
+%12 = load i32, i32* %guess
+%13 = icmp slt i32 %11, %12
+
+br i1 %13, label %ifCode2, label %elseCode2
+ifCode2:
+%14 = load i32, i32* %more
+call void @println(i32 %14)
+
+br label %endif2
+elseCode2:
+%15 = load i32, i32* %OK
+call void @println(i32 %15)
+
+store i32 1, i32* %win
+
+br label %endif2
+endif2:
 
 br label %endif1
 endif1:
@@ -108,8 +121,16 @@ endif0:
 br label %forCond0
 endfor0:
 
-%14 = load i32, i32* %KO
-call void @println(i32 %14)
+%16 = load i32, i32* %win
+%17 = icmp eq i32 %16, 0
+
+br i1 %17, label %ifCode3, label %endif3
+ifCode3:
+%18 = load i32, i32* %KO
+call void @println(i32 %18)
+
+br label %endif3
+endif3:
 
 ret i32 0;
 }

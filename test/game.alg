@@ -10,19 +10,25 @@ begin
     co Value to guess
     read(guess);
 
+    win := 0;
     for i from 0 by 1 to 5 do
-        co Value of the user
-        read(try);
+        if win = 0 then
+            co Value of the user
+            read(try);
 
-        if try > guess then
-            print(less)
-        else
-            if try < guess then
-                print(more)
+            if try > guess then
+                print(less)
             else
-                print(OK)
+                if try < guess then
+                    print(more)
+                else
+                    print(OK);
+                    win := 1
+                endif
             endif
-        endif
+           endif
     endwhile;
-    print(KO)
+    if win = 0 then
+        print(KO)
+    endif
 end
