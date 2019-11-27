@@ -1142,7 +1142,7 @@ class Parser {
     private void print(int number, String rule) {
         if (v)
             System.out.println("[" + number + "] " + rule);
-        else
-            System.out.print(number + " ");
+        //else
+        //    System.out.print(number + " ");
     }
 }

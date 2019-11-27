@@ -178,10 +178,7 @@ public class AbstractSyntaxTree {
 
     private AbstractSyntaxTree rearrangeTree() {
         int operatorIndex = getOperatorIndex();
-        System.out.println(operatorIndex);
-        System.out.println(children.size());
         AbstractSyntaxTree operator = children.get(operatorIndex);
-        System.out.println(operator.label.getValue());
         List<AbstractSyntaxTree> operatorChildren = new ArrayList<>();
 
         if (operatorIndex > 1) {
@@ -189,29 +186,51 @@ public class AbstractSyntaxTree {
             int startPos = 0;
             for (int i = startPos; i < operatorIndex; i++) {
                 temp.children.add(children.get(startPos));
-                System.out.println("Left : " + children.get(startPos).label.getValue());
                 children.remove(startPos);
             }
             operatorChildren.add(temp.rearrangeTree());
         }
         else {
-            operatorChildren.add(children.get(0));
+            AbstractSyntaxTree child = children.get(0);
+            if (child.label.getValue() == "<ExprArith>") {
+                if (child.children.size() == 3) {
+                    operatorChildren.add(child.rearrangeTree());
+                }
+                else {
+                    operatorChildren.add(child.children.get(0));
+                }
+            }
+            else
+                operatorChildren.add(child);
+            children.remove(0);
         }
+
+        operatorIndex = getOperatorIndex();
 
         if (operatorIndex < children.size()-2) {
 
             AbstractSyntaxTree temp = new AbstractSyntaxTree(new Symbol(null, "temp"));
-            int startPos = 2;
+            int startPos = 1;
             int childrenSize = children.size();
             for (int i = startPos; i < childrenSize; i++) {
                 temp.children.add(children.get(startPos));
-                System.out.println("Right : " + children.get(startPos).label.getValue());
                 children.remove(startPos);
             }
             operatorChildren.add(temp.rearrangeTree());
         }
         else {
-            operatorChildren.add(children.get(children.size()-1));
+            AbstractSyntaxTree child = children.get(children.size()-1);
+            if (child.label.getValue() == "<ExprArith>") {
+                if (child.children.size() == 3) {
+                    operatorChildren.add(child.rearrangeTree());
+                }
+                else {
+                    operatorChildren.add(child.children.get(0));
+                }
+            }
+            else
+                operatorChildren.add(child);
+            children.remove(children.size()-1);
         }
 
         operator.children = operatorChildren;
@@ -230,5 +249,13 @@ public class AbstractSyntaxTree {
 
     public Symbol getLabel() {
         return label;
+    }
+
+    public List<AbstractSyntaxTree> getChildren() {
+        return children;
+    }
+
+    public AbstractSyntaxTree get(int i) {
+        return children.get(i);
     }
 }

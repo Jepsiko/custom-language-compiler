@@ -7,8 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/exprarith.alg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.log" afterDir="false" />
@@ -18,8 +16,9 @@
       <change beforePath="$PROJECT_DIR$/dist/tree_AST.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParseTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/exprarith.alg" beforeDir="false" afterPath="$PROJECT_DIR$/test/exprarith.alg" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -114,6 +113,7 @@
       <workItem from="1574784395884" duration="3621000" />
       <workItem from="1574788035990" duration="9039000" />
       <workItem from="1574805292860" duration="710000" />
+      <workItem from="1574806660400" duration="9275000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
