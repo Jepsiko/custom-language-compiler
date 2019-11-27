@@ -133,7 +133,7 @@ public class ParseTree {
         List<AbstractSyntaxTree> childrenAST = new ArrayList<>();
 
         for (ParseTree child : parseTree.children) {
-            if (child.label.isTerminal()) {
+            if (child.label.isTerminal()) { // If terminal to keep
                 if (isToBeKept(child)) {
                     childrenAST.add(new AbstractSyntaxTree(child.label));
                 }
@@ -143,7 +143,7 @@ public class ParseTree {
                 } else {
                     Stack<ParseTree> stack = new Stack<>();
                     for (int i = child.children.size()-1; i >= 0; i--) { // Initialization of the stack
-                        ParseTree greatChild = child.children.get(i);
+                        ParseTree greatChild = child.children.get(i); // Little child
                         if (isToBeKept(greatChild)) {
                             if (greatChild.label.isTerminal()) {
                                 childrenAST.add(new AbstractSyntaxTree(greatChild.label));

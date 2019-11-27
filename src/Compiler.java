@@ -3,41 +3,62 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Compiler {
     private Path outputFile;
     private final boolean toFile;
 
     private int unnamedVar;
+    private int whileIndex;
+    private int forIndex;
+    private int ifIndex;
+
+    private List<String> variables;
 
     public Compiler() {
         toFile = false;
         unnamedVar = 0;
+        whileIndex = 0;
+        forIndex = 0;
+        ifIndex = 0;
+        variables = new ArrayList<>();
     }
 
     public Compiler(String outputFilename) {
         if (!outputFilename.equals("")) {
             toFile = true;
             outputFile = Paths.get(outputFilename);
+            try {
+                Files.write(outputFile, Collections.singleton(""), StandardCharsets.UTF_8); // Empty the file
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else {
             toFile = false;
         }
         unnamedVar = 0;
+        whileIndex = 0;
+        forIndex = 0;
+        ifIndex = 0;
+        variables = new ArrayList<>();
     }
 
-    public void compile(AbstractSyntaxTree AST) throws IOException {
+    public void compile(AbstractSyntaxTree AST) {
         Program(AST);
     }
 
-    private void Program(AbstractSyntaxTree AST) throws IOException {
+    private void Program(AbstractSyntaxTree AST) {
         begin();
         Code(AST.get(1));
         end();
     }
 
-    private void begin() throws IOException {
+    private void begin() {
         write("@.strP = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1\n" +
                 "\n" +
                 "; Function Attrs: nounwind uwtable\n" +
@@ -83,115 +104,331 @@ public class Compiler {
                 "entry:\n");
     }
 
-    private void Code(AbstractSyntaxTree AST) throws IOException {
-        for (AbstractSyntaxTree child : AST.getChildren()) {
-            switch (child.getLabel().getValue().toString()) {
+    private void Code(AbstractSyntaxTree AST) {
+        for (AbstractSyntaxTree instruction : AST.getChildren()) {
+            switch (instruction.getLabel().getValue().toString()) {
                 case "<Assign>":
-                    Assign(child);
+                    Assign(instruction);
                     break;
                 case "<Read>":
-                    Read(child);
+                    Read(instruction);
                     break;
                 case "<Print>":
-                    Print(child);
+                    Print(instruction);
                     break;
                 case "<While>":
-                    While(child);
+                    While(instruction, whileIndex);
+                    break;
+                case "<For>":
+                    For(instruction, forIndex);
+                    break;
+                case "<If>":
+                    If(instruction, ifIndex);
                     break;
             }
             write(""); // Empty line between each group of instruction
         }
     }
 
-    private void end() throws IOException {
-        write("}");
+    private void end() {
+        write("ret i32 0;\n}");
     }
 
-    private void Read(AbstractSyntaxTree AST) throws IOException {
-        String varName = AST.get(0).getLabel().getValue().toString();
-        write("%" + varName + " = call i32 @readInt()");
-    }
-
-    private void Print(AbstractSyntaxTree AST) throws IOException {
-        String varName = AST.get(0).getLabel().getValue().toString();
-        write("call void @println(i32 %" + varName + ")");
-    }
-
-    private void While(AbstractSyntaxTree AST) throws IOException {
-        Cond(AST.get(0));
-        Code(AST.get(1));
-    }
-
-    private void Cond(AbstractSyntaxTree AST) {
-
-    }
-
-    private void Assign(AbstractSyntaxTree AST) throws IOException {
+    private void Read(AbstractSyntaxTree AST) {
         String varName = AST.get(0).getLabel().getValue().toString();
 
-        write("%" + varName + " = alloca i32");
+        if (!variables.contains(varName)) {
+            write("%" + varName + " = alloca i32");
+            variables.add(varName);
+        }
 
-        ExprArith(AST.get(1).get(0));
-
+        write("%" + unnamedVar + " = call i32 @readInt()");
         write("store i32 %" + unnamedVar + ", i32* %" + varName);
         unnamedVar++;
     }
 
-    private void ExprArith(AbstractSyntaxTree AST) throws IOException {
+    private void Print(AbstractSyntaxTree AST) {
+        String varName = AST.get(0).getLabel().getValue().toString();
+        write("%" + unnamedVar + " = load i32, i32* %" + varName);
+        write("call void @println(i32 %" + unnamedVar + ")");
+        unnamedVar++;
+    }
+
+    private void If(AbstractSyntaxTree AST, int index) {
+        ifIndex++;
+
+        boolean withElse = AST.getChildren().size() == 3; // True if there is an else
+
+        Cond(AST.get(0));
+
+        int cond = unnamedVar-1;
+        if (withElse) {
+            write("\nbr i1 %" + cond + ", label %ifCode" + index + ", label %elseCode" + index);
+        } else {
+            write("\nbr i1 %" + cond + ", label %ifCode" + index + ", label %endif" + index);
+        }
+        write("ifCode" + index + ":");
+
+        Code(AST.get(1));
+
+        write("br label %endif" + index);
+
+        if (withElse) {
+            write("elseCode" + index + ":");
+
+            Code(AST.get(2));
+
+            write("br label %endif" + index);
+        }
+
+        write("endif" + index + ":");
+    }
+
+    private void For(AbstractSyntaxTree AST, int index) {
+        forIndex++;
+
+        String varName = Assign(AST);
+
+        write("br label %forCond" + index);
+        write("forCond" + index + ":");
+
+        ExprArith(AST.get(0)); // Load i into an unnamed variable
+        int i = unnamedVar;
+        unnamedVar++;
+
+        AbstractSyntaxTree maxValue = AST.get(3).get(0);
+        boolean maxValueIsNumber = maxValue.getLabel().getType() == LexicalUnit.NUMBER;
+        int m;
+        if (maxValueIsNumber) {
+            m = (int) maxValue.getLabel().getValue();
+        }
+        else {
+            ExprArith(maxValue);
+            m = unnamedVar;
+            unnamedVar++;
+        }
+
+        int cond = unnamedVar;
+        StringBuilder llCode = new StringBuilder("%" + cond + " = icmp slt i32 %" + i + ", ");
+        if (!maxValueIsNumber) {
+            llCode.append("%");
+        }
+        llCode.append(m);
+
+        write(llCode.toString());
+        unnamedVar++;
+
+        AbstractSyntaxTree increment = AST.get(2).get(0);
+        boolean incrementIsNumber = increment.getLabel().getType() == LexicalUnit.NUMBER;
+        if (incrementIsNumber) {
+            m = (int) increment.getLabel().getValue();
+        }
+        else {
+            ExprArith(increment);
+            m = unnamedVar;
+            unnamedVar++;
+        }
+
+        int p = unnamedVar;
+        llCode = new StringBuilder("%" + p + " = add i32 %" + i + ", ");
+        if (!incrementIsNumber) {
+            llCode.append("%");
+        }
+        llCode.append(m);
+
+        write(llCode.toString());
+
+        write("store i32 %" + unnamedVar + ", i32* %" + varName);
+        unnamedVar++;
+
+        write("\nbr i1 %" + cond + ", label %forCode" + index + ", label %endfor" + index);
+        write("forCode" + index + ":");
+
+        Code(AST.get(4));
+
+        write("br label %forCond" + index);
+        write("endfor" + index + ":");
+    }
+
+    private void While(AbstractSyntaxTree AST, int index) {
+        whileIndex++;
+
+        write("br label %whileCond" + index);
+        write("whileCond" + index + ":");
+
+        Cond(AST.get(0));
+
+        int cond = unnamedVar-1;
+        write("\nbr i1 %" + cond + ", label %whileCode" + index + ", label %endwhile" + index);
+        write("whileCode" + index + ":");
+
+        Code(AST.get(1));
+
+        write("br label %whileCond" + index);
+        write("endwhile" + index + ":");
+    }
+
+    private void Cond(AbstractSyntaxTree AST) {
+        CondAnd(AST.get(0));
+        int n = unnamedVar-1;
+
+        for (int i = 1; i < AST.getChildren().size(); i++) {
+            CondAnd(AST.get(i));
+            int m = unnamedVar-1;
+
+            int p = unnamedVar;
+            write("%" + p + " = or i1 %" + n + ", %" + m);
+
+            unnamedVar++;
+            n = p;
+        }
+    }
+
+    private void CondAnd(AbstractSyntaxTree AST) {
+        SimpleCond(AST.get(0).get(0));
+        int n = unnamedVar;
+
+        unnamedVar++;
+        for (int i = 1; i < AST.getChildren().size(); i++) {
+            SimpleCond(AST.get(i).get(0));
+            int m = unnamedVar;
+
+            unnamedVar++;
+            int p = unnamedVar;
+            write("%" + p + " = and i1 %" + n + ", %" + m);
+
+            unnamedVar++;
+            n = p;
+        }
+    }
+
+    private void SimpleCond(AbstractSyntaxTree AST) {
         switch (AST.getLabel().getType()) {
-            case NUMBER:
-                write("%" + unnamedVar + " = i32 " + AST.getLabel().getValue());
+            case EQUAL:
+                operation(AST, "icmp eq");
                 break;
-            case VARNAME:
-                write("%" + unnamedVar + " = load i32, i32* " + AST.getLabel().getValue());
+            case DIFFERENT:
+                operation(AST, "icmp ne");
                 break;
-            case PLUS:
-                Plus(AST);
+            case GREATER:
+                operation(AST, "icmp sgt");
                 break;
-            case MINUS:
-                Minus(AST);
+            case GREATER_EQUAL:
+                operation(AST, "icmp sge");
                 break;
-            case TIMES:
-                Times(AST);
+            case SMALLER:
+                operation(AST, "icmp slt");
                 break;
-            case DIVIDE:
-                Divide(AST);
+            case SMALLER_EQUAL:
+                operation(AST, "icmp sle");
                 break;
         }
     }
 
-    private void operation(AbstractSyntaxTree AST, String operator) throws IOException {
-        ExprArith(AST.get(0));
-        int n = unnamedVar;
+    private String Assign(AbstractSyntaxTree AST) {
+        String varName = AST.get(0).getLabel().getValue().toString();
 
-        unnamedVar++;
-        ExprArith(AST.get(1));
-        int m = unnamedVar;
+        if (!variables.contains(varName)) {
+            write("%" + varName + " = alloca i32");
+            variables.add(varName);
+        }
 
-        unnamedVar++;
+        AbstractSyntaxTree rightTerm = AST.get(1).get(0);
+        boolean rightIsNumber = rightTerm.getLabel().getType() == LexicalUnit.NUMBER;
+        int m;
+        if (rightIsNumber) {
+            m = (int) rightTerm.getLabel().getValue();
+        }
+        else {
+            ExprArith(rightTerm);
+            m = unnamedVar;
+            unnamedVar++;
+        }
+
+        StringBuilder llCode = new StringBuilder("store i32 ");
+
+        if (!rightIsNumber) {
+            llCode.append("%");
+        }
+        llCode.append(m);
+        llCode.append(", i32* %");
+        llCode.append(varName);
+
+        write(llCode.toString());
+
+        return varName;
+    }
+
+    private void ExprArith(AbstractSyntaxTree AST) {
+        switch (AST.getLabel().getType()) {
+            case VARNAME:
+                write("%" + unnamedVar + " = load i32, i32* %" + AST.getLabel().getValue());
+                break;
+            case PLUS:
+                operation(AST, "add");
+                break;
+            case MINUS:
+                operation(AST, "sub");
+                break;
+            case TIMES:
+                operation(AST, "mul");
+                break;
+            case DIVIDE:
+                operation(AST, "sdiv");
+                break;
+        }
+    }
+
+    private void operation(AbstractSyntaxTree AST, String operator) {
+        AbstractSyntaxTree leftTerm = AST.get(0);
+        boolean leftIsNumber = leftTerm.getLabel().getType() == LexicalUnit.NUMBER;
+        int n;
+        if (leftIsNumber) {
+            n = (int) leftTerm.getLabel().getValue();
+        }
+        else {
+            ExprArith(leftTerm);
+            n = unnamedVar;
+            unnamedVar++;
+        }
+
+        AbstractSyntaxTree rightTerm = AST.get(1);
+        boolean rightIsNumber = rightTerm.getLabel().getType() == LexicalUnit.NUMBER;
+        int m;
+        if (rightIsNumber) {
+            m = (int) rightTerm.getLabel().getValue();
+        }
+        else {
+            ExprArith(rightTerm);
+            m = unnamedVar;
+            unnamedVar++;
+        }
+
         int p = unnamedVar;
-        write("%" + p + " = " + operator + " i32 %" + n + ", %" + m);
+
+        StringBuilder llCode = new StringBuilder("%" + p + " = " + operator + " i32 ");
+        if (!leftIsNumber) {
+            llCode.append("%");
+        }
+        llCode.append(n);
+
+        llCode.append(", ");
+        if (!rightIsNumber) {
+            llCode.append("%");
+        }
+        llCode.append(m);
+
+        write(llCode.toString());
     }
 
-    private void Plus(AbstractSyntaxTree AST) throws IOException {
-        operation(AST, "add");
-    }
-
-    private void Minus(AbstractSyntaxTree AST) throws IOException {
-        operation(AST, "sub");
-    }
-
-    private void Divide(AbstractSyntaxTree AST) throws IOException {
-        operation(AST, "sdiv");
-    }
-
-    private void Times(AbstractSyntaxTree AST) throws IOException {
-        operation(AST, "mul");
-    }
-
-    private void write(String llCode) throws IOException {
+    private void write(String llCode) {
         if(toFile) {
-            Files.write(outputFile, Collections.singleton(llCode + "\n"), StandardCharsets.UTF_8);
+            try {
+                Files.write(outputFile, Collections.singleton(llCode), StandardCharsets.UTF_8,
+                        StandardOpenOption.APPEND);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else {
             System.out.println(llCode);

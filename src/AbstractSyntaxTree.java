@@ -188,7 +188,7 @@ public class AbstractSyntaxTree {
         else {
             AbstractSyntaxTree child = children.get(0);
             if (child.label.getValue() == "<ExprArith>") {
-                if (child.children.size() == 3) {
+                if (child.children.size() >= 3) {
                     operatorChildren.add(child.rearrangeTree());
                 }
                 else {
@@ -216,7 +216,7 @@ public class AbstractSyntaxTree {
         else {
             AbstractSyntaxTree child = children.get(children.size()-1);
             if (child.label.getValue() == "<ExprArith>") {
-                if (child.children.size() == 3) {
+                if (child.children.size() >= 3) {
                     operatorChildren.add(child.rearrangeTree());
                 }
                 else {

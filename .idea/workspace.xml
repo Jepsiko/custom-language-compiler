@@ -7,9 +7,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dist/output.bc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/output.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/boolean.alg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/game.alg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ParseTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +117,9 @@
       <workItem from="1574784395884" duration="3621000" />
       <workItem from="1574788035990" duration="9039000" />
       <workItem from="1574805292860" duration="710000" />
-      <workItem from="1574806660400" duration="10179000" />
+      <workItem from="1574806660400" duration="14729000" />
+      <workItem from="1574856984682" duration="63000" />
+      <workItem from="1574857066931" duration="13357000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -211,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574848720605</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="No CondAnd simplification">
+      <created>1574849619127</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1574849619127</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -247,6 +269,7 @@
     <MESSAGE value="AST finished" />
     <MESSAGE value="Error corrected" />
     <MESSAGE value="AST corrected for simplecond with exprarith child which has only 1 child" />
-    <option name="LAST_COMMIT_MESSAGE" value="AST corrected for simplecond with exprarith child which has only 1 child" />
+    <MESSAGE value="No CondAnd simplification" />
+    <option name="LAST_COMMIT_MESSAGE" value="No CondAnd simplification" />
   </component>
 </project>
