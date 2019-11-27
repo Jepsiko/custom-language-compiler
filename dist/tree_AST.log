@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  27 NOV 2019 10:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  27 NOV 2019 11:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -794,16 +794,16 @@ Missing character: There is no ; in font nullfont!
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree_AST.aux) ) 
 Here is how much of TeX's memory you used:
- 35802 strings out of 494894
- 799148 string characters out of 6179472
- 797645 words of memory out of 5000000
- 38818 multiletter control sequences out of 15000+600000
+ 36113 strings out of 494894
+ 804446 string characters out of 6179472
+ 802115 words of memory out of 5000000
+ 39129 multiletter control sequences out of 15000+600000
  531035 words of font info for 23 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 193i,9n,202p,10360b,4962s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 193i,9n,202p,10360b,5142s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/
 jepsiko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk>
-Output written on tree_AST.pdf (1 page, 12286 bytes).
+Output written on tree_AST.pdf (1 page, 12424 bytes).
 PDF statistics:
  45 PDF objects out of 1000 (max. 8388607)
  11 compressed objects within 1 object stream

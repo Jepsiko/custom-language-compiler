@@ -110,11 +110,6 @@ public class AbstractSyntaxTree {
     }
 
     public void simplify() {
-        if (label.getValue() == "<Cond>"  && children.size() == 1) {
-            AbstractSyntaxTree child = children.get(0);
-            children = child.children;
-        }
-
         if (label.getValue() == "<ExprArith>" && children.size() == 1) {
             AbstractSyntaxTree child = children.get(0);
 

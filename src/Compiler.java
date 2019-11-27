@@ -38,18 +38,68 @@ public class Compiler {
     }
 
     private void begin() throws IOException {
-        write("define i32 @main() {\n" +
+        write("@.strP = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1\n" +
+                "\n" +
+                "; Function Attrs: nounwind uwtable\n" +
+                "define void @println(i32 %x) #0 {\n" +
+                "\t%1 = alloca i32, align 4\n" +
+                "\tstore i32 %x, i32* %1, align 4\n" +
+                "\t%2 = load i32, i32* %1, align 4\n" +
+                "\t%3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.strP, i32 0, i32 0), i32 %2)\n" +
+                "\tret void\n" +
+                "}\n" +
+                "\n" +
+                "declare i32 @printf(i8*, ...) #1\n" +
+                "\n" +
+                "declare i32 @getchar()\n" +
+                "\n" +
+                "define i32 @readInt() {\n" +
+                "entry:\n" +
+                "\t%res = alloca i32\n" +
+                "\tstore i32 0, i32* %res\n" +
+                "\tbr label %loop\n" +
+                "loop:\n" +
+                "\t%0 = call i32 @getchar()\n" +
+                "\t%1 = sub i32 %0, 48\n" +
+                "\n" +
+                "\t%2 = icmp sge i32 %1, 0\n" +
+                "\t%3 = icmp sle i32 %1, 9\n" +
+                "\t%4 = and i1 %2, %3\n" +
+                "\tbr i1 %4, label %continue, label %exit\n" +
+                "continue:\n" +
+                "\t%5 = load i32, i32* %res\n" +
+                "\t%6 = mul i32 %5, 10\n" +
+                "\t%7 = add i32 %6, %1\n" +
+                "\tstore i32 %7, i32* %res\n" +
+                "\n" +
+                "\tbr label %loop\n" +
+                "exit:\n" +
+                "\t%8 = load i32, i32* %res\n" +
+                "\tret i32 %8\n" +
+                "}\n" +
+                "\n" +
+                "\n" +
+                "define i32 @main() {\n" +
                 "entry:\n");
     }
 
     private void Code(AbstractSyntaxTree AST) throws IOException {
         for (AbstractSyntaxTree child : AST.getChildren()) {
-            if (child.getLabel().getValue() == "<Assign>") {
-                Assign(child);
+            switch (child.getLabel().getValue().toString()) {
+                case "<Assign>":
+                    Assign(child);
+                    break;
+                case "<Read>":
+                    Read(child);
+                    break;
+                case "<Print>":
+                    Print(child);
+                    break;
+                case "<While>":
+                    While(child);
+                    break;
             }
-            else if (child.getLabel().getValue() == "") {
-
-            }
+            write(""); // Empty line between each group of instruction
         }
     }
 
@@ -57,14 +107,33 @@ public class Compiler {
         write("}");
     }
 
+    private void Read(AbstractSyntaxTree AST) throws IOException {
+        String varName = AST.get(0).getLabel().getValue().toString();
+        write("%" + varName + " = call i32 @readInt()");
+    }
+
+    private void Print(AbstractSyntaxTree AST) throws IOException {
+        String varName = AST.get(0).getLabel().getValue().toString();
+        write("call void @println(i32 %" + varName + ")");
+    }
+
+    private void While(AbstractSyntaxTree AST) throws IOException {
+        Cond(AST.get(0));
+        Code(AST.get(1));
+    }
+
+    private void Cond(AbstractSyntaxTree AST) {
+
+    }
+
     private void Assign(AbstractSyntaxTree AST) throws IOException {
         String varName = AST.get(0).getLabel().getValue().toString();
 
-        write("%" + varName + "= alloca i32");
+        write("%" + varName + " = alloca i32");
 
         ExprArith(AST.get(1).get(0));
 
-        write("store i32 %" + unnamedVar + ", i32* %" + varName + "\n");
+        write("store i32 %" + unnamedVar + ", i32* %" + varName);
         unnamedVar++;
     }
 
