@@ -7,14 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dist/game.bc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/game.ll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/output.bc" beforeDir="false" afterPath="$PROJECT_DIR$/dist/output.bc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/output.ll" beforeDir="false" afterPath="$PROJECT_DIR$/dist/output.ll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/game.alg" beforeDir="false" afterPath="$PROJECT_DIR$/test/game.alg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,6 +33,11 @@
     <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -54,18 +57,6 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -82,6 +73,18 @@
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -109,7 +112,10 @@
       <workItem from="1574805292860" duration="710000" />
       <workItem from="1574806660400" duration="14729000" />
       <workItem from="1574856984682" duration="63000" />
-      <workItem from="1574857066931" duration="13716000" />
+      <workItem from="1574857066931" duration="13814000" />
+      <workItem from="1574940442957" duration="128000" />
+      <workItem from="1575022444050" duration="5000" />
+      <workItem from="1576488878651" duration="5520000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -230,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574872644038</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Game test finishes well">
+      <created>1574873078478</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1574873078478</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,6 +281,33 @@
     <MESSAGE value="AST corrected for simplecond with exprarith child which has only 1 child" />
     <MESSAGE value="No CondAnd simplification" />
     <MESSAGE value="Working compiler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working compiler" />
+    <MESSAGE value="Game test finishes well" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game test finishes well" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576488988434">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576488988434" />
+    <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1576496829997">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576496829997" />
+    <state width="1807" height="277" key="GridCell.Tab.0.bottom" timestamp="1576491462903">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1576491462903" />
+    <state width="1807" height="277" key="GridCell.Tab.0.center" timestamp="1576491462902">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1576491462902" />
+    <state width="1807" height="277" key="GridCell.Tab.0.left" timestamp="1576491462902">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1576491462902" />
+    <state width="1807" height="277" key="GridCell.Tab.0.right" timestamp="1576491462903">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576491462903" />
   </component>
 </project>
