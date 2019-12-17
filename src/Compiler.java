@@ -187,6 +187,9 @@ public class Compiler {
     private void For(AbstractSyntaxTree AST, int index) {
         forIndex++;
 
+        /*
+        Creation of the variable of the for loop
+         */
         String varName = Assign(AST);
 
         write("br label %forCond" + index);
@@ -196,6 +199,9 @@ public class Compiler {
         int i = unnamedVar;
         unnamedVar++;
 
+        /*
+        Comparison of the variable with the maximal value
+         */
         AbstractSyntaxTree maxValue = AST.get(3).get(0);
         boolean maxValueIsNumber = maxValue.getLabel().getType() == LexicalUnit.NUMBER;
         int m;
@@ -218,6 +224,17 @@ public class Compiler {
         write(llCode.toString());
         unnamedVar++;
 
+        /*
+        Beginning of the inner code of the for loop
+         */
+        write("\nbr i1 %" + cond + ", label %forCode" + index + ", label %endfor" + index);
+        write("forCode" + index + ":");
+
+        Code(AST.get(4));
+
+        /*
+        Increment the value of the variable
+         */
         AbstractSyntaxTree increment = AST.get(2).get(0);
         boolean incrementIsNumber = increment.getLabel().getType() == LexicalUnit.NUMBER;
         if (incrementIsNumber) {
@@ -241,11 +258,9 @@ public class Compiler {
         write("store i32 %" + unnamedVar + ", i32* %" + varName);
         unnamedVar++;
 
-        write("\nbr i1 %" + cond + ", label %forCode" + index + ", label %endfor" + index);
-        write("forCode" + index + ":");
-
-        Code(AST.get(4));
-
+        /*
+        End of the for loop
+         */
         write("br label %forCond" + index);
         write("endfor" + index + ":");
     }

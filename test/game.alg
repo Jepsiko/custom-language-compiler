@@ -15,18 +15,21 @@ begin
         if win = 0 then
             co Value of the user
             read(try);
-
-            if try > guess then
-                print(less)
-            else
-                if try < guess then
-                    print(more)
-                else
+            if i /= 4 then
+                if try = guess then
                     print(OK);
                     win := 1
+                endif;
+
+                if try > guess then
+                    print(less)
+                endif;
+
+                if try < guess then
+                    print(more)
                 endif
             endif
-           endif
+        endif
     endwhile;
     if win = 0 then
         print(KO)

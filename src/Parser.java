@@ -44,8 +44,6 @@ class Parser {
      */
     ParseTree parse() {
         ParseTree parseTree = Program();
-        if (!v)
-            System.out.println();
 
         if (syntaxError)
             return null;

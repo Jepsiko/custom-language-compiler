@@ -6,13 +6,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Main of the Code, read the code and call the parser
  */
 public class Main{
-    public static void main(String[] args) throws FileNotFoundException, IOException, SecurityException, InterruptedException {
+    public static void main(String[] args) throws IOException, SecurityException, InterruptedException {
 
         if (args.length == 0)
             System.exit(-1) ;
@@ -26,6 +25,7 @@ public class Main{
         String arg = args[i];
         if (arg.equals("-exec")) {
             execute = true;
+            outputFile = "temp.ll";
             i++;
             arg = args[i];
         }
@@ -48,8 +48,6 @@ public class Main{
             }
             i++;
         }
-
-
 
         final LexicalAnalyzer analyzer = new LexicalAnalyzer(Source);
         List<Symbol> symbols = new ArrayList<>();
@@ -81,12 +79,18 @@ public class Main{
         Compiler compiler = new Compiler(outputFile);
         compiler.compile(AST);
 
-        if (execute && !outputFile.equals("")) {
+        if (execute) {
             String byteCodeFile = outputFile.substring(0, outputFile.length()-2) + "bc";
             Process process = new ProcessBuilder("llvm-as", outputFile, "-o=" + byteCodeFile).start();
             process.waitFor();
 
-            // TODO: interpret the code
+            process = new ProcessBuilder("lli", byteCodeFile).inheritIO().start();
+            process.waitFor();
+
+            File tempFile = new File("temp.ll");
+            tempFile.delete();
+            tempFile = new File("temp.bc");
+            tempFile.delete();
         }
     }
 }
