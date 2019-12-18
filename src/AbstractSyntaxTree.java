@@ -8,7 +8,7 @@ public class AbstractSyntaxTree {
     private Compiler compiler;
 
     /**
-     * Creates a singleton tree with only a root labeled by lbl.
+     * Creates a singleton tree with only a root labeled by label.
      *
      * @param label The label of the root
      */
@@ -17,7 +17,7 @@ public class AbstractSyntaxTree {
     }
 
     /**
-     * Creates a tree with root labeled by lbl and children chdn.
+     * Creates a tree with root labeled by label and with children.
      *
      * @param label    The label of the root
      * @param children Its children
@@ -233,15 +233,6 @@ public class AbstractSyntaxTree {
         return operator;
     }
 
-    public List<AbstractSyntaxTree> traversal() {
-        List<AbstractSyntaxTree> path = new ArrayList<>();
-        path.add(this);
-        for (AbstractSyntaxTree child : children) {
-            path.addAll(child.traversal());
-        }
-        return path;
-    }
-
     public Symbol getLabel() {
         return label;
     }
@@ -250,7 +241,7 @@ public class AbstractSyntaxTree {
         return children;
     }
 
-    public AbstractSyntaxTree get(int i) {
+    public AbstractSyntaxTree childAt(int i) {
         return children.get(i);
     }
 }

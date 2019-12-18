@@ -24,7 +24,7 @@ Num = [0-9]
 AlphaNum = {Alpha}|{Num}
 VarName = {Alpha} {AlphaNum}*
 Number = "-"?{Num}+
-Space		= (\t | \f | " ")
+Space = (\t | \f | " ")
 Separator = ({Space}|{EndOfLine})
 Any = ([^"\n""\r"])*
 UpToEnd = ({Space}{Any}{EndOfLine}) | ({EndOfLine})
@@ -83,12 +83,12 @@ UpToEnd = ({Space}{Any}{EndOfLine}) | ({EndOfLine})
 
    {VarName}     {return new Symbol(LexicalUnit.VARNAME, yyline, yycolumn, yytext());}
 
-   {Separator}  {}
+   {Separator}   {}
    [^]			 {throw new PatternSyntaxException("Unmatched token, out of symbols", yytext(), yyline);}	//unmatched token gives an error
 }
 
 <LONG_COMMENT>{
    [^]			        {}
-   "CO"{Separator}     {yybegin(YYINITIAL);}
+   "CO"{Separator}      {yybegin(YYINITIAL);}
    <<EOF>>              {throw new PatternSyntaxException("A comment is never closed.",yytext(),yyline);}
 }

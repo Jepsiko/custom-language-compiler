@@ -7,12 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/game.bc" beforeDir="false" afterPath="$PROJECT_DIR$/dist/game.bc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/game.ll" beforeDir="false" afterPath="$PROJECT_DIR$/dist/game.ll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/game.alg" beforeDir="false" afterPath="$PROJECT_DIR$/test/game.alg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LexicalAnalyzer.flex" beforeDir="false" afterPath="$PROJECT_DIR$/src/LexicalAnalyzer.flex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +54,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
@@ -119,7 +120,13 @@
       <workItem from="1576488878651" duration="5854000" />
       <workItem from="1576582832599" duration="222000" />
       <workItem from="1576593040868" duration="3437000" />
-      <workItem from="1576610493450" duration="2290000" />
+      <workItem from="1576610493450" duration="4049000" />
+      <workItem from="1576672517894" duration="80000" />
+      <workItem from="1576672615794" duration="92000" />
+      <workItem from="1576672724635" duration="281000" />
+      <workItem from="1576673176487" duration="629000" />
+      <workItem from="1576674444951" duration="3052000" />
+      <workItem from="1576680727407" duration="596000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -261,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576612168383</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Code Algol corrected">
+      <created>1576612800574</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1576612800574</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,7 +316,8 @@
     <MESSAGE value="Game test finishes well" />
     <MESSAGE value="The code compile but is not interpreted yet" />
     <MESSAGE value="Fixed the variable of the for loop" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the variable of the for loop" />
+    <MESSAGE value="Code Algol corrected" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code Algol corrected" />
   </component>
   <component name="WindowStateProjectService">
     <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576488988434">
@@ -313,14 +328,26 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="695" y="357" width="586" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1576596133940" />
+    <state x="834" y="444" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1576675105935">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="834" y="444" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576675105935" />
+    <state x="571" y="210" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor" timestamp="1576674532703">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="571" y="210" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576674532703" />
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1576496829997">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576496829997" />
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2" timestamp="1576612167868">
+    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2" timestamp="1576612800381">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576612167868" />
+    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576612800381" />
+    <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576672874004">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1576672874004" />
     <state width="1807" height="277" key="GridCell.Tab.0.bottom" timestamp="1576597141748">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -337,9 +364,13 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="277" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576597141747" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576612171058">
+    <state x="482" y="187" width="1024" height="845" key="SettingsEditor" timestamp="1576672804771">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576612171058" />
+    <state x="482" y="187" width="1024" height="845" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576672804771" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576612802144">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576612802144" />
   </component>
 </project>

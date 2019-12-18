@@ -8,15 +8,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Class for the compiler.
+ * The compiler can compile from an AbstractSyntaxTree.
+ */
 public class Compiler {
+    /**
+     * Path to the .ll file for the compiled code
+     */
     private Path outputFile;
+    /**
+     * Boolean equal to true if we write to file, false if we write on the stdin
+     */
     private final boolean toFile;
-
+    /**
+     * Number representing an unnamed variable, incremented each time the variable isn't used anymore
+     */
     private int unnamedVar;
+    /**
+     * Different index for each while loop to make each label unique
+     */
     private int whileIndex;
+    /**
+     * Different index for each for loop to make each label unique
+     */
     private int forIndex;
+    /**
+     * Different index for each if/else condition to make each label unique
+     */
     private int ifIndex;
-
+    /**
+     * List of all the variables used in the program
+     */
     private List<String> variables;
 
     public Compiler() {
@@ -48,13 +71,19 @@ public class Compiler {
         variables = new ArrayList<>();
     }
 
+    /**
+     * Compile function which takes the AbstractSyntaxTree reprensenting the code and creates
+     * a LLVM IR code corresponding to the algorithm of the AST.
+     *
+     * @param AST AbstractSyntaxTree representing the ALGOL0 code to be compiled
+     */
     public void compile(AbstractSyntaxTree AST) {
         Program(AST);
     }
 
     private void Program(AbstractSyntaxTree AST) {
         begin();
-        Code(AST.get(1));
+        Code(AST.childAt(1));
         end();
     }
 
@@ -135,7 +164,7 @@ public class Compiler {
     }
 
     private void Read(AbstractSyntaxTree AST) {
-        String varName = AST.get(0).getLabel().getValue().toString();
+        String varName = AST.childAt(0).getLabel().getValue().toString();
 
         if (!variables.contains(varName)) {
             write("%" + varName + " = alloca i32");
@@ -148,7 +177,7 @@ public class Compiler {
     }
 
     private void Print(AbstractSyntaxTree AST) {
-        String varName = AST.get(0).getLabel().getValue().toString();
+        String varName = AST.childAt(0).getLabel().getValue().toString();
         write("%" + unnamedVar + " = load i32, i32* %" + varName);
         write("call void @println(i32 %" + unnamedVar + ")");
         unnamedVar++;
@@ -159,7 +188,7 @@ public class Compiler {
 
         boolean withElse = AST.getChildren().size() == 3; // True if there is an else
 
-        Cond(AST.get(0));
+        Cond(AST.childAt(0));
 
         int cond = unnamedVar-1;
         if (withElse) {
@@ -169,14 +198,14 @@ public class Compiler {
         }
         write("ifCode" + index + ":");
 
-        Code(AST.get(1));
+        Code(AST.childAt(1));
 
         write("br label %endif" + index);
 
         if (withElse) {
             write("elseCode" + index + ":");
 
-            Code(AST.get(2));
+            Code(AST.childAt(2));
 
             write("br label %endif" + index);
         }
@@ -195,14 +224,14 @@ public class Compiler {
         write("br label %forCond" + index);
         write("forCond" + index + ":");
 
-        ExprArith(AST.get(0)); // Load i into an unnamed variable
+        ExprArith(AST.childAt(0)); // Load i into an unnamed variable
         int i = unnamedVar;
         unnamedVar++;
 
         /*
         Comparison of the variable with the maximal value
          */
-        AbstractSyntaxTree maxValue = AST.get(3).get(0);
+        AbstractSyntaxTree maxValue = AST.childAt(3).childAt(0);
         boolean maxValueIsNumber = maxValue.getLabel().getType() == LexicalUnit.NUMBER;
         int m;
         if (maxValueIsNumber) {
@@ -230,12 +259,12 @@ public class Compiler {
         write("\nbr i1 %" + cond + ", label %forCode" + index + ", label %endfor" + index);
         write("forCode" + index + ":");
 
-        Code(AST.get(4));
+        Code(AST.childAt(4));
 
         /*
         Increment the value of the variable
          */
-        AbstractSyntaxTree increment = AST.get(2).get(0);
+        AbstractSyntaxTree increment = AST.childAt(2).childAt(0);
         boolean incrementIsNumber = increment.getLabel().getType() == LexicalUnit.NUMBER;
         if (incrementIsNumber) {
             m = (int) increment.getLabel().getValue();
@@ -271,24 +300,24 @@ public class Compiler {
         write("br label %whileCond" + index);
         write("whileCond" + index + ":");
 
-        Cond(AST.get(0));
+        Cond(AST.childAt(0));
 
         int cond = unnamedVar-1;
         write("\nbr i1 %" + cond + ", label %whileCode" + index + ", label %endwhile" + index);
         write("whileCode" + index + ":");
 
-        Code(AST.get(1));
+        Code(AST.childAt(1));
 
         write("br label %whileCond" + index);
         write("endwhile" + index + ":");
     }
 
     private void Cond(AbstractSyntaxTree AST) {
-        CondAnd(AST.get(0));
+        CondAnd(AST.childAt(0));
         int n = unnamedVar-1;
 
         for (int i = 1; i < AST.getChildren().size(); i++) {
-            CondAnd(AST.get(i));
+            CondAnd(AST.childAt(i));
             int m = unnamedVar-1;
 
             int p = unnamedVar;
@@ -300,12 +329,12 @@ public class Compiler {
     }
 
     private void CondAnd(AbstractSyntaxTree AST) {
-        SimpleCond(AST.get(0).get(0));
+        SimpleCond(AST.childAt(0).childAt(0));
         int n = unnamedVar;
 
         unnamedVar++;
         for (int i = 1; i < AST.getChildren().size(); i++) {
-            SimpleCond(AST.get(i).get(0));
+            SimpleCond(AST.childAt(i).childAt(0));
             int m = unnamedVar;
 
             unnamedVar++;
@@ -341,14 +370,14 @@ public class Compiler {
     }
 
     private String Assign(AbstractSyntaxTree AST) {
-        String varName = AST.get(0).getLabel().getValue().toString();
+        String varName = AST.childAt(0).getLabel().getValue().toString();
 
         if (!variables.contains(varName)) {
             write("%" + varName + " = alloca i32");
             variables.add(varName);
         }
 
-        AbstractSyntaxTree rightTerm = AST.get(1).get(0);
+        AbstractSyntaxTree rightTerm = AST.childAt(1).childAt(0);
         boolean rightIsNumber = rightTerm.getLabel().getType() == LexicalUnit.NUMBER;
         int m;
         if (rightIsNumber) {
@@ -395,7 +424,7 @@ public class Compiler {
     }
 
     private void operation(AbstractSyntaxTree AST, String operator) {
-        AbstractSyntaxTree leftTerm = AST.get(0);
+        AbstractSyntaxTree leftTerm = AST.childAt(0);
         boolean leftIsNumber = leftTerm.getLabel().getType() == LexicalUnit.NUMBER;
         int n;
         if (leftIsNumber) {
@@ -407,7 +436,7 @@ public class Compiler {
             unnamedVar++;
         }
 
-        AbstractSyntaxTree rightTerm = AST.get(1);
+        AbstractSyntaxTree rightTerm = AST.childAt(1);
         boolean rightIsNumber = rightTerm.getLabel().getType() == LexicalUnit.NUMBER;
         int m;
         if (rightIsNumber) {

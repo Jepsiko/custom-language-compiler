@@ -15,7 +15,6 @@ class Parser {
      * Verbose boolean
      */
     private final boolean v;
-
     /**
      * Lookahead pointer
      */
@@ -35,7 +34,6 @@ class Parser {
         this.l = 0;
         this.syntaxError = false;
     }
-
 
     /**
      * Parse the symbols and return the parse tree if there is no syntax error.
