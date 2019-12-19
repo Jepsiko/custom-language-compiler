@@ -1,0 +1,15 @@
+\documentclass[border=5pt]{standalone}
+
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{forest}
+
+\begin{document}
+
+\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{begin} ][{<Code>} [{<Assign>} [{a} ][{<ExprArith>} [{2} ]]][{<Assign>} [{b} ][{<ExprArith>} [{1} ]]][{<Assign>} [{c} ][{<ExprArith>} [{0} ]]][{<If>} [{<Cond>} [{<Cond>} [{<Cond>} [{<ExprArith>} [{a} ][{*} ]][{0} ]][{<ExprArith>} [{a} ]][{0} ]][{and} ][{b} ][{/} ][{<} ][{<ExprArith>} [{1} ]]][{<Code>} [{<Print>} [{a} ]]]]][{end} ]];
+\end{forest}
+
+\end{document}
+%% Local Variables:
+%% TeX-engine: pdflatex
+%% End:

@@ -7,28 +7,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/boolean-parenthesis.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/boolean-parenthesis.bc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/boolean-parenthesis.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.aux" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/boolean-parenthesis.alg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tree.tex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tree_AST.tex" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tree_AST_building.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree_AST.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree_AST.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST_building.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST_building.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST_building.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST_building.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ParseTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/tree.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +137,7 @@
       <workItem from="1576674444951" duration="3052000" />
       <workItem from="1576680727407" duration="873000" />
       <workItem from="1576683281604" duration="17074000" />
-      <workItem from="1576753405017" duration="1279000" />
+      <workItem from="1576753405017" duration="7642000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -306,7 +293,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576681341486</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Not compiling because I fucked up">
+      <created>1576754706107</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1576754706107</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -349,13 +343,14 @@
     <MESSAGE value="Fixed the variable of the for loop" />
     <MESSAGE value="Code Algol corrected" />
     <MESSAGE value="Working Compiler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working Compiler" />
+    <MESSAGE value="Not compiling because I fucked up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Not compiling because I fucked up" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576690062503">
+    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576755241451">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576690062503" />
+    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576755241451" />
     <state x="695" y="357" width="671" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576684279947">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -368,37 +363,41 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="571" y="210" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576674532703" />
+    <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1576759376464">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="676" y="280" width="624" height="544" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576759376464" />
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1576496829997">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576496829997" />
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2" timestamp="1576681341141">
+    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2" timestamp="1576761139831">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576681341141" />
+    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576761139831" />
     <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576672874004">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1576672874004" />
-    <state width="1807" height="277" key="GridCell.Tab.0.bottom" timestamp="1576703500704">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="474" key="GridCell.Tab.0.bottom" timestamp="1576761010899">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642794" />
+    <state width="1807" height="474" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1576761010899" />
     <state width="1807" height="277" key="GridCell.Tab.0.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500704" />
-    <state width="1807" height="277" key="GridCell.Tab.0.center" timestamp="1576703500701">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="474" key="GridCell.Tab.0.center" timestamp="1576761010898">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642793" />
+    <state width="1807" height="474" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1576761010898" />
     <state width="1807" height="277" key="GridCell.Tab.0.center/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500701" />
-    <state width="1807" height="277" key="GridCell.Tab.0.left" timestamp="1576703500701">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="474" key="GridCell.Tab.0.left" timestamp="1576761010898">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642793" />
+    <state width="1807" height="474" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1576761010898" />
     <state width="1807" height="277" key="GridCell.Tab.0.left/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500701" />
-    <state width="1807" height="277" key="GridCell.Tab.0.right" timestamp="1576703500703">
-      <screen x="67" y="27" width="3773" height="1053" />
+    <state width="1807" height="474" key="GridCell.Tab.0.right" timestamp="1576761010898">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642793" />
+    <state width="1807" height="474" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576761010898" />
     <state width="1807" height="277" key="GridCell.Tab.0.right/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500703" />
     <state width="1807" height="343" key="GridCell.Tab.1.bottom" timestamp="1576703500691">
       <screen x="67" y="27" width="3773" height="1053" />
@@ -428,10 +427,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="482" y="187" width="1024" height="845" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576753872686" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576681400046">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576754783307">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576681400046" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576754783307" />
     <state x="726" y="307" width="554" height="500" key="extract.method.dialog" timestamp="1576686690089">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

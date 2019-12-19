@@ -33,7 +33,8 @@ public class AbstractSyntaxTree {
     }
 
     public AbstractSyntaxTree(ParseTree parseTree) {
-        createTree(parseTree, this);
+        this(parseTree.getLabel(), new ArrayList<>());
+        createTree(parseTree.getChildren(), children);
 
         try {
             Path file = Paths.get("tree_AST_building.tex");
@@ -293,54 +294,74 @@ public class AbstractSyntaxTree {
         return label.getValue();
     }
 
-    static private void createTree(ParseTree parseTree, AbstractSyntaxTree abstractSyntaxTree) {
-        abstractSyntaxTree.label = parseTree.getLabel();
-
-
+    static private void createTree(List<ParseTree> childrenPT, List<AbstractSyntaxTree> childrenAST) {
+        for (ParseTree childPT : childrenPT) {
+            System.out.println(childPT.getLabel().getValue());
+            if (childPT.getLabel().isTerminal()) {
+                if (isToBeKept(childPT)) {
+                    System.out.println("Child added : " + childPT.getLabel().getValue().toString());
+                    childrenAST.add(new AbstractSyntaxTree(childPT.getLabel()));
+                }
+            }
+            else {
+                if (isToBeKept(childPT)) {
+                    System.out.println("Child added : " + childPT.getLabel().getValue().toString());
+                    childrenAST.add(new AbstractSyntaxTree(childPT.getLabel()));
+                    createTree(childPT.getChildren(), childrenAST.get(childrenAST.size()-1).children);
+                }
+                else {
+                    for (ParseTree greatChildPT : childPT.getChildren()) {
+                        System.out.println(greatChildPT.getLabel().getValue());
+                        if (isToBeKept(greatChildPT)) {
+                            //childrenAST.add(new AbstractSyntaxTree(greatChildPT.getLabel()));
+                            System.out.println("Great child added : " + greatChildPT.getLabel().getValue().toString());
+                        }
+                        createTree(greatChildPT.getChildren(), childrenAST);
+                    }
+                }
+            }
+        }
     }
 
     static private boolean isToBeKept(ParseTree nodeParseTree) {
         if (nodeParseTree.getLabel().isNonTerminal()) {
             String nonTerminal = nodeParseTree.getLabel().getValue().toString();
             switch (nonTerminal) {
-                case "<InstList>":
-                case "<Instruction>":
-                case "<NextInst>":
-                case "<ExprArith'>":
-                case "<Prod>":
-                case "<Prod'>":
-                case "<Atom>":
-                case "<IfSeq>":
-                case "<Cond'>":
-                case "<CondAnd>":
-                case "<CondAnd'>":
-                case "<SimpleCond>":
-                case "<SimpleCond'>":
-                    return false;
+                case "<Program>":
+                case "<Code>":
+                case "<Assign>":
+                case "<If>":
+                case "<While>":
+                case "<For>":
+                case "<Print>":
+                case "<Read>":
+                case "<ExprArith>":
+                case "<Cond>":
+                    return true;
             }
         } else {
             LexicalUnit terminal = nodeParseTree.getLabel().getType();
             switch (terminal) {
-                case LEFT_PARENTHESIS:
-                case RIGHT_PARENTHESIS:
-                case SEMICOLON:
-                case READ:
-                case DO:
-                case THEN:
-                case BY:
-                case TO:
-                case FROM:
-                case FOR:
-                case IF:
-                case PRINT:
-                case ENDIF:
-                case ELSE:
-                case ENDWHILE:
-                case ASSIGN:
-                case WHILE:
-                    return false;
+                case VARNAME:
+                case MINUS:
+                case NUMBER:
+                case OR:
+                case EQUAL:
+                case GREATER:
+                case SMALLER:
+                case DIFFERENT:
+                case GREATER_EQUAL:
+                case SMALLER_EQUAL:
+                case AND:
+                case END:
+                case PLUS:
+                case NOT:
+                case TIMES:
+                case DIVIDE:
+                case BEG:
+                    return true;
             }
         }
-        return true;
+        return false;
     }
 }
