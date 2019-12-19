@@ -329,9 +329,10 @@ public class Compiler {
         write("br label %whileCond" + index);
         write("whileCond" + index + ":");
 
-        Cond(AST.childAt(0));
+        Cond(AST.childAt(0).childAt(0));
 
-        int cond = unnamedVar-1;
+        int cond = unnamedVar;
+        unnamedVar++;
         write("\nbr i1 %" + cond + ", label %whileCode" + index + ", label %endwhile" + index);
         write("whileCode" + index + ":");
 

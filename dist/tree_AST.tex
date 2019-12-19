@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{begin} ][{<Code>} [{<Read>} [{a} ]][{<Read>} [{b} ]][{<Read>} [{c} ]][{<If>} [{<Cond>} [{or} [{<=} [{a} ][{0} ]][{and} [{>} [{b} ][{2} ]][{<} [{c} ][{1} ]]]]][{<Code>} [{<Print>} [{a} ]][{<Print>} [{b} ]][{<Print>} [{c} ]]]]][{end} ]];
+\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{begin} ][{<Code>} [{<Read>} [{a} ]][{<Read>} [{b} ]][{<While>} [{<Cond>} [{/=} [{b} ][{0} ]]][{<Code>} [{<Assign>} [{c} ][{<ExprArith>} [{b} ]]][{<While>} [{<Cond>} [{>=} [{a} ][{b} ]]][{<Code>} [{<Assign>} [{a} ][{<ExprArith>} [{-} [{a} ][{b} ]]]]]][{<Assign>} [{b} ][{<ExprArith>} [{a} ]]][{<Assign>} [{a} ][{<ExprArith>} [{c} ]]]]][{<Print>} [{a} ]]][{end} ]];
 \end{forest}
 
 \end{document}
