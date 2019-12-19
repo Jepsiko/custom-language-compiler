@@ -326,7 +326,7 @@ public class Compiler {
 
         write(llCode.toString());
 
-        write("store i32 %" + unnamedVar + ", i32* %" + varName);
+        write("store i32 %" + p + ", i32* %" + varName);
         unnamedVar++;
 
         /*
