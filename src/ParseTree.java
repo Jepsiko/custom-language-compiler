@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Stack;
 
 /**
  * A skeleton class to represent parse trees. The arity is not fixed: a node can
@@ -120,111 +119,23 @@ public class ParseTree {
                 + toForestPicture() + "\n\n\\end{document}\n%% Local Variables:\n%% TeX-engine: pdflatex\n%% End:";
     }
 
-    static public AbstractSyntaxTree toAST(ParseTree parseTree) {
-        AbstractSyntaxTree AST = createTree(parseTree);
-
-        AST.simplify();
-
-        return AST;
+    public Symbol getLabel() {
+        return label;
     }
 
-    static private AbstractSyntaxTree createTree(ParseTree parseTree) {
-
-        List<AbstractSyntaxTree> childrenAST = new ArrayList<>();
-
-        for (ParseTree child : parseTree.children) {
-            if (child.label.isTerminal()) { // If terminal to keep
-                if (isToBeKept(child)) {
-                    childrenAST.add(new AbstractSyntaxTree(child.label));
-                }
-            } else if (child.label.isNonTerminal()) {
-                if (isToBeKept(child)) {
-                    childrenAST.add(createTree(child));
-                } else {
-                    Stack<ParseTree> stack = new Stack<>();
-                    for (int i = child.children.size()-1; i >= 0; i--) { // Initialization of the stack
-                        ParseTree greatChild = child.children.get(i); // Little child
-                        if (isToBeKept(greatChild)) {
-                            if (greatChild.label.isTerminal()) {
-                                childrenAST.add(new AbstractSyntaxTree(greatChild.label));
-                            }
-                            else {
-                                childrenAST.add(createTree(greatChild));
-                            }
-                        }
-                        else {
-                            stack.push(greatChild);
-                        }
-                    }
-
-                    ParseTree current;
-                    while (!stack.isEmpty()) {
-
-                        current = stack.pop();
-                        for (int i = current.children.size()-1; i >= 0; i--) {
-                            ParseTree greatChild = current.children.get(i);
-                            if (isToBeKept(greatChild)) {
-                                if (greatChild.label.isTerminal()) {
-                                    childrenAST.add(new AbstractSyntaxTree(greatChild.label));
-                                }
-                                else {
-                                    childrenAST.add(createTree(greatChild));
-                                }
-                            }
-                            else {
-                                stack.push(greatChild);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return new AbstractSyntaxTree(parseTree.label, childrenAST);
+    public List<ParseTree> getChildren() {
+        return children;
     }
 
-    static private boolean isToBeKept(ParseTree parseTree) {
-        if (parseTree.label.isNonTerminal()) {
-            String nonTerminal = parseTree.label.getValue().toString();
-            switch (nonTerminal) {
-                case "<InstList>":
-                case "<Instruction>":
-                case "<NextInst>":
-                case "<Prod>":
-                case "<Atom>":
-                case "<IfSeq>":
-                case "<Cond'>":
-                case "<CondAnd'>":
-                case "<ExprArith'>":
-                case "<Comp>":
-                case "<Prod'>":
-                    return false;
-            }
-        } else {
-            LexicalUnit terminal = parseTree.label.getType();
-            switch (terminal) {
-                case LEFT_PARENTHESIS:
-                case RIGHT_PARENTHESIS:
-                case SEMICOLON:
-                case READ:
-                case DO:
-                case THEN:
-                case BY:
-                case TO:
-                case FROM:
-                case FOR:
-                case IF:
-                case PRINT:
-                case ENDIF:
-                case ELSE:
-                case ENDWHILE:
-                case ASSIGN:
-                case WHILE:
-                case AND:
-                case OR:
-                    return false;
-            }
-        }
-        return true;
+    public ParseTree childAt(int i) {
+        return children.get(i);
+    }
+
+    public int numberOfChildren() {
+        return children.size();
+    }
+
+    private Object getValue() {
+        return label.getValue();
     }
 }

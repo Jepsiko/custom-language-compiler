@@ -850,18 +850,16 @@ class Parser {
     private ParseTree SimpleCond() {
         List<ParseTree> children = new ArrayList<>();
 
-        // [35] <SimpleCond> -> <ExprArith> <Comp> <ExprArith>
+        // [35] <SimpleCond> -> <ExprArith> <SimpleCond'>
         if (
                 lookahead() == LexicalUnit.VARNAME ||
                 lookahead() == LexicalUnit.NUMBER ||
-                lookahead() == LexicalUnit.MINUS ||
-                lookahead() == LexicalUnit.LEFT_PARENTHESIS)
+                lookahead() == LexicalUnit.MINUS)
         {
-            print(35, "<SimpleCond> -> <ExprArith> <Comp> <ExprArith>");
+            print(35, "<SimpleCond> -> <ExprArith> <SimpleCond'>");
 
             children.add(ExprArith());
-            children.add(Comp());
-            children.add(ExprArith());
+            children.add(SimpleCond_prime());
             while (children.remove(null));
             return new ParseTree(new Symbol(null, "<SimpleCond>"), children);
         }
@@ -874,12 +872,22 @@ class Parser {
             while (children.remove(null));
             return new ParseTree(new Symbol(null, "<SimpleCond>"), children);
         }
+        // [47] <SimpleCond> -> (<Cond>)
+        else if (lookahead() == LexicalUnit.LEFT_PARENTHESIS) {
+            print(47, "<SimpleCond> -> (<Cond>)");
+
+            children.add(match(LexicalUnit.LEFT_PARENTHESIS));
+            children.add(Cond());
+            children.add(match(LexicalUnit.RIGHT_PARENTHESIS));
+            while (children.remove(null));
+            return new ParseTree(new Symbol(null, "<SimpleCond>"), children);
+        }
 
         return null;
     }
 
     /**
-     * Function representing the variable Comp.
+     * Function representing the variable SimpleCond'.
      *
      * According to the action table, the function will execute a
      * certain rule if the lookahead is corresponding.
@@ -895,50 +903,76 @@ class Parser {
      *
      * @return a recursive ParseTree
      */
-    private ParseTree Comp() {
+    private ParseTree SimpleCond_prime() {
         List<ParseTree> children = new ArrayList<>();
 
-        // [37] <Comp> -> =
-        if (lookahead() == LexicalUnit.EQUAL) {
-            print(37, "<Comp> -> =");
-
-            children.add(match(LexicalUnit.EQUAL));
-            return new ParseTree(new Symbol(null, "<Comp>"), children);
-        }
-        // [38] <Comp> -> >=
-        else if (lookahead() == LexicalUnit.GREATER_EQUAL) {
-            print(38, "<Comp> -> >=");
-
-            children.add(match(LexicalUnit.GREATER_EQUAL));
-            return new ParseTree(new Symbol(null, "<Comp>"), children);
-        }
-        // [39] <Comp> -> >
-        else if (lookahead() == LexicalUnit.GREATER) {
-            print(39, "<Comp> -> >");
-
-            children.add(match(LexicalUnit.GREATER));
-            return new ParseTree(new Symbol(null, "<Comp>"), children);
-        }
-        // [40] <Comp> -> <=
-        else if (lookahead() == LexicalUnit.SMALLER_EQUAL) {
-            print(40, "<Comp> -> <=");
-
-            children.add(match(LexicalUnit.SMALLER_EQUAL));
-            return new ParseTree(new Symbol(null, "<Comp>"), children);
-        }
-        // [41] <Comp> -> <
-        else if (lookahead() == LexicalUnit.SMALLER) {
-            print(41, "<Comp> -> <");
+        // [48] <SimpleCond'> -> < <ExprArith> <SimpleCond'>
+        if (lookahead() == LexicalUnit.SMALLER) {
+            print(48, "<SimpleCond'> -> < <ExprArith> <SimpleCond'>");
 
             children.add(match(LexicalUnit.SMALLER));
-            return new ParseTree(new Symbol(null, "<Comp>"), children);
+            children.add(ExprArith());
+            children.add(SimpleCond_prime());
+            while (children.remove(null));
+            return new ParseTree(new Symbol(null, "<SimpleCond'>"), children);
         }
-        // [42] <Comp> -> /=
+        // [49] <SimpleCond'> -> <= <ExprArith> <SimpleCond'>
+        else if (lookahead() == LexicalUnit.SMALLER_EQUAL) {
+            print(49, "<SimpleCond'> -> <= <ExprArith> <SimpleCond'>");
+
+            children.add(match(LexicalUnit.SMALLER_EQUAL));
+            children.add(ExprArith());
+            children.add(SimpleCond_prime());
+            while (children.remove(null));
+            return new ParseTree(new Symbol(null, "<SimpleCond'>"), children);
+        }
+        // [50] <SimpleCond'> -> = <ExprArith> <SimpleCond'>
+        else if (lookahead() == LexicalUnit.EQUAL) {
+            print(50, "<SimpleCond'> -> = <ExprArith> <SimpleCond'>");
+
+            children.add(match(LexicalUnit.EQUAL));
+            children.add(ExprArith());
+            children.add(SimpleCond_prime());
+            while (children.remove(null));
+            return new ParseTree(new Symbol(null, "<SimpleCond'>"), children);
+        }
+        // [51] <SimpleCond'> -> > <ExprArith> <SimpleCond'>
+        else if (lookahead() == LexicalUnit.GREATER) {
+            print(51, "<SimpleCond'> -> > <ExprArith> <SimpleCond'>");
+
+            children.add(match(LexicalUnit.GREATER));
+            children.add(ExprArith());
+            children.add(SimpleCond_prime());
+            while (children.remove(null));
+            return new ParseTree(new Symbol(null, "<SimpleCond'>"), children);
+        }
+        // [52] <SimpleCond'> -> >= <ExprArith> <SimpleCond'>
+        else if (lookahead() == LexicalUnit.GREATER_EQUAL) {
+            print(52, "<SimpleCond'> -> >= <ExprArith> <SimpleCond'>");
+
+            children.add(match(LexicalUnit.GREATER_EQUAL));
+            children.add(ExprArith());
+            children.add(SimpleCond_prime());
+            while (children.remove(null));
+            return new ParseTree(new Symbol(null, "<SimpleCond'>"), children);
+        }
+        // [53] <SimpleCond'> -> /= <ExprArith> <SimpleCond'>
         else if (lookahead() == LexicalUnit.DIFFERENT) {
-            print(42, "<Comp> -> /=");
+            print(53, "<SimpleCond'> -> >= <ExprArith> <SimpleCond'>");
 
             children.add(match(LexicalUnit.DIFFERENT));
-            return new ParseTree(new Symbol(null, "<Comp>"), children);
+            children.add(ExprArith());
+            children.add(SimpleCond_prime());
+            while (children.remove(null));
+            return new ParseTree(new Symbol(null, "<SimpleCond'>"), children);
+        }
+        // [54] <SimpleCond'> -> ε
+        else if (
+                lookahead() == LexicalUnit.THEN ||
+                lookahead() == LexicalUnit.DO)
+        {
+            print(54, "<SimpleCond'> -> ε");
+            return null;
         }
 
         return null;

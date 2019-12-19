@@ -68,7 +68,7 @@ public class Main{
             Files.write(file, Collections.singleton(parseTree.toLaTeX()), StandardCharsets.UTF_8);
         }
 
-        AbstractSyntaxTree AST = ParseTree.toAST(parseTree);
+        AbstractSyntaxTree AST = new AbstractSyntaxTree(parseTree);
 
         if (!texFile.equals("")) {
             texFile = texFile.replace(".", "_AST.");
@@ -81,7 +81,7 @@ public class Main{
 
         if (execute) {
             String byteCodeFile = outputFile.substring(0, outputFile.length()-2) + "bc";
-            Process process = new ProcessBuilder("llvm-as", outputFile, "-o=" + byteCodeFile).start();
+            Process process = new ProcessBuilder("llvm-as", outputFile, "-o=" + byteCodeFile).inheritIO().start();
             process.waitFor();
 
             process = new ProcessBuilder("lli", byteCodeFile).inheritIO().start();

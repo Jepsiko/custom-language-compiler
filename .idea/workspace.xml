@@ -7,12 +7,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/boolean-parenthesis.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/boolean-parenthesis.bc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/boolean-parenthesis.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.aux" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree_AST_building.tex" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/boolean-parenthesis.alg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tree.tex" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tree_AST.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LexicalAnalyzer.flex" beforeDir="false" afterPath="$PROJECT_DIR$/src/LexicalAnalyzer.flex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ParseTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ParseTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,6 +43,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1TyNOmPwPRrOVo9WHBTHN7LW3u5" />
@@ -46,6 +66,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1573914690869" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -54,7 +75,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
@@ -63,6 +84,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Project Part 3" />
+      <option name="PROGRAM_PARAMETERS" value="-exec $PROJECT_DIR$/test/boolean-parenthesis.alg -o boolean-parenthesis.ll -wt tree.tex" />
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
@@ -126,7 +148,9 @@
       <workItem from="1576672724635" duration="281000" />
       <workItem from="1576673176487" duration="629000" />
       <workItem from="1576674444951" duration="3052000" />
-      <workItem from="1576680727407" duration="596000" />
+      <workItem from="1576680727407" duration="873000" />
+      <workItem from="1576683281604" duration="17074000" />
+      <workItem from="1576753405017" duration="1279000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -275,7 +299,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576612800574</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Working Compiler">
+      <created>1576681341486</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1576681341486</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,17 +348,18 @@
     <MESSAGE value="The code compile but is not interpreted yet" />
     <MESSAGE value="Fixed the variable of the for loop" />
     <MESSAGE value="Code Algol corrected" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code Algol corrected" />
+    <MESSAGE value="Working Compiler" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working Compiler" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576488988434">
+    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576690062503">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576488988434" />
-    <state x="695" y="357" width="586" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576596133940">
+    <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576690062503" />
+    <state x="695" y="357" width="671" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576684279947">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="695" y="357" width="586" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1576596133940" />
+    <state x="695" y="357" width="671" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1576684279947" />
     <state x="834" y="444" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1576675105935">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -340,37 +372,69 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576496829997" />
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2" timestamp="1576612800381">
+    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2" timestamp="1576681341141">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576612800381" />
+    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576681341141" />
     <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576672874004">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1576672874004" />
-    <state width="1807" height="277" key="GridCell.Tab.0.bottom" timestamp="1576597141748">
+    <state width="1807" height="277" key="GridCell.Tab.0.bottom" timestamp="1576703500704">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642794" />
+    <state width="1807" height="277" key="GridCell.Tab.0.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500704" />
+    <state width="1807" height="277" key="GridCell.Tab.0.center" timestamp="1576703500701">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642793" />
+    <state width="1807" height="277" key="GridCell.Tab.0.center/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500701" />
+    <state width="1807" height="277" key="GridCell.Tab.0.left" timestamp="1576703500701">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642793" />
+    <state width="1807" height="277" key="GridCell.Tab.0.left/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500701" />
+    <state width="1807" height="277" key="GridCell.Tab.0.right" timestamp="1576703500703">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="277" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576694642793" />
+    <state width="1807" height="277" key="GridCell.Tab.0.right/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500703" />
+    <state width="1807" height="343" key="GridCell.Tab.1.bottom" timestamp="1576703500691">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="343" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1576689844591" />
+    <state width="1807" height="343" key="GridCell.Tab.1.bottom/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500691" />
+    <state width="1807" height="343" key="GridCell.Tab.1.center" timestamp="1576703500691">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="343" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1576689844591" />
+    <state width="1807" height="343" key="GridCell.Tab.1.center/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500691" />
+    <state width="1807" height="343" key="GridCell.Tab.1.left" timestamp="1576703500690">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="343" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1576689844591" />
+    <state width="1807" height="343" key="GridCell.Tab.1.left/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500690" />
+    <state width="1807" height="343" key="GridCell.Tab.1.right" timestamp="1576703500691">
+      <screen x="67" y="27" width="3773" height="1053" />
+    </state>
+    <state width="1807" height="343" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576689844591" />
+    <state width="1807" height="343" key="GridCell.Tab.1.right/67.27.3773.1053@67.27.3773.1053" timestamp="1576703500691" />
+    <state x="800" y="489" width="387" height="126" key="ReplaceDuplicatesPrompt" timestamp="1576686701371">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1576597141748" />
-    <state width="1807" height="277" key="GridCell.Tab.0.center" timestamp="1576597141747">
+    <state x="800" y="489" width="387" height="126" key="ReplaceDuplicatesPrompt/67.27.1853.1053@67.27.1853.1053" timestamp="1576686701371" />
+    <state x="482" y="187" width="1024" height="845" key="SettingsEditor" timestamp="1576753872686">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1576597141747" />
-    <state width="1807" height="277" key="GridCell.Tab.0.left" timestamp="1576597141747">
+    <state x="482" y="187" width="1024" height="845" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576753872686" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576681400046">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1576597141747" />
-    <state width="1807" height="277" key="GridCell.Tab.0.right" timestamp="1576597141747">
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576681400046" />
+    <state x="726" y="307" width="554" height="500" key="extract.method.dialog" timestamp="1576686690089">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="277" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1576597141747" />
-    <state x="482" y="187" width="1024" height="845" key="SettingsEditor" timestamp="1576672804771">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="482" y="187" width="1024" height="845" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576672804771" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576612802144">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576612802144" />
+    <state x="726" y="307" width="554" height="500" key="extract.method.dialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576686690089" />
   </component>
 </project>

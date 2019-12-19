@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  18 DEC 2019 20:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  18 DEC 2019 21:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**tree.tex
-(./tree.tex
+**tree_AST_building.tex
+(./tree_AST_building.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 5 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/standalone/standalone.cls
@@ -711,8 +711,9 @@ Package: inlinedef 2008/07/10 v1.0 Inlined expansions within definitions
 .................................................
 \forest@externalize@max@outer@n=\count291
 \forest@externalize@inner@n=\count292
-) (./tree.aux)
-\openout1 = `tree.aux'.
+)
+(./tree_AST_building.aux)
+\openout1 = `tree_AST_building.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
@@ -726,7 +727,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
-ABD: EveryShipout initializing macros
+ ABD: EveryShipout initializing macros
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count293
@@ -791,20 +792,21 @@ Missing character: There is no ; in font nullfont!
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree_AST_building.aux) 
+) 
 Here is how much of TeX's memory you used:
- 45838 strings out of 494894
- 977548 string characters out of 6179472
- 998956 words of memory out of 5000000
- 48854 multiletter control sequences out of 15000+600000
+ 36623 strings out of 494894
+ 813409 string characters out of 6179472
+ 809813 words of memory out of 5000000
+ 39639 multiletter control sequences out of 15000+600000
  531035 words of font info for 23 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 353i,9n,314p,10356b,13301s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/jeps
-iko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk>
-Output written on tree.pdf (1 page, 20416 bytes).
+ 173i,9n,188p,10369b,5848s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/jepsiko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.60
+0pk>
+Output written on tree_AST_building.pdf (1 page, 12890 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
+ 47 PDF objects out of 1000 (max. 8388607)
  11 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)

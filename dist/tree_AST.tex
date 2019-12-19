@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{begin} ][{<Code>} [{<Assign>} [{less} ][{<ExprArith>} [{-1} ]]][{<Assign>} [{more} ][{<ExprArith>} [{1} ]]][{<Assign>} [{OK} ][{<ExprArith>} [{100} ]]][{<Assign>} [{KO} ][{<ExprArith>} [{-100} ]]][{<Read>} [{guess} ]][{<Assign>} [{win} ][{<ExprArith>} [{0} ]]][{<For>} [{i} ][{<ExprArith>} [{0} ]][{<ExprArith>} [{1} ]][{<ExprArith>} [{5} ]][{<Code>} [{<If>} [{<Cond>} [{<CondAnd>} [{<SimpleCond>} [{=} [{win} ][{0} ]]]]][{<Code>} [{<Read>} [{try} ]][{<If>} [{<Cond>} [{<CondAnd>} [{<SimpleCond>} [{=} [{try} ][{guess} ]]]]][{<Code>} [{<Print>} [{OK} ]][{<Assign>} [{win} ][{<ExprArith>} [{1} ]]]]][{<If>} [{<Cond>} [{<CondAnd>} [{<SimpleCond>} [{/=} [{i} ][{4} ]]]]][{<Code>} [{<If>} [{<Cond>} [{<CondAnd>} [{<SimpleCond>} [{>} [{try} ][{guess} ]]]]][{<Code>} [{<Print>} [{less} ]]]][{<If>} [{<Cond>} [{<CondAnd>} [{<SimpleCond>} [{<} [{try} ][{guess} ]]]]][{<Code>} [{<Print>} [{more} ]]]]]]]]]][{<If>} [{<Cond>} [{<CondAnd>} [{<SimpleCond>} [{=} [{win} ][{0} ]]]]][{<Code>} [{<Print>} [{KO} ]]]]][{end} ]];
+\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{a} ][{end} ]];
 \end{forest}
 
 \end{document}
