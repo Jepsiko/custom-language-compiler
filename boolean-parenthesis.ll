@@ -1,4 +1,5 @@
 
+
 @.strP = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
 
 ; Function Attrs: nounwind uwtable
@@ -21,17 +22,19 @@ entry:
 	br label %loop
 loop:
 	%0 = call i32 @getchar()
-	%1 = sub i32 %0, 48
+	%1 = icmp eq i32 %0, 45
+	%2 = sub i32 %0, 48
 
-	%2 = icmp sge i32 %1, 0
-	%3 = icmp sle i32 %1, 9
-	%4 = and i1 %2, %3
-	br i1 %4, label %continue, label %exit
+	%3 = icmp sge i32 %2, 0
+	%4 = icmp sle i32 %2, 9
+	%5 = and i1 %3, %4
+	%6 = or i1 %1, %5
+	br i1 %6, label %continue, label %exit
 continue:
-	%5 = load i32, i32* %res
-	%6 = mul i32 %5, 10
-	%7 = add i32 %6, %1
-	store i32 %7, i32* %res
+	%7 = load i32, i32* %res
+	%8 = mul i32 %7, 10
+	%9 = add i32 %8, %2
+	store i32 %9, i32* %res
 
 	br label %loop
 exit:
@@ -42,25 +45,34 @@ exit:
 
 define i32 @main() {
 entry:
-
 %a = alloca i32
-store i32 2, i32* %a
+%0 = call i32 @readInt()
+store i32 %0, i32* %a
 
 %b = alloca i32
-store i32 1, i32* %b
+%1 = call i32 @readInt()
+store i32 %1, i32* %b
 
 %c = alloca i32
-store i32 0, i32* %c
+%2 = call i32 @readInt()
+store i32 %2, i32* %c
 
-%0 = load i32, i32* %a
-%1 = mul i32 %0, 3
-%2 = icmp sle i32 %1, 0
-%4 = and i1 %2, %3
+%3 = load i32, i32* %a
+%4 = icmp sle i32 %3, 0
+%5 = load i32, i32* %b
+%6 = icmp sgt i32 %5, 2
+%7 = or i1 %4, %6
+%8 = load i32, i32* %c
+%9 = icmp slt i32 %8, 1
+%10 = and i1 %7, %9
 
-br i1 %4, label %ifCode0, label %endif0
+br i1 %10, label %ifCode0, label %endif0
 ifCode0:
-%5 = load i32, i32* %a
-call void @println(i32 %5)
+%ok = alloca i32
+store i32 1, i32* %ok
+
+%11 = load i32, i32* %ok
+call void @println(i32 %11)
 
 br label %endif0
 endif0:

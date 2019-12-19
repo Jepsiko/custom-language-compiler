@@ -1,11 +1,13 @@
 
 begin
-    a := 2;
-    b := 1;
-    c := 0;
+    read(a);
+    read(b);
+    read(c);
 
-    if ((a * 3 <= 0) or (a + 2 < 0)) and b / a + 2 < 1 then
-        print(a)
+    if (a <= 0) or ((b > 2) and c < 1) then
+        print(a);
+        print(b);
+        print(c)
     endif
 
 end

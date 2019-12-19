@@ -36,13 +36,6 @@ public class AbstractSyntaxTree {
         this(parseTree.getLabel(), new ArrayList<>());
         createTree(parseTree.getChildren(), children);
 
-        try {
-            Path file = Paths.get("tree_AST_building.tex");
-            Files.write(file, Collections.singleton(toLaTeX()), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         simplify();
     }
 

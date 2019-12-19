@@ -107,25 +107,53 @@ public class Compiler {
                 "entry:\n" +
                 "\t%res = alloca i32\n" +
                 "\tstore i32 0, i32* %res\n" +
-                "\tbr label %loop\n" +
-                "loop:\n" +
-                "\t%0 = call i32 @getchar()\n" +
-                "\t%1 = sub i32 %0, 48\n" +
                 "\n" +
-                "\t%2 = icmp sge i32 %1, 0\n" +
-                "\t%3 = icmp sle i32 %1, 9\n" +
-                "\t%4 = and i1 %2, %3\n" +
-                "\tbr i1 %4, label %continue, label %exit\n" +
+                "\t%isNegative = alloca i1\n" +
+                "\t%number = alloca i32\n" +
+                "\t%0 = call i32 @getchar()\n" +
+                "\t\n" +
+                "\t%1 = icmp eq i32 %0, 45\n" +
+                "\tstore i1 %1, i1* %isNegative\n" +
+                "\tbr i1 %1, label %loop, label %firstIteration\n" +
+                "firstIteration:\n" +
+                "\t%2 = sub i32 %0, 48\n" +
+                "\tstore i32 %2, i32* %number\n" +
+                "\n" +
+                "\t%3 = icmp sge i32 %2, 0\n" +
+                "\t%4 = icmp sle i32 %2, 9\n" +
+                "\t%5 = and i1 %3, %4\n" +
+                "\tbr i1 %5, label %continue, label %exit\n" +
+                "loop:\n" +
+                "\t%6 = call i32 @getchar()\n" +
+                "\t%7 = sub i32 %6, 48\n" +
+                "\tstore i32 %7, i32* %number\n" +
+                "\n" +
+                "\t%8 = icmp sge i32 %7, 0\n" +
+                "\t%9 = icmp sle i32 %7, 9\n" +
+                "\t%10 = and i1 %8, %9\n" +
+                "\tbr i1 %10, label %continue, label %exit\n" +
                 "continue:\n" +
-                "\t%5 = load i32, i32* %res\n" +
-                "\t%6 = mul i32 %5, 10\n" +
-                "\t%7 = add i32 %6, %1\n" +
-                "\tstore i32 %7, i32* %res\n" +
+                "\t%11 = load i32, i32* %res\n" +
+                "\t%12 = mul i32 %11, 10\n" +
+                "\t%13 = load i32, i32* %number\n" +
+                "\t%14 = add i32 %12, %13 \n" +
+                "\tstore i32 %14, i32* %res\n" +
                 "\n" +
                 "\tbr label %loop\n" +
                 "exit:\n" +
-                "\t%8 = load i32, i32* %res\n" +
-                "\tret i32 %8\n" +
+                "\n" +
+                "\t%15 = load i1, i1* %isNegative\n" +
+                "\tbr i1 %15, label %ifNegative, label %endifNegative\n" +
+                "\n" +
+                "ifNegative:\n" +
+                "\t%16 = load i32, i32* %res\n" +
+                "\t%17 = mul i32 %16, -1\n" +
+                "\tstore i32 %17, i32* %res\n" +
+                "\n" +
+                "\tbr label %endifNegative\n" +
+                "endifNegative:\n" +
+                "\t%18 = load i32, i32* %res\n" +
+                "\tret i32 %18\n" +
                 "}\n" +
                 "\n" +
                 "\n" +
@@ -188,9 +216,10 @@ public class Compiler {
 
         boolean withElse = AST.getChildren().size() == 3; // True if there is an else
 
-        Cond(AST.childAt(0));
+        Cond(AST.childAt(0).childAt(0));
 
-        int cond = unnamedVar-1;
+        int cond = unnamedVar;
+        unnamedVar++;
         if (withElse) {
             write("\nbr i1 %" + cond + ", label %ifCode" + index + ", label %elseCode" + index);
         } else {
@@ -244,6 +273,7 @@ public class Compiler {
         }
 
         int cond = unnamedVar;
+        unnamedVar++;
         StringBuilder llCode = new StringBuilder("%" + cond + " = icmp slt i32 %" + i + ", ");
         if (!maxValueIsNumber) {
             llCode.append("%");
@@ -251,7 +281,6 @@ public class Compiler {
         llCode.append(m);
 
         write(llCode.toString());
-        unnamedVar++;
 
         /*
         Beginning of the inner code of the for loop
@@ -313,58 +342,30 @@ public class Compiler {
     }
 
     private void Cond(AbstractSyntaxTree AST) {
-        CondAnd(AST.childAt(0));
-        int n = unnamedVar-1;
-
-        for (int i = 1; i < AST.getChildren().size(); i++) {
-            CondAnd(AST.childAt(i));
-            int m = unnamedVar-1;
-
-            int p = unnamedVar;
-            write("%" + p + " = or i1 %" + n + ", %" + m);
-
-            unnamedVar++;
-            n = p;
-        }
-    }
-
-    private void CondAnd(AbstractSyntaxTree AST) {
-        SimpleCond(AST.childAt(0).childAt(0));
-        int n = unnamedVar;
-
-        unnamedVar++;
-        for (int i = 1; i < AST.getChildren().size(); i++) {
-            SimpleCond(AST.childAt(i).childAt(0));
-            int m = unnamedVar;
-
-            unnamedVar++;
-            int p = unnamedVar;
-            write("%" + p + " = and i1 %" + n + ", %" + m);
-
-            unnamedVar++;
-            n = p;
-        }
-    }
-
-    private void SimpleCond(AbstractSyntaxTree AST) {
         switch (AST.getLabel().getType()) {
+            case AND:
+                operation(AST, "and", true);
+                break;
+            case OR:
+                operation(AST, "or", true);
+                break;
             case EQUAL:
-                operation(AST, "icmp eq");
+                operation(AST, "icmp eq", false);
                 break;
             case DIFFERENT:
-                operation(AST, "icmp ne");
+                operation(AST, "icmp ne", false);
                 break;
             case GREATER:
-                operation(AST, "icmp sgt");
+                operation(AST, "icmp sgt", false);
                 break;
             case GREATER_EQUAL:
-                operation(AST, "icmp sge");
+                operation(AST, "icmp sge", false);
                 break;
             case SMALLER:
-                operation(AST, "icmp slt");
+                operation(AST, "icmp slt", false);
                 break;
             case SMALLER_EQUAL:
-                operation(AST, "icmp sle");
+                operation(AST, "icmp sle", false);
                 break;
         }
     }
@@ -409,21 +410,21 @@ public class Compiler {
                 write("%" + unnamedVar + " = load i32, i32* %" + AST.getLabel().getValue());
                 break;
             case PLUS:
-                operation(AST, "add");
+                operation(AST, "add", false);
                 break;
             case MINUS:
-                operation(AST, "sub");
+                operation(AST, "sub", false);
                 break;
             case TIMES:
-                operation(AST, "mul");
+                operation(AST, "mul", false);
                 break;
             case DIVIDE:
-                operation(AST, "sdiv");
+                operation(AST, "sdiv", false);
                 break;
         }
     }
 
-    private void operation(AbstractSyntaxTree AST, String operator) {
+    private void operation(AbstractSyntaxTree AST, String operator, boolean isBoolean) {
         AbstractSyntaxTree leftTerm = AST.childAt(0);
         boolean leftIsNumber = leftTerm.getLabel().getType() == LexicalUnit.NUMBER;
         int n;
@@ -431,7 +432,21 @@ public class Compiler {
             n = (int) leftTerm.getLabel().getValue();
         }
         else {
-            ExprArith(leftTerm);
+            switch (leftTerm.getLabel().getType()) {
+                case OR:
+                case AND:
+                case SMALLER:
+                case SMALLER_EQUAL:
+                case GREATER:
+                case GREATER_EQUAL:
+                case EQUAL:
+                case DIFFERENT:
+                    Cond(leftTerm);
+                    break;
+                default:
+                    ExprArith(leftTerm);
+                    break;
+            }
             n = unnamedVar;
             unnamedVar++;
         }
@@ -443,14 +458,29 @@ public class Compiler {
             m = (int) rightTerm.getLabel().getValue();
         }
         else {
-            ExprArith(rightTerm);
+            switch (rightTerm.getLabel().getType()) {
+                case OR:
+                case AND:
+                case SMALLER:
+                case SMALLER_EQUAL:
+                case GREATER:
+                case GREATER_EQUAL:
+                case EQUAL:
+                case DIFFERENT:
+                    Cond(rightTerm);
+                    break;
+                default:
+                    ExprArith(rightTerm);
+                    break;
+            }
             m = unnamedVar;
             unnamedVar++;
         }
 
         int p = unnamedVar;
 
-        StringBuilder llCode = new StringBuilder("%" + p + " = " + operator + " i32 ");
+        int type = isBoolean ? 1 : 32;
+        StringBuilder llCode = new StringBuilder("%" + p + " = " + operator + " i" + type + " ");
         if (!leftIsNumber) {
             llCode.append("%");
         }
