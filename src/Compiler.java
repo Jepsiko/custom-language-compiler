@@ -425,69 +425,49 @@ public class Compiler {
     }
 
     private void operation(AbstractSyntaxTree AST, String operator, boolean isBoolean) {
-        AbstractSyntaxTree leftTerm = AST.childAt(0);
-        boolean leftIsNumber = leftTerm.getLabel().getType() == LexicalUnit.NUMBER;
-        int n;
-        if (leftIsNumber) {
-            n = (int) leftTerm.getLabel().getValue();
-        }
-        else {
-            switch (leftTerm.getLabel().getType()) {
-                case OR:
-                case AND:
-                case SMALLER:
-                case SMALLER_EQUAL:
-                case GREATER:
-                case GREATER_EQUAL:
-                case EQUAL:
-                case DIFFERENT:
-                    Cond(leftTerm);
-                    break;
-                default:
-                    ExprArith(leftTerm);
-                    break;
-            }
-            n = unnamedVar;
-            unnamedVar++;
-        }
+        boolean[] isNumber = new boolean[2];
+        int[] variables = new int[2];
+        for (int i = 0; i < 2; i++) {
+            AbstractSyntaxTree term = AST.childAt(i);
 
-        AbstractSyntaxTree rightTerm = AST.childAt(1);
-        boolean rightIsNumber = rightTerm.getLabel().getType() == LexicalUnit.NUMBER;
-        int m;
-        if (rightIsNumber) {
-            m = (int) rightTerm.getLabel().getValue();
-        }
-        else {
-            switch (rightTerm.getLabel().getType()) {
-                case OR:
-                case AND:
-                case SMALLER:
-                case SMALLER_EQUAL:
-                case GREATER:
-                case GREATER_EQUAL:
-                case EQUAL:
-                case DIFFERENT:
-                    Cond(rightTerm);
-                    break;
-                default:
-                    ExprArith(rightTerm);
-                    break;
+            isNumber[i] = term.getLabel().getType() == LexicalUnit.NUMBER;
+            if (isNumber[i]) {
+                variables[i] = (int) term.getLabel().getValue();
             }
-            m = unnamedVar;
-            unnamedVar++;
+            else {
+                switch (term.getLabel().getType()) {
+                    case OR:
+                    case AND:
+                    case SMALLER:
+                    case SMALLER_EQUAL:
+                    case GREATER:
+                    case GREATER_EQUAL:
+                    case EQUAL:
+                    case DIFFERENT:
+                        Cond(term);
+                        break;
+                    default:
+                        ExprArith(term);
+                        break;
+                }
+                variables[i] = unnamedVar;
+                unnamedVar++;
+            }
         }
 
         int p = unnamedVar;
-
+        int n = variables[0];
+        int m = variables[1];
         int type = isBoolean ? 1 : 32;
+
         StringBuilder llCode = new StringBuilder("%" + p + " = " + operator + " i" + type + " ");
-        if (!leftIsNumber) {
+        if (!isNumber[0]) {
             llCode.append("%");
         }
         llCode.append(n);
 
         llCode.append(", ");
-        if (!rightIsNumber) {
+        if (!isNumber[1]) {
             llCode.append("%");
         }
         llCode.append(m);
