@@ -175,23 +175,27 @@ public class AbstractSyntaxTree {
 
         for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
-            switch (child.getLabel().getType()) {
-                case EQUAL:
-                case DIFFERENT:
-                case GREATER:
-                case GREATER_EQUAL:
-                case SMALLER:
-                case SMALLER_EQUAL:
-                    return i;
+            if (child.getLabel().getType() != null) {
+                switch (child.getLabel().getType()) {
+                    case EQUAL:
+                    case DIFFERENT:
+                    case GREATER:
+                    case GREATER_EQUAL:
+                    case SMALLER:
+                    case SMALLER_EQUAL:
+                        return i;
+                }
             }
         }
 
         for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
-            switch (child.getLabel().getType()) {
-                case PLUS:
-                case MINUS:
-                    return i;
+            if (child.getLabel().getType() != null) {
+                switch (child.getLabel().getType()) {
+                    case PLUS:
+                    case MINUS:
+                        return i;
+                }
             }
         }
 
@@ -287,8 +291,8 @@ public class AbstractSyntaxTree {
     /**
      * Create an AbstractSyntaxTree from a ParseTree by keeping certain nodes and removing the others.
      *
-     * @param childrenPT
-     * @param childrenAST
+     * @param childrenPT children of a ParseTree
+     * @param childrenAST children of an AbstractSyntaxTree created during the process
      */
     static private void createTree(List<ParseTree> childrenPT, List<AbstractSyntaxTree> childrenAST) {
         for (ParseTree childPT : childrenPT) {

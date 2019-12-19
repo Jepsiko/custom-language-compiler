@@ -53,14 +53,14 @@ store i32 1, i32* %b
 store i32 0, i32* %c
 
 %0 = load i32, i32* %a
-%1 = load i32, i32* %b
-%2 = add i32 %0, %1
-%3 = icmp sle i32 %2, 0
+%1 = mul i32 %0, 3
+%2 = icmp sle i32 %1, 0
+%4 = and i1 %2, %3
 
-br i1 %3, label %ifCode0, label %endif0
+br i1 %4, label %ifCode0, label %endif0
 ifCode0:
-%4 = load i32, i32* %a
-call void @println(i32 %4)
+%5 = load i32, i32* %a
+call void @println(i32 %5)
 
 br label %endif0
 endif0:

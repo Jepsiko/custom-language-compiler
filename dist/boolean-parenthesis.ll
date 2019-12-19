@@ -43,5 +43,27 @@ exit:
 define i32 @main() {
 entry:
 
+%a = alloca i32
+store i32 2, i32* %a
+
+%b = alloca i32
+store i32 1, i32* %b
+
+%c = alloca i32
+store i32 0, i32* %c
+
+%0 = load i32, i32* %a
+%1 = mul i32 %0, 3
+%2 = icmp sle i32 %1, 0
+%4 = and i1 %2, %3
+
+br i1 %4, label %ifCode0, label %endif0
+ifCode0:
+%5 = load i32, i32* %a
+call void @println(i32 %5)
+
+br label %endif0
+endif0:
+
 ret i32 0;
 }
