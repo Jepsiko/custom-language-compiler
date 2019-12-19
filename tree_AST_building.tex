@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{begin} ][{<Code>} [{<Assign>} [{a} ][{<ExprArith>} [{2} ]]][{<Assign>} [{b} ][{<ExprArith>} [{1} ]]][{<Assign>} [{c} ][{<ExprArith>} [{0} ]]][{<If>} [{<Cond>} [{<Cond>} [{<Cond>} [{<ExprArith>} [{a} ][{*} ]][{0} ]][{<ExprArith>} [{a} ]][{0} ]][{and} ][{b} ][{/} ][{<} ][{<ExprArith>} [{1} ]]][{<Code>} [{<Print>} [{a} ]]]]][{end} ]];
+\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{begin} ][{<Code>} [{<Assign>} [{a} ][{<ExprArith>} [{2} ]]][{<Assign>} [{b} ][{<ExprArith>} [{1} ]]][{<Assign>} [{c} ][{<ExprArith>} [{0} ]]][{<If>} [{<Cond>} [{<Cond>} [{<Cond>} [{<ExprArith>} [{a} ][{*} ][{3} ]][{<=} ][{<ExprArith>} [{0} ]]][{or} ][{<Cond>} [{<ExprArith>} [{a} ][{+} ][{2} ]][{<} ][{<ExprArith>} [{0} ]]]][{and} ][{<ExprArith>} [{b} ][{/} ][{a} ][{+} ][{2} ]][{<} ][{<ExprArith>} [{1} ]]][{<Code>} [{<Print>} [{a} ]]]]][{end} ]];
 \end{forest}
 
 \end{document}

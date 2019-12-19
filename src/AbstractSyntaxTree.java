@@ -159,47 +159,43 @@ public class AbstractSyntaxTree {
     }
 
     private int getOperatorIndex() {
-        for (int i = numberOfChildren()-1; i >= 0; i--) {
+        for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() == LexicalUnit.AND) {
                 return i;
             }
         }
 
-        for (int i = numberOfChildren()-1; i >= 0; i--) {
+        for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() == LexicalUnit.OR) {
                 return i;
             }
         }
 
-        for (int i = numberOfChildren()-1; i >= 0; i--) {
+        for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
-            if (child.getLabel().getType() != null) {
-                switch (child.getLabel().getType()) {
-                    case EQUAL:
-                    case DIFFERENT:
-                    case GREATER:
-                    case GREATER_EQUAL:
-                    case SMALLER:
-                    case SMALLER_EQUAL:
-                        return i;
-                }
+            switch (child.getLabel().getType()) {
+                case EQUAL:
+                case DIFFERENT:
+                case GREATER:
+                case GREATER_EQUAL:
+                case SMALLER:
+                case SMALLER_EQUAL:
+                    return i;
             }
         }
 
-        for (int i = numberOfChildren()-1; i >= 0; i--) {
+        for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
-            if (child.getLabel().getType() != null) {
-                switch (child.getLabel().getType()) {
-                    case PLUS:
-                    case MINUS:
-                        return i;
-                }
+            switch (child.getLabel().getType()) {
+                case PLUS:
+                case MINUS:
+                    return i;
             }
         }
 
-        for (int i = numberOfChildren()-1; i >= 0; i--) {
+        for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() != null) {
                 switch (child.getLabel().getType()) {
@@ -225,25 +221,22 @@ public class AbstractSyntaxTree {
                 children.remove(startPos);
             }
             operatorChildren.add(temp.rearrangeTree());
-        }
-        else {
+        } else {
             AbstractSyntaxTree child = childAt(0);
             if (child.getValue() == "<ExprArith>" || child.getValue() == "<Cond>") {
                 if (child.numberOfChildren() >= 3) {
                     operatorChildren.add(child.rearrangeTree());
-                }
-                else {
+                } else {
                     operatorChildren.add(child.childAt(0));
                 }
-            }
-            else
+            } else
                 operatorChildren.add(child);
             children.remove(0);
         }
 
         operatorIndex = getOperatorIndex();
 
-        if (operatorIndex < numberOfChildren()-2) {
+        if (operatorIndex < numberOfChildren() - 2) {
 
             AbstractSyntaxTree temp = new AbstractSyntaxTree(new Symbol(null, "temp"));
             int startPos = 1;
@@ -253,20 +246,17 @@ public class AbstractSyntaxTree {
                 children.remove(startPos);
             }
             operatorChildren.add(temp.rearrangeTree());
-        }
-        else {
-            AbstractSyntaxTree child = childAt(numberOfChildren()-1);
+        } else {
+            AbstractSyntaxTree child = childAt(numberOfChildren() - 1);
             if (child.getValue() == "<ExprArith>" || child.getValue() == "<Cond>") {
                 if (child.numberOfChildren() >= 3) {
                     operatorChildren.add(child.rearrangeTree());
-                }
-                else {
+                } else {
                     operatorChildren.add(child.childAt(0));
                 }
-            }
-            else
+            } else
                 operatorChildren.add(child);
-            children.remove(numberOfChildren()-1);
+            children.remove(numberOfChildren() - 1);
         }
 
         operator.children = operatorChildren;
@@ -285,7 +275,7 @@ public class AbstractSyntaxTree {
     public AbstractSyntaxTree childAt(int i) {
         return children.get(i);
     }
-    
+
     public int numberOfChildren() {
         return children.size();
     }
@@ -294,30 +284,23 @@ public class AbstractSyntaxTree {
         return label.getValue();
     }
 
+    /**
+     * Create an AbstractSyntaxTree from a ParseTree by keeping certain nodes and removing the others.
+     *
+     * @param childrenPT
+     * @param childrenAST
+     */
     static private void createTree(List<ParseTree> childrenPT, List<AbstractSyntaxTree> childrenAST) {
         for (ParseTree childPT : childrenPT) {
-            System.out.println(childPT.getLabel().getValue());
-            if (childPT.getLabel().isTerminal()) {
-                if (isToBeKept(childPT)) {
-                    System.out.println("Child added : " + childPT.getLabel().getValue().toString());
-                    childrenAST.add(new AbstractSyntaxTree(childPT.getLabel()));
-                }
+            if (isToBeKept(childPT)) {
+                childrenAST.add(new AbstractSyntaxTree(childPT.getLabel()));
             }
-            else {
+
+            if (childPT.getLabel().isNonTerminal()) {
                 if (isToBeKept(childPT)) {
-                    System.out.println("Child added : " + childPT.getLabel().getValue().toString());
-                    childrenAST.add(new AbstractSyntaxTree(childPT.getLabel()));
-                    createTree(childPT.getChildren(), childrenAST.get(childrenAST.size()-1).children);
-                }
-                else {
-                    for (ParseTree greatChildPT : childPT.getChildren()) {
-                        System.out.println(greatChildPT.getLabel().getValue());
-                        if (isToBeKept(greatChildPT)) {
-                            //childrenAST.add(new AbstractSyntaxTree(greatChildPT.getLabel()));
-                            System.out.println("Great child added : " + greatChildPT.getLabel().getValue().toString());
-                        }
-                        createTree(greatChildPT.getChildren(), childrenAST);
-                    }
+                    createTree(childPT.getChildren(), childrenAST.get(childrenAST.size() - 1).children);
+                } else {
+                    createTree(childPT.getChildren(), childrenAST);
                 }
             }
         }
