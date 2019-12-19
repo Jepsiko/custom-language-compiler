@@ -87,6 +87,10 @@ public class Compiler {
         end();
     }
 
+    /**
+     * Write some LLVM functions to print and read from input.
+     * Then it writes the beginning of the main function.
+     */
     private void begin() {
         write("@.strP = private unnamed_addr constant [4 x i8] c\"%d\\0A\\00\", align 1\n" +
                 "\n" +
@@ -161,6 +165,12 @@ public class Compiler {
                 "entry:\n");
     }
 
+    /**
+     * For each instruction of the code the compilator calls the right function
+     * with the AST of the instruction as parameter.
+     *
+     * @param AST the AbstractSyntaxTree whose label is Code
+     */
     private void Code(AbstractSyntaxTree AST) {
         for (AbstractSyntaxTree instruction : AST.getChildren()) {
             switch (instruction.getLabel().getValue().toString()) {
@@ -183,10 +193,13 @@ public class Compiler {
                     If(instruction, ifIndex);
                     break;
             }
-            write(""); // Empty line between each group of instruction
+            write(); // Empty line between each group of instruction
         }
     }
 
+    /**
+     * Write the end of the main function.
+     */
     private void end() {
         write("ret i32 0;\n}");
     }
@@ -488,5 +501,9 @@ public class Compiler {
         else {
             System.out.println(llCode);
         }
+    }
+
+    private void write() {
+        write("");
     }
 }
