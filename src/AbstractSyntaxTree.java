@@ -288,7 +288,7 @@ public class AbstractSyntaxTree {
 
     /**
      * Get the children of the tree
-     * @return
+     * @return children of the tree
      */
     public List<AbstractSyntaxTree> getChildren() {
         return children;
@@ -340,6 +340,12 @@ public class AbstractSyntaxTree {
         }
     }
 
+    /**
+     * Check if a certain node of the ParseTree is to be kept
+     *
+     * @param nodeParseTree the node for the check
+     * @return true if the node is to be kept, false otherwise
+     */
     static private boolean isToBeKept(ParseTree nodeParseTree) {
         if (nodeParseTree.getLabel().isNonTerminal()) {
             String nonTerminal = nodeParseTree.getLabel().getValue().toString();
