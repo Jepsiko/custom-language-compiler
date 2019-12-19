@@ -1,8 +1,3 @@
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -121,6 +116,9 @@ public class AbstractSyntaxTree {
                 + toForestPicture() + "\n\n\\end{document}\n%% Local Variables:\n%% TeX-engine: pdflatex\n%% End:";
     }
 
+    /**
+     * Recursive function which simplify and rearrange depending the type of the evaluation
+     */
     public void simplify() {
         if (getValue() == "<ExprArith>" && numberOfChildren() == 1) {
             AbstractSyntaxTree child = childAt(0);
@@ -151,7 +149,12 @@ public class AbstractSyntaxTree {
         }
     }
 
+    /**
+     * Get the index of the operator while rearrange
+     * @return index
+     */
     private int getOperatorIndex() {
+        // AND
         for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() == LexicalUnit.AND) {
@@ -159,6 +162,7 @@ public class AbstractSyntaxTree {
             }
         }
 
+        // OR
         for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() == LexicalUnit.OR) {
@@ -166,6 +170,7 @@ public class AbstractSyntaxTree {
             }
         }
 
+        // COMPARATOR
         for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() != null) {
@@ -181,6 +186,7 @@ public class AbstractSyntaxTree {
             }
         }
 
+        // ADDITION SOUSTRACTION
         for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() != null) {
@@ -192,6 +198,7 @@ public class AbstractSyntaxTree {
             }
         }
 
+        // MULTIPLICATION DIVISION
         for (int i = numberOfChildren() - 1; i >= 0; i--) {
             AbstractSyntaxTree child = childAt(i);
             if (child.getLabel().getType() != null) {
@@ -205,6 +212,10 @@ public class AbstractSyntaxTree {
         return -1;
     }
 
+    /**
+     * Rearrange the tree for each side by making a copy of the one given
+     * @return the tree but rearrange
+     */
     private AbstractSyntaxTree rearrangeTree() {
         int operatorIndex = getOperatorIndex();
         AbstractSyntaxTree operator = childAt(operatorIndex);
@@ -218,15 +229,18 @@ public class AbstractSyntaxTree {
                 children.remove(startPos);
             }
             operatorChildren.add(temp.rearrangeTree());
-        } else {
+        }
+        else {
             AbstractSyntaxTree child = childAt(0);
             if (child.getValue() == "<ExprArith>" || child.getValue() == "<Cond>") {
                 if (child.numberOfChildren() >= 3) {
                     operatorChildren.add(child.rearrangeTree());
-                } else {
+                }
+                else {
                     operatorChildren.add(child.childAt(0));
                 }
-            } else
+            }
+            else
                 operatorChildren.add(child);
             children.remove(0);
         }
@@ -243,15 +257,18 @@ public class AbstractSyntaxTree {
                 children.remove(startPos);
             }
             operatorChildren.add(temp.rearrangeTree());
-        } else {
+        }
+        else {
             AbstractSyntaxTree child = childAt(numberOfChildren() - 1);
             if (child.getValue() == "<ExprArith>" || child.getValue() == "<Cond>") {
                 if (child.numberOfChildren() >= 3) {
                     operatorChildren.add(child.rearrangeTree());
-                } else {
+                }
+                else {
                     operatorChildren.add(child.childAt(0));
                 }
-            } else
+            }
+            else
                 operatorChildren.add(child);
             children.remove(numberOfChildren() - 1);
         }
@@ -261,22 +278,42 @@ public class AbstractSyntaxTree {
         return operator;
     }
 
+    /**
+     * Get the label
+     * @return a label
+     */
     public Symbol getLabel() {
         return label;
     }
 
+    /**
+     * Get the children of the tree
+     * @return
+     */
     public List<AbstractSyntaxTree> getChildren() {
         return children;
     }
 
+    /**
+     * Get the child at the index i in the tree
+     * @param i index
+     * @return the child at index i
+     */
     public AbstractSyntaxTree childAt(int i) {
         return children.get(i);
     }
 
+    /**
+     * Get the number of children
+     * @return size of the children
+     */
     public int numberOfChildren() {
         return children.size();
     }
 
+    /**
+     * Get the value  of the label
+     */
     private Object getValue() {
         return label.getValue();
     }

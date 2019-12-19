@@ -29,30 +29,57 @@ public class Symbol {
 		this(unit, UNDEFINED_POSITION, UNDEFINED_POSITION, value);
 	}
 
+	/**
+	 * Check if the symbol is a terminal
+	 * @return a bool
+	 */
 	public boolean isTerminal() {
 		return this.type != null;
 	}
 
+	/**
+	 * Check if the symbol is a non a terminal
+	 * @return a bool
+	 */
 	public boolean isNonTerminal() {
 		return this.type == null;
 	}
 
+	/**
+	 * Get the type
+	 * @return type
+	 */
 	public LexicalUnit getType() {
 		return this.type;
 	}
 
+	/**
+	 * Get the value
+	 * @return value
+	 */
 	public Object getValue() {
 		return this.value;
 	}
 
+	/**
+	 * Get the line
+	 * @return line
+	 */
 	public int getLine() {
 		return this.line;
 	}
 
+	/**
+	 * Get the column
+	 * @return column
+	 */
 	public int getColumn() {
 		return this.column;
 	}
 
+	/**
+	 * Override of hashcode
+	 */
 	@Override
 	public int hashCode() {
 		final String value = this.value != null ? this.value.toString() : "null";
@@ -60,6 +87,9 @@ public class Symbol {
 		return new String(value + "_" + type).hashCode();
 	}
 
+	/**
+	 * Override of To String in order to have a clean print
+	 */
 	@Override
 	public String toString() {
 		if (this.isTerminal()) {

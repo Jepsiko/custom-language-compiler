@@ -119,22 +119,42 @@ public class ParseTree {
                 + toForestPicture() + "\n\n\\end{document}\n%% Local Variables:\n%% TeX-engine: pdflatex\n%% End:";
     }
 
+    /**
+     * Get the label
+     * @return label
+     */
     public Symbol getLabel() {
         return label;
     }
 
+    /**
+     * Get the children
+     * @return children
+     */
     public List<ParseTree> getChildren() {
         return children;
     }
 
+    /**
+     * Get the child at the index i in the tree
+     * @param i index
+     * @return the child at index i
+     */
     public ParseTree childAt(int i) {
         return children.get(i);
     }
 
+    /**
+     * Get the number of children
+     * @return size of the children
+     */
     public int numberOfChildren() {
         return children.size();
     }
 
+    /**
+     * Get the value of the label
+     */
     private Object getValue() {
         return label.getValue();
     }
