@@ -225,6 +225,9 @@ public class Compiler {
     }
 
     private void If(AbstractSyntaxTree AST, int index) {
+        if (AST.numberOfChildren() < 2) {
+            return;
+        }
         ifIndex++;
 
         boolean withElse = AST.getChildren().size() == 3; // True if there is an else

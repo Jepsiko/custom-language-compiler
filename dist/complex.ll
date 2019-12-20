@@ -88,17 +88,17 @@ forCode0:
 %4 = load i32, i32* %a
 %5 = load i32, i32* %i
 %6 = icmp ne i32 %4, %5
-%7 = sub i1 1, %6
-%8 = load i32, i32* %a
-%9 = load i32, i32* %i
-%10 = icmp slt i32 %8, %9
-%11 = load i32, i32* %a
-%12 = add i32 %11, 2
-%13 = load i32, i32* %i
-%14 = icmp eq i32 %12, %13
-%15 = sub i1 1, %14
-%16 = and i1 %10, %15
-%17 = or i1 %7, %16
+%7 = load i32, i32* %a
+%8 = load i32, i32* %i
+%9 = icmp slt i32 %7, %8
+%10 = or i1 %6, %9
+%11 = sub i1 1, %10
+%12 = load i32, i32* %a
+%13 = add i32 %12, 2
+%14 = load i32, i32* %i
+%15 = icmp eq i32 %13, %14
+%16 = sub i1 1, %15
+%17 = and i1 %11, %16
 
 br i1 %17, label %ifCode0, label %elseCode0
 ifCode0:

@@ -1,13 +1,7 @@
 
 begin
-    read(a);
-    read(b);
-    read(c);
-
-    if (a <= 0) or ((b > 2) and c < 1) then
-        print(a);
-        print(b);
-        print(c)
+    if not 1 + 2 * 5 < 0 and 2 <= 0 or not (7 > 2 and 4 < 1) then
+        read(a)
+    else
     endif
-
 end
