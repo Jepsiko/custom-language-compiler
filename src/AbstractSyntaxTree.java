@@ -5,7 +5,6 @@ import java.util.List;
 public class AbstractSyntaxTree {
     private Symbol label;
     private List<AbstractSyntaxTree> children;
-    private Compiler compiler;
 
     /**
      * Creates a singleton tree with only a root labeled by label.
@@ -120,6 +119,8 @@ public class AbstractSyntaxTree {
      * Recursive function which simplify and rearrange depending the type of the evaluation
      */
     public void simplify() {
+        // The case where an <ExprArith> as only one terminal as a child ([Number] or [VarName]).
+        // We replace the <ExprArith> with his child.
         if (getValue() == "<ExprArith>" && numberOfChildren() == 1) {
             AbstractSyntaxTree child = childAt(0);
 
@@ -128,29 +129,30 @@ public class AbstractSyntaxTree {
             }
         }
 
+        // The case where an <ExprArith> as at least 3 children.
+        // That means that the children contains an operator.
+        // So we replace the <ExprArith> with result of the rearranged tree.
+        // Giving the node of the less priority operator.
         if (getValue() == "<ExprArith>" && numberOfChildren() >= 3) {
             children = Collections.singletonList(rearrangeTree());
         }
 
-        if (getValue() == "<Cond>" && numberOfChildren() == 1) {
-            AbstractSyntaxTree child = childAt(0);
-
-            if (child.getValue() == "<Cond>") {
-                children = child.getChildren();
-            }
-        }
-
+        // The case where an <Cond> as at least 3 children.
+        // That means that the children contains an operator.
+        // So we replace the <Cond> with result of the rearranged tree.
+        // Giving the node of the less priority operator.
         if (getValue() == "<Cond>" && numberOfChildren() >= 3) {
             children = Collections.singletonList(rearrangeTree());
         }
 
+        // We call this function recursively on all the children of the this node.
         for (AbstractSyntaxTree child : children) {
             child.simplify();
         }
     }
 
     /**
-     * Get the index of the operator while rearrange
+     * Get the index of the less priority operator among all the children while rearranging the tree.
      * @return index
      */
     private int getOperatorIndex() {
@@ -213,8 +215,18 @@ public class AbstractSyntaxTree {
     }
 
     /**
-     * Rearrange the tree for each side by making a copy of the one given
-     * @return the tree but rearrange
+     * Rearrange the tree for each side of the less priority operator.
+     *
+     * All the children at the left side of the operator will be made children
+     * of a temporary node which will be the left child of the operator.
+     * Then the function repeats itself recursively on the temporary child.
+     *
+     * The same is done for all the children at the right side of the operator.
+     *
+     * This makes the operator to have only two children transforming the tree
+     * in a binary tree below him.
+     *
+     * @return the operator node
      */
     private AbstractSyntaxTree rearrangeTree() {
         int operatorIndex = getOperatorIndex();
