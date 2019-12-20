@@ -229,7 +229,7 @@ public class Compiler {
 
         boolean withElse = AST.getChildren().size() == 3; // True if there is an else
 
-        Cond(AST.childAt(0));
+        operate(AST.childAt(0));
 
         int cond = unnamedVar;
         unnamedVar++;
@@ -266,7 +266,7 @@ public class Compiler {
         write("br label %forCond" + index);
         write("forCond" + index + ":");
 
-        ExprArith(AST.childAt(0)); // Load i into an unnamed variable
+        operate(AST.childAt(0)); // Load i into an unnamed variable
         int i = unnamedVar;
         unnamedVar++;
 
@@ -280,7 +280,7 @@ public class Compiler {
             m = (int) maxValue.getLabel().getValue();
         }
         else {
-            ExprArith(maxValue);
+            operate(maxValue);
             m = unnamedVar;
             unnamedVar++;
         }
@@ -312,7 +312,7 @@ public class Compiler {
             m = (int) increment.getLabel().getValue();
         }
         else {
-            ExprArith(increment);
+            operate(increment);
             m = unnamedVar;
             unnamedVar++;
         }
@@ -342,7 +342,7 @@ public class Compiler {
         write("br label %whileCond" + index);
         write("whileCond" + index + ":");
 
-        Cond(AST.childAt(0));
+        operate(AST.childAt(0));
 
         int cond = unnamedVar;
         unnamedVar++;
@@ -355,13 +355,37 @@ public class Compiler {
         write("endwhile" + index + ":");
     }
 
-    private void Cond(AbstractSyntaxTree AST) {
+    /**
+     * Call the corresponding operation with the good operator.
+     * If the AST is a VarName, we load it.
+     *
+     * @param AST the AST corresponding to the operator
+     */
+    private void operate(AbstractSyntaxTree AST) {
         switch (AST.getLabel().getType()) {
+            case VARNAME:
+                write("%" + unnamedVar + " = load i32, i32* %" + AST.getLabel().getValue());
+                break;
+            case PLUS:
+                operation(AST, "add");
+                break;
+            case MINUS:
+                operation(AST, "sub");
+                break;
+            case TIMES:
+                operation(AST, "mul");
+                break;
+            case DIVIDE:
+                operation(AST, "sdiv");
+                break;
             case AND:
                 operation(AST, "and", true);
                 break;
             case OR:
                 operation(AST, "or", true);
+                break;
+            case NOT:
+                operation(AST, "not", true);
                 break;
             case EQUAL:
                 operation(AST, "icmp eq");
@@ -381,9 +405,6 @@ public class Compiler {
             case SMALLER_EQUAL:
                 operation(AST, "icmp sle");
                 break;
-            case NOT:
-                operation(AST, "not", true);
-                break;
         }
     }
 
@@ -402,7 +423,7 @@ public class Compiler {
             m = (int) rightTerm.getLabel().getValue();
         }
         else {
-            ExprArith(rightTerm);
+            operate(rightTerm);
             m = unnamedVar;
             unnamedVar++;
         }
@@ -421,33 +442,29 @@ public class Compiler {
         return varName;
     }
 
-    private void ExprArith(AbstractSyntaxTree AST) {
-        switch (AST.getLabel().getType()) {
-            case VARNAME:
-                write("%" + unnamedVar + " = load i32, i32* %" + AST.getLabel().getValue());
-                break;
-            case PLUS:
-                operation(AST, "add");
-                break;
-            case MINUS:
-                operation(AST, "sub");
-                break;
-            case TIMES:
-                operation(AST, "mul");
-                break;
-            case DIVIDE:
-                operation(AST, "sdiv");
-                break;
-        }
-    }
-
+    /**
+     * Function handling operations between integers given the AST corresponding to the operator
+     * and the string for the operator in the LLVM IR language.
+     *
+     * @param AST the AST corresponding to the operator
+     * @param operator the operator in the LLVM IR language
+     */
     private void operation(AbstractSyntaxTree AST, String operator) {
         operation(AST, operator, false);
     }
 
+    /**
+     * Function handling operations given the AST corresponding to the operator
+     * and the string for the operator in the LLVM IR language.
+     *
+     * @param AST the AST corresponding to the operator
+     * @param operator the operator in the LLVM IR language
+     * @param isBoolean true if the type of the operand is a boolean, false if it's a integer
+     */
     private void operation(AbstractSyntaxTree AST, String operator, boolean isBoolean) {
         int size = 2;
         if (operator.equals("not")) {
+            isBoolean = true;
             size = 1;
         }
 
@@ -461,22 +478,7 @@ public class Compiler {
                 variables[i] = (int) term.getLabel().getValue();
             }
             else {
-                switch (term.getLabel().getType()) {
-                    case OR:
-                    case AND:
-                    case SMALLER:
-                    case SMALLER_EQUAL:
-                    case GREATER:
-                    case GREATER_EQUAL:
-                    case EQUAL:
-                    case DIFFERENT:
-                    case NOT:
-                        Cond(term);
-                        break;
-                    default:
-                        ExprArith(term);
-                        break;
-                }
+                operate(term);
                 variables[i] = unnamedVar;
                 unnamedVar++;
             }
@@ -515,6 +517,9 @@ public class Compiler {
         write(llCode.toString());
     }
 
+    /**
+     * Write the string given in the code in a file or on the stdout
+     */
     private void write(String llCode) {
         if(toFile) {
             try {
@@ -529,6 +534,9 @@ public class Compiler {
         }
     }
 
+    /**
+     * Write an empty line in the code
+     */
     private void write() {
         write("");
     }
