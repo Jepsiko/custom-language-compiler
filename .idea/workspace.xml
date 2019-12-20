@@ -7,9 +7,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dist/complex.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree-building.aux" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree-building.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree-building.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/tree-building.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/euclide.ll" beforeDir="false" afterPath="$PROJECT_DIR$/dist/euclide.ll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -355,7 +366,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576769425550</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="More javadoc">
+      <created>1576850640959</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1576850640959</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -376,7 +394,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Function toAST added but not finished" />
     <MESSAGE value="TODO added" />
     <MESSAGE value="Refactor, now the trees are constructed with symbols instead of string" />
     <MESSAGE value="Terminals have to be kept to be in the AST" />
@@ -401,7 +418,8 @@
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Javadoc added" />
     <MESSAGE value="For corrected" />
-    <option name="LAST_COMMIT_MESSAGE" value="For corrected" />
+    <MESSAGE value="More javadoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="More javadoc" />
   </component>
   <component name="WindowStateProjectService">
     <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576755241451">
@@ -428,10 +446,11 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576496829997" />
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2" timestamp="1576769425454">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="826" y="113" width="1020" height="810" key="CommitChangelistDialog2" timestamp="1576850640763">
+      <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576769425454" />
+    <state x="826" y="113" width="1020" height="810" key="CommitChangelistDialog2/67.27.3773.1053@67.27.3773.1053" timestamp="1576850640763" />
     <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1576672874004">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -492,10 +511,11 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="482" y="187" width="1024" height="845" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576753872686" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576769426725">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="1920" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576850643798">
+      <screen x="67" y="27" width="3773" height="1053" />
     </state>
     <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576769426725" />
+    <state x="1920" y="288" key="Vcs.Push.Dialog.v2/67.27.3773.1053@67.27.3773.1053" timestamp="1576850643798" />
     <state x="726" y="307" width="554" height="500" key="extract.method.dialog" timestamp="1576686690089">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

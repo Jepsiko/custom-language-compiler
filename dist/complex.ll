@@ -71,88 +71,44 @@ endifNegative:
 define i32 @main() {
 entry:
 
-%less = alloca i32
-store i32 -1, i32* %less
-
-%more = alloca i32
-store i32 1, i32* %more
-
-%OK = alloca i32
-store i32 100, i32* %OK
-
-%KO = alloca i32
-store i32 -100, i32* %KO
-
-%guess = alloca i32
+%a = alloca i32
 %0 = call i32 @readInt()
-store i32 %0, i32* %guess
-
-%win = alloca i32
-store i32 0, i32* %win
+store i32 %0, i32* %a
 
 %i = alloca i32
 store i32 0, i32* %i
 br label %forCond0
 forCond0:
 %1 = load i32, i32* %i
-%2 = icmp slt i32 %1, 5
+%2 = add i32 9, 1
+%3 = icmp slt i32 %1, %2
 
-br i1 %2, label %forCode0, label %endfor0
+br i1 %3, label %forCode0, label %endfor0
 forCode0:
-%3 = load i32, i32* %win
-%4 = icmp eq i32 %3, 0
+%4 = load i32, i32* %a
+%5 = load i32, i32* %i
+%6 = icmp ne i32 %4, %5
+%7 = sub i1 1, %6
+%8 = load i32, i32* %a
+%9 = load i32, i32* %i
+%10 = icmp slt i32 %8, %9
+%11 = load i32, i32* %a
+%12 = add i32 %11, 2
+%13 = load i32, i32* %i
+%14 = icmp eq i32 %12, %13
+%15 = sub i1 1, %14
+%16 = and i1 %10, %15
+%17 = or i1 %7, %16
 
-br i1 %4, label %ifCode0, label %endif0
+br i1 %17, label %ifCode0, label %elseCode0
 ifCode0:
-%try = alloca i32
-%5 = call i32 @readInt()
-store i32 %5, i32* %try
+%18 = load i32, i32* %i
+call void @println(i32 %18)
 
-%6 = load i32, i32* %try
-%7 = load i32, i32* %guess
-%8 = icmp eq i32 %6, %7
-
-br i1 %8, label %ifCode1, label %endif1
-ifCode1:
-%9 = load i32, i32* %OK
-call void @println(i32 %9)
-
-store i32 1, i32* %win
-
-br label %endif1
-endif1:
-
-%10 = load i32, i32* %i
-%11 = icmp ne i32 %10, 4
-
-br i1 %11, label %ifCode2, label %endif2
-ifCode2:
-%12 = load i32, i32* %try
-%13 = load i32, i32* %guess
-%14 = icmp sgt i32 %12, %13
-
-br i1 %14, label %ifCode3, label %endif3
-ifCode3:
-%15 = load i32, i32* %less
-call void @println(i32 %15)
-
-br label %endif3
-endif3:
-
-%16 = load i32, i32* %try
-%17 = load i32, i32* %guess
-%18 = icmp slt i32 %16, %17
-
-br i1 %18, label %ifCode4, label %endif4
-ifCode4:
-%19 = load i32, i32* %more
+br label %endif0
+elseCode0:
+%19 = load i32, i32* %a
 call void @println(i32 %19)
-
-br label %endif4
-endif4:
-
-br label %endif2
-endif2:
 
 br label %endif0
 endif0:
@@ -161,17 +117,6 @@ endif0:
 store i32 %20, i32* %i
 br label %forCond0
 endfor0:
-
-%21 = load i32, i32* %win
-%22 = icmp eq i32 %21, 0
-
-br i1 %22, label %ifCode5, label %endif5
-ifCode5:
-%23 = load i32, i32* %KO
-call void @println(i32 %23)
-
-br label %endif5
-endif5:
 
 ret i32 0;
 }

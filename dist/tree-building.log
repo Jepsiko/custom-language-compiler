@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  20 DEC 2019 16:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  20 DEC 2019 16:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**tree_AST.tex
-(./tree_AST.tex
+**tree-building.tex
+(./tree-building.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 5 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/standalone/standalone.cls
@@ -712,8 +712,8 @@ Package: inlinedef 2008/07/10 v1.0 Inlined expansions within definitions
 \forest@externalize@max@outer@n=\count291
 \forest@externalize@inner@n=\count292
 )
-(./tree_AST.aux)
-\openout1 = `tree_AST.aux'.
+(./tree-building.aux)
+\openout1 = `tree-building.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
@@ -792,20 +792,21 @@ Missing character: There is no ; in font nullfont!
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree_AST.aux) ) 
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree-building.aux) ) 
 Here is how much of TeX's memory you used:
- 35436 strings out of 494894
- 791605 string characters out of 6179472
- 791898 words of memory out of 5000000
- 38452 multiletter control sequences out of 15000+600000
+ 37748 strings out of 494894
+ 831006 string characters out of 6179472
+ 861139 words of memory out of 5000000
+ 40764 multiletter control sequences out of 15000+600000
  531035 words of font info for 23 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 203i,9n,209p,10360b,4503s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/
-jepsiko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk>
-Output written on tree_AST.pdf (1 page, 10619 bytes).
+ 173i,9n,188p,10365b,7226s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </
+home/jepsiko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk>
+
+Output written on tree-building.pdf (1 page, 12559 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
+ 46 PDF objects out of 1000 (max. 8388607)
  11 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)

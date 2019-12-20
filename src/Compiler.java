@@ -229,7 +229,7 @@ public class Compiler {
 
         boolean withElse = AST.getChildren().size() == 3; // True if there is an else
 
-        Cond(AST.childAt(0).childAt(0));
+        Cond(AST.childAt(0));
 
         int cond = unnamedVar;
         unnamedVar++;
@@ -273,7 +273,7 @@ public class Compiler {
         /*
         Comparison of the variable with the maximal value
          */
-        AbstractSyntaxTree maxValue = AST.childAt(3).childAt(0);
+        AbstractSyntaxTree maxValue = AST.childAt(3);
         boolean maxValueIsNumber = maxValue.getLabel().getType() == LexicalUnit.NUMBER;
         int m;
         if (maxValueIsNumber) {
@@ -306,7 +306,7 @@ public class Compiler {
         /*
         Increment the value of the variable
          */
-        AbstractSyntaxTree increment = AST.childAt(2).childAt(0);
+        AbstractSyntaxTree increment = AST.childAt(2);
         boolean incrementIsNumber = increment.getLabel().getType() == LexicalUnit.NUMBER;
         if (incrementIsNumber) {
             m = (int) increment.getLabel().getValue();
@@ -342,7 +342,7 @@ public class Compiler {
         write("br label %whileCond" + index);
         write("whileCond" + index + ":");
 
-        Cond(AST.childAt(0).childAt(0));
+        Cond(AST.childAt(0));
 
         int cond = unnamedVar;
         unnamedVar++;
@@ -364,22 +364,25 @@ public class Compiler {
                 operation(AST, "or", true);
                 break;
             case EQUAL:
-                operation(AST, "icmp eq", false);
+                operation(AST, "icmp eq");
                 break;
             case DIFFERENT:
-                operation(AST, "icmp ne", false);
+                operation(AST, "icmp ne");
                 break;
             case GREATER:
-                operation(AST, "icmp sgt", false);
+                operation(AST, "icmp sgt");
                 break;
             case GREATER_EQUAL:
-                operation(AST, "icmp sge", false);
+                operation(AST, "icmp sge");
                 break;
             case SMALLER:
-                operation(AST, "icmp slt", false);
+                operation(AST, "icmp slt");
                 break;
             case SMALLER_EQUAL:
-                operation(AST, "icmp sle", false);
+                operation(AST, "icmp sle");
+                break;
+            case NOT:
+                operation(AST, "not", true);
                 break;
         }
     }
@@ -392,7 +395,7 @@ public class Compiler {
             variables.add(varName);
         }
 
-        AbstractSyntaxTree rightTerm = AST.childAt(1).childAt(0);
+        AbstractSyntaxTree rightTerm = AST.childAt(1);
         boolean rightIsNumber = rightTerm.getLabel().getType() == LexicalUnit.NUMBER;
         int m;
         if (rightIsNumber) {
@@ -424,24 +427,33 @@ public class Compiler {
                 write("%" + unnamedVar + " = load i32, i32* %" + AST.getLabel().getValue());
                 break;
             case PLUS:
-                operation(AST, "add", false);
+                operation(AST, "add");
                 break;
             case MINUS:
-                operation(AST, "sub", false);
+                operation(AST, "sub");
                 break;
             case TIMES:
-                operation(AST, "mul", false);
+                operation(AST, "mul");
                 break;
             case DIVIDE:
-                operation(AST, "sdiv", false);
+                operation(AST, "sdiv");
                 break;
         }
     }
 
+    private void operation(AbstractSyntaxTree AST, String operator) {
+        operation(AST, operator, false);
+    }
+
     private void operation(AbstractSyntaxTree AST, String operator, boolean isBoolean) {
-        boolean[] isNumber = new boolean[2];
-        int[] variables = new int[2];
-        for (int i = 0; i < 2; i++) {
+        int size = 2;
+        if (operator.equals("not")) {
+            size = 1;
+        }
+
+        boolean[] isNumber = new boolean[size];
+        int[] variables = new int[size];
+        for (int i = 0; i < size; i++) {
             AbstractSyntaxTree term = AST.childAt(i);
 
             isNumber[i] = term.getLabel().getType() == LexicalUnit.NUMBER;
@@ -458,6 +470,7 @@ public class Compiler {
                     case GREATER_EQUAL:
                     case EQUAL:
                     case DIFFERENT:
+                    case NOT:
                         Cond(term);
                         break;
                     default:
@@ -469,22 +482,35 @@ public class Compiler {
             }
         }
 
+        StringBuilder llCode;
         int p = unnamedVar;
         int n = variables[0];
-        int m = variables[1];
         int type = isBoolean ? 1 : 32;
 
-        StringBuilder llCode = new StringBuilder("%" + p + " = " + operator + " i" + type + " ");
-        if (!isNumber[0]) {
-            llCode.append("%");
-        }
-        llCode.append(n);
+        if (operator.equals("not")) {
+            llCode = new StringBuilder("%" + p + " = sub i" + type + " 1, ");
 
-        llCode.append(", ");
-        if (!isNumber[1]) {
-            llCode.append("%");
+            if (!isNumber[0]) {
+                llCode.append("%");
+            }
+            llCode.append(n);
         }
-        llCode.append(m);
+        else {
+            llCode = new StringBuilder("%" + p + " = " + operator + " i" + type + " ");
+
+            if (!isNumber[0]) {
+                llCode.append("%");
+            }
+            llCode.append(n);
+
+            int m = variables[1];
+
+            llCode.append(", ");
+            if (!isNumber[1]) {
+                llCode.append("%");
+            }
+            llCode.append(m);
+        }
 
         write(llCode.toString());
     }
