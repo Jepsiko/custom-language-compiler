@@ -226,7 +226,7 @@ public class Compiler {
 
     private void If(AbstractSyntaxTree AST, int index) {
         if (AST.numberOfChildren() < 2) {
-            return;
+            return; // If the code of the if is empty we don't write it because it's useless
         }
         ifIndex++;
 
@@ -259,6 +259,9 @@ public class Compiler {
     }
 
     private void For(AbstractSyntaxTree AST, int index) {
+        if (AST.numberOfChildren() < 5) {
+            return; // If the code of the for loop is empty we don't write it because it's useless
+        }
         forIndex++;
 
         /*
@@ -340,6 +343,9 @@ public class Compiler {
     }
 
     private void While(AbstractSyntaxTree AST, int index) {
+        if (AST.numberOfChildren() < 2) {
+            return; // If the code of the while loop is empty we don't write it because it's useless
+        }
         whileIndex++;
 
         write("br label %whileCond" + index);

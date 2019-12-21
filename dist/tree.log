@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  20 DEC 2019 17:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  21 DEC 2019 14:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -793,18 +793,18 @@ Missing character: There is no ; in font nullfont!
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree.aux) ) 
 Here is how much of TeX's memory you used:
- 41970 strings out of 494894
- 906769 string characters out of 6179472
- 908342 words of memory out of 5000000
- 44986 multiletter control sequences out of 15000+600000
+ 44732 strings out of 494894
+ 958005 string characters out of 6179472
+ 977801 words of memory out of 5000000
+ 47748 multiletter control sequences out of 15000+600000
  531035 words of font info for 23 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 283i,9n,265p,10356b,9847s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 333i,9n,300p,10356b,12406s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/jeps
 iko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk>
-Output written on tree.pdf (1 page, 18326 bytes).
+Output written on tree.pdf (1 page, 19239 bytes).
 PDF statistics:
- 57 PDF objects out of 1000 (max. 8388607)
+ 55 PDF objects out of 1000 (max. 8388607)
  11 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
