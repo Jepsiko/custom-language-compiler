@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{<Code>} [{<If>} [{<Cond>} [{not} ][{<ExprArith>} [{1} ][{+} ][{2} ][{*} ][{5} ]][{<} ][{<ExprArith>} [{0} ]][{and} ][{<ExprArith>} [{2} ]][{<=} ][{<ExprArith>} [{0} ]][{or} ][{not} ][{<Cond>} [{<ExprArith>} [{7} ]][{>} ][{<ExprArith>} [{2} ]][{and} ][{<ExprArith>} [{4} ]][{<} ][{<ExprArith>} [{1} ]]]]]]];
+\begin{forest}for tree={rectangle,draw, l sep=20pt}[{<Program>} [{<Code>} [{<Assign>} [{x} ][{<ExprArith>} [{1} ]]][{<Assign>} [{y} ][{<ExprArith>} [{x} ]]][{<Assign>} [{a} ][{<ExprArith>} [{-2} ][{+} ][{3} ][{*} ][{<ExprArith>} [{6} ][{+} ][{1} ]][{/} ][{5} ]]][{<Assign>} [{b} ][{<ExprArith>} [{<ExprArith>} [{6} ][{-} ][{3} ]][{+} ][{5} ][{/} ][{2} ][{-} ][{<ExprArith>} [{6} ][{+} ][{2} ]][{*} ][{4} ]]]]];
 \end{forest}
 
 \end{document}
