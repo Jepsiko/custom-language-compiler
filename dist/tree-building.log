@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  22 DEC 2019 12:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.25)  22 DEC 2019 12:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -794,19 +794,19 @@ Missing character: There is no ; in font nullfont!
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./tree-building.aux) ) 
 Here is how much of TeX's memory you used:
- 36801 strings out of 494894
- 815256 string characters out of 6179472
- 838204 words of memory out of 5000000
- 39817 multiletter control sequences out of 15000+600000
+ 36067 strings out of 494894
+ 801796 string characters out of 6179472
+ 831227 words of memory out of 5000000
+ 39083 multiletter control sequences out of 15000+600000
  531035 words of font info for 23 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 163i,9n,181p,10365b,6454s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 163i,9n,181p,10365b,5976s stack positions out of 5000i,500n,10000p,200000b,80000s
  </
 home/jepsiko/.texlive2017/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk>
 
-Output written on tree-building.pdf (1 page, 13133 bytes).
+Output written on tree-building.pdf (1 page, 11815 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
+ 46 PDF objects out of 1000 (max. 8388607)
  11 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
