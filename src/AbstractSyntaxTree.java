@@ -437,6 +437,7 @@ public class AbstractSyntaxTree {
                 case TIMES:
                 case DIVIDE:
                 case BEG:
+                case ELSE:
                     return true;
             }
         }

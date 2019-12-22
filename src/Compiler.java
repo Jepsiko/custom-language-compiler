@@ -225,12 +225,15 @@ public class Compiler {
     }
 
     private void If(AbstractSyntaxTree AST, int index) {
-        if (AST.numberOfChildren() < 2) {
+        if (AST.numberOfChildren() == 1) {
             return; // If the code of the if is empty we don't write it because it's useless
+        }
+        if (AST.numberOfChildren() == 2 && AST.childAt(1).getLabel().getType() == LexicalUnit.ELSE) {
+            return; // If the code of the if and the else is empty we don't write it because it's useless
         }
         ifIndex++;
 
-        boolean withElse = AST.getChildren().size() == 3; // True if there is an else
+        boolean withElse = AST.getChildren().size() >= 3; // True if there is an else
 
         operate(AST.childAt(0));
 
@@ -243,14 +246,26 @@ public class Compiler {
         }
         write("ifCode" + index + ":");
 
-        Code(AST.childAt(1));
+        if (AST.childAt(1).getLabel().getType() != LexicalUnit.ELSE) {
+            Code(AST.childAt(1));
+        }
 
         write("br label %endif" + index);
 
         if (withElse) {
             write("elseCode" + index + ":");
 
-            Code(AST.childAt(2));
+            if (AST.numberOfChildren() == 3) {
+                if (AST.childAt(1).getLabel().getType() == LexicalUnit.ELSE) {
+                    Code(AST.childAt(2));
+                }
+                else {
+                    Code(AST.childAt(1));
+                }
+            }
+            else {
+                Code(AST.childAt(3));
+            }
 
             write("br label %endif" + index);
         }

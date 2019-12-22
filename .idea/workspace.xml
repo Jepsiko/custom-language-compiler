@@ -7,7 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac94aaa9-9f92-4d25-8c23-a16a6a0d6929" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dist/boolean-parenthesis.tbc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/boolean-parenthesis.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/part3.jar" beforeDir="false" afterPath="$PROJECT_DIR$/dist/part3.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree-building.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree-building.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree-building.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree-building.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree-building.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree-building.tex" afterDir="false" />
@@ -17,7 +20,9 @@
       <change beforePath="$PROJECT_DIR$/dist/tree_AST.log" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree_AST.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/tree_AST.tex" beforeDir="false" afterPath="$PROJECT_DIR$/dist/tree_AST.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AbstractSyntaxTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/boolean-parenthesis.alg" beforeDir="false" afterPath="$PROJECT_DIR$/test/boolean-parenthesis.alg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +150,7 @@
       <workItem from="1576683281604" duration="17074000" />
       <workItem from="1576753405017" duration="7748000" />
       <workItem from="1576761208891" duration="5800000" />
-      <workItem from="1576934936515" duration="865000" />
+      <workItem from="1576934936515" duration="3890000" />
     </task>
     <task id="LOCAL-00001" summary="javadoc added">
       <created>1574427809419</created>
@@ -385,7 +390,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576857577623</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="The Compiler doesn't write useless code for the for loop and the while loop">
+      <created>1576935844774</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1576935844774</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,7 +418,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Terminals have to be kept to be in the AST" />
     <MESSAGE value="ParseTree inherit from AbstractSyntaxTree" />
     <MESSAGE value="No inheritance for now" />
     <MESSAGE value="The creation of the AST can be done but is not perfect" />
@@ -431,7 +442,8 @@
     <MESSAGE value="More javadoc" />
     <MESSAGE value="Not is working and more comments" />
     <MESSAGE value="More javadoc and better Compiler" />
-    <option name="LAST_COMMIT_MESSAGE" value="More javadoc and better Compiler" />
+    <MESSAGE value="The Compiler doesn't write useless code for the for loop and the while loop" />
+    <option name="LAST_COMMIT_MESSAGE" value="The Compiler doesn't write useless code for the for loop and the while loop" />
   </component>
   <component name="WindowStateProjectService">
     <state x="664" y="254" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576755241451">
@@ -458,11 +470,11 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1576496829997" />
-    <state x="440" y="113" width="1091" height="810" key="CommitChangelistDialog2" timestamp="1576874361374">
+    <state x="558" y="147" width="1091" height="810" key="CommitChangelistDialog2" timestamp="1576935844474">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="440" y="113" width="1091" height="810" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1576874361374" />
-    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576769425454" />
+    <state x="558" y="147" width="860" height="810" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1576935844474" />
     <state x="826" y="113" width="1020" height="810" key="CommitChangelistDialog2/67.27.3773.1053@67.27.3773.1053" timestamp="1576857577516" />
     <state x="167" y="125" width="1653" height="855" key="DiffContextDialog" timestamp="1576874344936">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -528,11 +540,15 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="482" y="187" width="1024" height="845" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1576753872686" />
-    <state x="292" y="204" width="911" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576874366611">
+    <state width="498" height="446" key="SwitcherDM" timestamp="1576936625136">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/67.27.1853.1053@67.27.1853.1053" timestamp="1576936625136" />
+    <state x="588" y="288" width="911" height="528" key="Vcs.Push.Dialog.v2" timestamp="1576935846860">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="292" y="204" width="911" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1576874366611" />
-    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576769426725" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1576935846860" />
     <state x="525" y="204" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.3773.1053@67.27.3773.1053" timestamp="1576857578663" />
     <state x="726" y="307" width="554" height="500" key="extract.method.dialog" timestamp="1576686690089">
       <screen x="67" y="27" width="1853" height="1053" />
