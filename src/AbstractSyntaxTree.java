@@ -1,8 +1,3 @@
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,15 +34,6 @@ public class AbstractSyntaxTree {
     public AbstractSyntaxTree(ParseTree parseTree) {
         this(parseTree.getLabel(), new ArrayList<>());
         createTree(parseTree.getChildren(), children);
-
-
-        try {
-            Path file = Paths.get("tree-building.tex");
-            Files.write(file, Collections.singleton(toLaTeX()), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         simplify();
     }
 
@@ -119,6 +105,7 @@ public class AbstractSyntaxTree {
     }
 
     /**
+
      * Writes the tree as a LaTeX document which can be compiled using PDFLaTeX.
      * <br>
      * <br>

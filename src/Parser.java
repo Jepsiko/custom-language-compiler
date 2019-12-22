@@ -1133,8 +1133,7 @@ class Parser {
      * @param type lexical unit to be matched
      * @return a leaf of a ParseTree with the matched terminal
      */
-    private ParseTree match(LexicalUnit type)
-    {
+    private ParseTree match(LexicalUnit type) {
         Symbol terminal = symbols.get(l);
         if (terminal.getType() == type) {
             if (v) {
