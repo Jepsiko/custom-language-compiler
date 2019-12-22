@@ -134,7 +134,8 @@ public class AbstractSyntaxTree {
     }
 
     /**
-     * Recursive function which simplify and rearrange depending the type of the evaluation
+     * Recursive function which simplify the tree by changing all the operations in binary (except for the 'not') trees.
+     * At the end it removes all the ExprArith and Cond nodes.
      */
     public void simplify() {
 

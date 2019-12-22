@@ -43,12 +43,7 @@ public class Compiler {
     private List<String> variables;
 
     public Compiler() {
-        toFile = false;
-        unnamedVar = 0;
-        whileIndex = 0;
-        forIndex = 0;
-        ifIndex = 0;
-        variables = new ArrayList<>();
+        this("");
     }
 
     public Compiler(String outputFilename) {
@@ -81,6 +76,12 @@ public class Compiler {
         Program(AST);
     }
 
+    /**
+     * Function representing the variable Program.
+     * Write the beginning of the program, then the code and finally the end of the program.
+     *
+     * @param AST the AbstractSyntaxTree whose label is Program
+     */
     private void Program(AbstractSyntaxTree AST) {
         begin();
         Code(AST.childAt(1));
@@ -204,6 +205,11 @@ public class Compiler {
         write("ret i32 0;\n}");
     }
 
+    /**
+     * Call the readInt() function in the LLVM IR language and store the input into the variable.
+     *
+     * @param AST the AbstractSyntaxTree whose label is Read
+     */
     private void Read(AbstractSyntaxTree AST) {
         String varName = AST.childAt(0).getLabel().getValue().toString();
 
@@ -217,6 +223,11 @@ public class Compiler {
         unnamedVar++;
     }
 
+    /**
+     * Call the println() function in the LLVM IR language on the variable.
+     *
+     * @param AST the AbstractSyntaxTree whose label is Print
+     */
     private void Print(AbstractSyntaxTree AST) {
         String varName = AST.childAt(0).getLabel().getValue().toString();
         write("%" + unnamedVar + " = load i32, i32* %" + varName);
@@ -224,6 +235,14 @@ public class Compiler {
         unnamedVar++;
     }
 
+    /**
+     * Write an if (/else) condition in the LLVM IR language by computing the condition and using
+     * the result to make a conditionnal jump in the code to the right label.
+     *
+     * The compiler can also remove empty if (/else) conditions.
+     *
+     * @param AST the AbstractSyntaxTree whose label is If
+     */
     private void If(AbstractSyntaxTree AST, int index) {
         if (AST.numberOfChildren() == 1) {
             return; // If the code of the if is empty we don't write it because it's useless
@@ -273,6 +292,17 @@ public class Compiler {
         write("endif" + index + ":");
     }
 
+    /**
+     * Write a for loop in the LLVM IR language by assigning the counter variable to
+     * the initial value then comparing the counter variable to the maximal value.
+     *
+     * If the counter variable is less equal than the maximal value, we do the code of the
+     * for loop then increment the counter variable by the increment value.
+     *
+     * The compiler can also remove empty for loops.
+     *
+     * @param AST the AbstractSyntaxTree whose label is While
+     */
     private void For(AbstractSyntaxTree AST, int index) {
         if (AST.numberOfChildren() < 5) {
             return; // If the code of the for loop is empty we don't write it because it's useless
@@ -357,6 +387,14 @@ public class Compiler {
         write("endfor" + index + ":");
     }
 
+    /**
+     * Write a while loop in the LLVM IR language by computing the condition and using
+     * the result to make a conditionnal jump in the code to the right label.
+     *
+     * The compiler can also remove empty while loops.
+     *
+     * @param AST the AbstractSyntaxTree whose label is While
+     */
     private void While(AbstractSyntaxTree AST, int index) {
         if (AST.numberOfChildren() < 2) {
             return; // If the code of the while loop is empty we don't write it because it's useless
@@ -432,6 +470,12 @@ public class Compiler {
         }
     }
 
+    /**
+     * Creates a new variable in LLVM IR code and store the result of the right term in the variable.
+     *
+     * @param AST the AbstractSyntaxTree whose label is Assign
+     * @return the name of the variable
+     */
     private String Assign(AbstractSyntaxTree AST) {
         String varName = AST.childAt(0).getLabel().getValue().toString();
 
@@ -483,7 +527,7 @@ public class Compiler {
      *
      * @param AST the AST corresponding to the operator
      * @param operator the operator in the LLVM IR language
-     * @param isBoolean true if the type of the operand is a boolean, false if it's a integer
+     * @param isBoolean true if the type of the operand is a boolean, false if it's an integer
      */
     private void operation(AbstractSyntaxTree AST, String operator, boolean isBoolean) {
         int size = 2;
