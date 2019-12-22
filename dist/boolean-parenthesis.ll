@@ -71,23 +71,32 @@ endifNegative:
 define i32 @main() {
 entry:
 
-%0 = mul i32 2, 5
-%1 = add i32 1, %0
-%2 = icmp slt i32 %1, 0
-%3 = sub i1 1, %2
-%4 = icmp sle i32 2, 0
-%5 = and i1 %3, %4
-%6 = icmp sgt i32 7, 2
-%7 = icmp slt i32 4, 1
-%8 = and i1 %6, %7
-%9 = sub i1 1, %8
-%10 = or i1 %5, %9
-
-br i1 %10, label %ifCode0, label %endif0
-ifCode0:
 %a = alloca i32
-%11 = call i32 @readInt()
-store i32 %11, i32* %a
+%0 = call i32 @readInt()
+store i32 %0, i32* %a
+
+%b = alloca i32
+%1 = call i32 @readInt()
+store i32 %1, i32* %b
+
+%2 = mul i32 2, 5
+%3 = add i32 1, %2
+%4 = icmp slt i32 %3, 0
+%5 = sub i1 1, %4
+%6 = icmp sle i32 2, 0
+%7 = and i1 %5, %6
+%8 = icmp sgt i32 7, 2
+%9 = icmp slt i32 4, 1
+%10 = and i1 %8, %9
+%11 = sub i1 1, %10
+%12 = or i1 %7, %11
+
+br i1 %12, label %ifCode0, label %elseCode0
+ifCode0:
+br label %endif0
+elseCode0:
+%13 = load i32, i32* %b
+call void @println(i32 %13)
 
 br label %endif0
 endif0:
