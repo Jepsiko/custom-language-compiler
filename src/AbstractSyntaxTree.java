@@ -419,12 +419,10 @@ public class AbstractSyntaxTree {
                 case GREATER_EQUAL:
                 case SMALLER_EQUAL:
                 case AND:
-                case END:
                 case PLUS:
                 case NOT:
                 case TIMES:
                 case DIVIDE:
-                case BEG:
                 case ELSE:
                     return true;
             }

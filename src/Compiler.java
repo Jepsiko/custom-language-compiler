@@ -84,7 +84,7 @@ public class Compiler {
      */
     private void Program(AbstractSyntaxTree AST) {
         begin();
-        Code(AST.childAt(1));
+        Code(AST.childAt(0));
         end();
     }
 
